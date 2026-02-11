@@ -199,6 +199,19 @@
       color: #8899aa;
       margin-left: 8px;
     }
+
+    .new-badge {
+      display: inline-block;
+      background: #ff4500;
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-left: 6px;
+      vertical-align: middle;
+      letter-spacing: 0.5px;
+    }
   </style>
 </head>
 <body>
@@ -276,7 +289,18 @@
       let currentPostIndex = 0;
       let countries = posts[0].countries;
       let currentPostUrl = posts[0].post_url;
+      // These get overridden after we find the newest post below
       let geojsonLayer;
+
+      // Find the newest post
+      let newestIndex = 0;
+      let newestTime = 0;
+      posts.forEach((post, i) => {
+        if (post.created_utc && post.created_utc > newestTime) {
+          newestTime = post.created_utc;
+          newestIndex = i;
+        }
+      });
 
       // Populate post selector
       const postSelect = document.getElementById('postSelect');
@@ -286,9 +310,13 @@
       posts.forEach((post, i) => {
         const opt = document.createElement('option');
         opt.value = i;
-        opt.textContent = post.post_title;
+        opt.textContent = (i === newestIndex ? 'NEW  ' : '') + post.post_title;
         postSelect.appendChild(opt);
       });
+
+      // Start on the newest post
+      currentPostIndex = newestIndex;
+      postSelect.value = newestIndex;
 
       function getColor(name) {
         if (countries[name]) {
@@ -371,9 +399,8 @@
 
       geojsonLayer = L.geoJSON(geoData, { style, onEachFeature }).addTo(map);
 
-      // Initial UI state
-      postLink.href = posts[0].post_url;
-      countryCount.textContent = Object.keys(countries).length + ' countries';
+      // Initial UI state — show newest post
+      updateMap();
 
       postSelect.addEventListener('change', (e) => {
         currentPostIndex = parseInt(e.target.value);

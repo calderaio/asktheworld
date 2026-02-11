@@ -15,7 +15,7 @@ import time
 import urllib.request
 
 SUBREDDIT = "AskTheWorld"
-NUM_POSTS = 5
+NUM_POSTS = 10
 BASE = "https://www.reddit.com"
 USER_AGENT = "AskTheWorldMap/1.0 (educational project; GitHub Actions bot)"
 
@@ -145,6 +145,7 @@ def fetch_with_praw():
         output.append({
             "post_title": submission.title,
             "post_url": f"{BASE}{submission.permalink}",
+            "created_utc": submission.created_utc,
             "countries": countries,
         })
 
@@ -175,6 +176,7 @@ def fetch_with_public_api():
             "url": f"{BASE}{d['permalink']}",
             "score": d["score"],
             "num_comments": d["num_comments"],
+            "created_utc": d["created_utc"],
         })
 
     posts.sort(key=lambda p: p["num_comments"], reverse=True)
@@ -212,6 +214,7 @@ def fetch_with_public_api():
         output.append({
             "post_title": post["title"],
             "post_url": post["url"],
+            "created_utc": post["created_utc"],
             "countries": countries,
         })
 
