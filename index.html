@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>r/AskTheWorld Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a2e;
+      color: #e0e0e0;
+    }
+
+    header {
+      background: #16213e;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 2px solid #ff4500;
+    }
+
+    header .reddit-icon {
+      width: 36px;
+      height: 36px;
+      background: #ff4500;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 20px;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .header-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    header h1 {
+      font-size: 1.3rem;
+      color: #fff;
+    }
+
+    header h1 span {
+      color: #ff4500;
+    }
+
+    .post-selector {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .post-selector select {
+      background: #0f3460;
+      color: #e0e0e0;
+      border: 1px solid #334;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 0.85rem;
+      font-family: inherit;
+      max-width: 500px;
+      cursor: pointer;
+    }
+
+    .post-selector select:focus {
+      outline: none;
+      border-color: #ff4500;
+    }
+
+    .post-link {
+      color: #ff4500;
+      text-decoration: none;
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+
+    .post-link:hover {
+      text-decoration: underline;
+    }
+
+    .post-nav {
+      display: flex;
+      gap: 4px;
+    }
+
+    .post-nav button {
+      background: #0f3460;
+      color: #e0e0e0;
+      border: 1px solid #334;
+      border-radius: 4px;
+      padding: 3px 10px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .post-nav button:hover {
+      border-color: #ff4500;
+      color: #ff4500;
+    }
+
+    #map {
+      width: 100%;
+      height: calc(100vh - 72px);
+    }
+
+    .leaflet-container {
+      background: #0f3460;
+    }
+
+    .comment-popup .country-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #1a1a2e;
+    }
+
+    .comment-popup .comment-body {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #333;
+      margin-bottom: 10px;
+      font-style: italic;
+    }
+
+    .comment-popup .comment-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: #666;
+      border-top: 1px solid #eee;
+      padding-top: 8px;
+    }
+
+    .comment-popup .author {
+      color: #0079d3;
+      font-weight: 600;
+    }
+
+    .comment-popup .upvotes {
+      color: #ff4500;
+      font-weight: 600;
+    }
+
+    .comment-popup .post-link-popup {
+      display: block;
+      margin-top: 8px;
+      text-align: center;
+      color: #ff4500;
+      text-decoration: none;
+      font-size: 0.8rem;
+      padding: 4px 0;
+      border-top: 1px solid #eee;
+    }
+
+    .comment-popup .post-link-popup:hover {
+      text-decoration: underline;
+    }
+
+    .info-box {
+      padding: 8px 12px;
+      background: rgba(22, 33, 62, 0.92);
+      backdrop-filter: blur(4px);
+      border-radius: 6px;
+      color: #ccc;
+      font-size: 0.85rem;
+      border: 1px solid #334;
+      line-height: 1.5;
+    }
+
+    .info-box strong {
+      color: #ff4500;
+    }
+
+    .legend {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .legend-swatch {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      border: 1px solid #555;
+    }
+
+    .country-count {
+      font-size: 0.75rem;
+      color: #8899aa;
+      margin-left: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="reddit-icon">r/</div>
+    <div class="header-text">
+      <h1><span>r/AskTheWorld</span> Map</h1>
+      <div class="post-selector">
+        <div class="post-nav">
+          <button id="prevPost">&larr;</button>
+          <button id="nextPost">&rarr;</button>
+        </div>
+        <select id="postSelect"></select>
+        <span class="country-count" id="countryCount"></span>
+        <a id="postLink" class="post-link" href="#" target="_blank">view on reddit</a>
+      </div>
+    </div>
+  </header>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const GEOJSON_URL = 'https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson';
+
+    const map = L.map('map', {
+      center: [20, 0],
+      zoom: 2.5,
+      minZoom: 2,
+      maxBounds: [[-90, -200], [90, 200]],
+      worldCopyJump: true
+    });
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OpenStreetMap &copy; CARTO',
+      subdomains: 'abcd',
+      maxZoom: 10
+    }).addTo(map);
+
+    // Info control
+    const info = L.control({ position: 'topright' });
+    info.onAdd = function () {
+      this._div = L.DomUtil.create('div', 'info-box');
+      this.update();
+      return this._div;
+    };
+    info.update = function (countryName, data) {
+      if (countryName && data) {
+        this._div.innerHTML = `
+          <strong>${countryName}</strong><br>
+          ${data.upvotes.toLocaleString()} upvotes &middot; ${data.author}
+        `;
+      } else if (countryName) {
+        this._div.innerHTML = `<strong>${countryName}</strong><br>No comment for this post`;
+      } else {
+        this._div.innerHTML = `
+          Hover over a country<br>
+          <div class="legend" style="margin-top:6px">
+            <div class="legend-swatch" style="background:#ff4500"></div> Has comment
+            <div class="legend-swatch" style="background:#1a1a2e; margin-left:8px"></div> No data
+          </div>
+        `;
+      }
+    };
+    info.addTo(map);
+
+    async function init() {
+      const [geoRes, dataRes] = await Promise.all([
+        fetch(GEOJSON_URL),
+        fetch('data.json')
+      ]);
+
+      const geoData = await geoRes.json();
+      const posts = await dataRes.json();
+
+      let currentPostIndex = 0;
+      let countries = posts[0].countries;
+      let currentPostUrl = posts[0].post_url;
+      let geojsonLayer;
+
+      // Populate post selector
+      const postSelect = document.getElementById('postSelect');
+      const postLink = document.getElementById('postLink');
+      const countryCount = document.getElementById('countryCount');
+
+      posts.forEach((post, i) => {
+        const opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = post.post_title;
+        postSelect.appendChild(opt);
+      });
+
+      function getColor(name) {
+        if (countries[name]) {
+          const upvotes = countries[name].upvotes;
+          if (upvotes >= 5000) return '#ff4500';
+          if (upvotes >= 4000) return '#e03d00';
+          if (upvotes >= 3000) return '#cc3700';
+          if (upvotes >= 2000) return '#b33000';
+          return '#802300';
+        }
+        return 'transparent';
+      }
+
+      function style(feature) {
+        const name = feature.properties.name;
+        const hasData = !!countries[name];
+        return {
+          fillColor: getColor(name),
+          weight: hasData ? 1.5 : 0.5,
+          opacity: 1,
+          color: hasData ? '#ff6a33' : '#334',
+          fillOpacity: hasData ? 0.7 : 0.05
+        };
+      }
+
+      function highlightFeature(e) {
+        const layer = e.target;
+        const name = layer.feature.properties.name;
+        layer.setStyle({
+          weight: 2.5,
+          color: '#fff',
+          fillOpacity: countries[name] ? 0.9 : 0.15
+        });
+        layer.bringToFront();
+        info.update(name, countries[name]);
+      }
+
+      function resetHighlight(e) {
+        geojsonLayer.resetStyle(e.target);
+        info.update();
+      }
+
+      function onClick(e) {
+        const name = e.target.feature.properties.name;
+        const data = countries[name];
+        if (!data) return;
+
+        L.popup({ maxWidth: 340 })
+          .setLatLng(e.latlng)
+          .setContent(`
+            <div class="comment-popup" style="min-width:280px;max-width:340px;">
+              <div class="country-name">${name}</div>
+              <div class="comment-body">"${data.comment}"</div>
+              <div class="comment-meta">
+                <span class="author">${data.author}</span>
+                <span class="upvotes">${data.upvotes.toLocaleString()} upvotes</span>
+              </div>
+              <a class="post-link-popup" href="${data.permalink}" target="_blank">View comment on Reddit &rarr;</a>
+            </div>
+          `)
+          .openOn(map);
+      }
+
+      function onEachFeature(feature, layer) {
+        layer.on({
+          mouseover: highlightFeature,
+          mouseout: resetHighlight,
+          click: onClick
+        });
+      }
+
+      function updateMap() {
+        countries = posts[currentPostIndex].countries;
+        currentPostUrl = posts[currentPostIndex].post_url;
+        postLink.href = currentPostUrl;
+        countryCount.textContent = Object.keys(countries).length + ' countries';
+        map.closePopup();
+        geojsonLayer.setStyle(style);
+      }
+
+      geojsonLayer = L.geoJSON(geoData, { style, onEachFeature }).addTo(map);
+
+      // Initial UI state
+      postLink.href = posts[0].post_url;
+      countryCount.textContent = Object.keys(countries).length + ' countries';
+
+      postSelect.addEventListener('change', (e) => {
+        currentPostIndex = parseInt(e.target.value);
+        updateMap();
+      });
+
+      document.getElementById('prevPost').addEventListener('click', () => {
+        currentPostIndex = (currentPostIndex - 1 + posts.length) % posts.length;
+        postSelect.value = currentPostIndex;
+        updateMap();
+      });
+
+      document.getElementById('nextPost').addEventListener('click', () => {
+        currentPostIndex = (currentPostIndex + 1) % posts.length;
+        postSelect.value = currentPostIndex;
+        updateMap();
+      });
+    }
+
+    init().catch(err => console.error('Failed to load data:', err));
+  </script>
+</body>
+</html>
