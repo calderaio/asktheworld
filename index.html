@@ -269,7 +269,11 @@
         this._div.innerHTML = `
           Hover over a country<br>
           <div class="legend" style="margin-top:6px">
-            <div class="legend-swatch" style="background:#ff4500"></div> Has comment
+            <div style="display:flex;align-items:center;gap:4px">
+              <span style="font-size:0.75rem">fewer</span>
+              <div style="width:80px;height:14px;border-radius:3px;border:1px solid #555;background:linear-gradient(to right, #4a1800, #ff4500)"></div>
+              <span style="font-size:0.75rem">more upvotes</span>
+            </div>
             <div class="legend-swatch" style="background:#1a1a2e; margin-left:8px"></div> No data
           </div>
         `;
@@ -319,15 +323,17 @@
       postSelect.value = newestIndex;
 
       function getColor(name) {
-        if (countries[name]) {
-          const upvotes = countries[name].upvotes;
-          if (upvotes >= 5000) return '#ff4500';
-          if (upvotes >= 4000) return '#e03d00';
-          if (upvotes >= 3000) return '#cc3700';
-          if (upvotes >= 2000) return '#b33000';
-          return '#802300';
-        }
-        return 'transparent';
+        if (!countries[name]) return 'transparent';
+        const upvotes = countries[name].upvotes;
+        // Find max upvotes for current post to scale colors
+        const maxUpvotes = Math.max(...Object.values(countries).map(c => c.upvotes));
+        // Normalize to 0-1 range (min 0.2 so even low-vote countries are visible)
+        const t = Math.min(1, Math.max(0.2, upvotes / maxUpvotes));
+        // Interpolate from dark (#4a1800) to bright (#ff4500)
+        const r = Math.round(74 + (255 - 74) * t);
+        const g = Math.round(24 + (69 - 24) * t);
+        const b = Math.round(0);
+        return `rgb(${r}, ${g}, ${b})`;
       }
 
       function style(feature) {
