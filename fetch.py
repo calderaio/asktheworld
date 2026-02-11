@@ -3,22 +3,20 @@
 Fetches top posts and comments from r/AskTheWorld and outputs data.json
 for the map visualization.
 
-Uses PRAW (Reddit OAuth API) for reliable access with proper rate limits.
-Set these environment variables:
-  REDDIT_CLIENT_ID
-  REDDIT_CLIENT_SECRET
+Uses Reddit's public .json endpoints (no API key needed).
+Rate-limited to be respectful.
 """
 
 import json
 import os
 import re
-import sys
-
-import praw
+import time
+import urllib.request
 
 SUBREDDIT = "AskTheWorld"
 NUM_POSTS = 5
 BASE = "https://www.reddit.com"
+USER_AGENT = "AskTheWorldMap/1.0 (educational project; GitHub Actions bot)"
 
 # Mapping from flair country names to GeoJSON country names
 FLAIR_TO_GEOJSON = {
@@ -45,6 +43,13 @@ FLAIR_TO_GEOJSON = {
     "Turkiye": "Turkey",
     "Türkiye": "Turkey",
 }
+
+
+def fetch_json(url):
+    """Fetch JSON from Reddit."""
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    with urllib.request.urlopen(req, timeout=15) as resp:
+        return json.loads(resp.read().decode())
 
 
 def extract_country(flair_text):
@@ -84,74 +89,78 @@ def extract_country(flair_text):
     return FLAIR_TO_GEOJSON.get(text, text)
 
 
-def process_comments(submission):
-    """Get the best comment per country from a submission."""
-    submission.comment_sort = "top"
-    submission.comments.replace_more(limit=0)
+def fetch_comments(permalink):
+    """Fetch top-level comments for a post, sorted by top."""
+    url = f"{BASE}{permalink}.json?sort=top&limit=500"
+    data = fetch_json(url)
+    comments = data[1]["data"]["children"]
 
     best = {}
-    for comment in submission.comments:
-        if comment.body in ("[removed]", "[deleted]"):
+    for c in comments:
+        if c["kind"] != "t1":
             continue
-        body = comment.body.strip()
+        d = c["data"]
+        if d.get("body") in ("[removed]", "[deleted]"):
+            continue
+        body = d["body"].strip()
         if len(body) < 20 or body.startswith("http"):
             continue
 
-        country = extract_country(comment.author_flair_text)
+        country = extract_country(d.get("author_flair_text"))
         if not country:
             continue
 
-        if country not in best or comment.score > best[country]["upvotes"]:
+        if country not in best or d["score"] > best[country]["upvotes"]:
             if len(body) > 500:
                 body = body[:497] + "..."
             best[country] = {
                 "comment": body,
-                "author": f"u/{comment.author.name}" if comment.author else "[deleted]",
-                "upvotes": comment.score,
-                "permalink": f"{BASE}{comment.permalink}",
+                "author": f"u/{d['author']}",
+                "upvotes": d["score"],
+                "permalink": f"{BASE}{d['permalink']}",
             }
     return best
 
 
 def main():
-    client_id = os.environ.get("REDDIT_CLIENT_ID")
-    client_secret = os.environ.get("REDDIT_CLIENT_SECRET")
-
-    if not client_id or not client_secret:
-        print("Error: Set REDDIT_CLIENT_ID and REDDIT_CLIENT_SECRET environment variables.")
-        print("Create an app at https://www.reddit.com/prefs/apps (select 'script' type).")
-        sys.exit(1)
-
-    reddit = praw.Reddit(
-        client_id=client_id,
-        client_secret=client_secret,
-        user_agent="AskTheWorldMap/2.0 (GitHub Actions bot)",
-    )
-
-    subreddit = reddit.subreddit(SUBREDDIT)
     print(f"Fetching top posts from r/{SUBREDDIT}...")
+    url = f"{BASE}/r/{SUBREDDIT}/hot.json?limit=15"
+    data = fetch_json(url)
 
-    # Get hot posts, sorted by most comments
-    posts = list(subreddit.hot(limit=15))
-    posts = [p for p in posts if not p.stickied]
-    posts.sort(key=lambda p: p.num_comments, reverse=True)
+    posts = []
+    for p in data["data"]["children"]:
+        d = p["data"]
+        if d.get("stickied"):
+            continue
+        posts.append({
+            "title": d["title"],
+            "permalink": d["permalink"],
+            "url": f"{BASE}{d['permalink']}",
+            "score": d["score"],
+            "num_comments": d["num_comments"],
+        })
+
+    posts.sort(key=lambda p: p["num_comments"], reverse=True)
     selected = posts[:NUM_POSTS]
 
     output = []
-    for i, submission in enumerate(selected):
-        print(f"\n[{i+1}/{len(selected)}] {submission.title[:70]}...")
-        print(f"  {submission.num_comments} comments, score {submission.score}")
+    for i, post in enumerate(selected):
+        print(f"\n[{i+1}/{len(selected)}] {post['title'][:70]}...")
+        print(f"  {post['num_comments']} comments, score {post['score']}")
 
-        countries = process_comments(submission)
+        countries = fetch_comments(post["permalink"])
         print(f"  Found {len(countries)} countries")
 
         output.append({
-            "post_title": submission.title,
-            "post_url": f"{BASE}{submission.permalink}",
+            "post_title": post["title"],
+            "post_url": post["url"],
             "countries": countries,
         })
 
-    # Write to the directory where the script lives (for GitHub Actions)
+        # Rate limit: be respectful
+        if i < len(selected) - 1:
+            time.sleep(3)
+
     script_dir = os.path.dirname(os.path.abspath(__file__))
     out_path = os.path.join(script_dir, "data.json")
 
