@@ -1,1 +1,1 @@
-# No external dependencies - uses only Python standard library
+praw>=7.7.0
