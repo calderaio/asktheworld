@@ -154,10 +154,18 @@ def fetch_with_praw():
 
 # ---------- Public JSON fetching (for local dev) ----------
 
-def fetch_json(url):
-    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(req, timeout=15) as resp:
-        return json.loads(resp.read().decode())
+def fetch_json(url, retries=3):
+    for attempt in range(retries):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                return json.loads(resp.read().decode())
+        except Exception as e:
+            if attempt < retries - 1:
+                print(f"  Retry {attempt + 1}/{retries} after error: {e}")
+                time.sleep(3)
+            else:
+                raise
 
 
 def fetch_with_public_api():
