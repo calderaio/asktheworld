@@ -229,6 +229,7 @@
         <a id="postLink" class="post-link" href="#" target="_blank">view on reddit</a>
       </div>
     </div>
+    <div id="lastUpdated" style="font-size:0.7rem;color:#556;white-space:nowrap;text-align:right;margin-left:auto;"></div>
   </header>
   <div id="map"></div>
 
@@ -288,7 +289,15 @@
       ]);
 
       const geoData = await geoRes.json();
-      const posts = await dataRes.json();
+      const rawData = await dataRes.json();
+      const posts = rawData.posts;
+
+      // Show last updated
+      if (rawData.last_updated) {
+        const d = new Date(rawData.last_updated);
+        document.getElementById('lastUpdated').textContent =
+          'updated ' + d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+      }
 
       let currentPostIndex = 0;
       let countries = posts[0].countries;

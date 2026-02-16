@@ -246,8 +246,14 @@ def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     out_path = os.path.join(script_dir, "data.json")
 
+    from datetime import datetime, timezone
+    result = {
+        "last_updated": datetime.now(timezone.utc).isoformat(),
+        "posts": output,
+    }
+
     with open(out_path, "w", encoding="utf-8") as f:
-        json.dump(output, f, indent=2, ensure_ascii=False)
+        json.dump(result, f, indent=2, ensure_ascii=False)
 
     total_countries = set()
     for post in output:
