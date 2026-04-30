@@ -374,6 +374,17 @@
         info.update();
       }
 
+      function renderComment(body) {
+        const imgRe = /https:\/\/(?:preview|i)\.redd\.it\/[^\s"<>]+/g;
+        const imgs = [];
+        const text = body.replace(imgRe, url => { imgs.push(url); return ''; }).trim();
+        let html = text ? `"${text}"` : '';
+        imgs.forEach(url => {
+          html += `<img src="${url}" style="max-width:100%;border-radius:4px;margin-top:6px;display:block;" alt="">`;
+        });
+        return html;
+      }
+
       function onClick(e) {
         const name = e.target.feature.properties.name;
         const data = countries[name];
@@ -384,7 +395,7 @@
           .setContent(`
             <div class="comment-popup" style="min-width:280px;max-width:340px;">
               <div class="country-name">${name}</div>
-              <div class="comment-body">"${data.comment}"</div>
+              <div class="comment-body">${renderComment(data.comment)}</div>
               <div class="comment-meta">
                 <span class="author">${data.author}</span>
                 <span class="upvotes">${data.upvotes.toLocaleString()} upvotes</span>
