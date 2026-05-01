@@ -19,10 +19,11 @@ git add data.json
 git diff --staged --quiet && echo "No changes to push." && exit 0
 git commit -m "Update data.json $(date '+%Y-%m-%d %H:%M')"
 
-# Use gh CLI for auth (works without keyring access in cron)
-GH_TOKEN=$(gh auth token 2>/dev/null || true)
-if [ -n "$GH_TOKEN" ]; then
-  git -c "http.https://github.com/.extraheader=Authorization: basic $(echo -n "x-access-token:$GH_TOKEN" | base64)" push
+# Use stored token file for auth (works without keyring access in cron)
+TOKEN_FILE="$HOME/.github_asktheworld_token"
+if [ -f "$TOKEN_FILE" ]; then
+  GH_TOKEN=$(sed 's|https://[^:]*:\([^@]*\)@.*|\1|' "$TOKEN_FILE")
+  git -c "http.https://github.com/.extraheader=Authorization: basic $(echo -n "x-access-token:${GH_TOKEN}" | base64)" push
 else
   git push
 fi
