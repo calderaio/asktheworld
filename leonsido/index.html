@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Schneiderei Leon Sido · Baden</title>
+  <meta name="description" content="Änderungsschneiderei in Baden: Änderungen, Massanfertigungen, Leder- und Sportbekleidung, Express-Service. Zürcherstrasse 10, 5400 Baden.">
+  <meta name="theme-color" content="#d52b1e">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23d52b1e'/%3E%3Cpath d='M13 6h6v7h7v6h-7v7h-6v-7H6v-6h7z' fill='%23fff'/%3E%3C/svg%3E">
+  <meta property="og:title" content="Schneiderei Leon Sido · Baden">
+  <meta property="og:description" content="Qualität und Termintreue. Änderungsschneiderei an der Zürcherstrasse 10 in Baden.">
+  <meta property="og:image" content="img/atelier.webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Schneiderei Leon Sido",
+    "image": "img/atelier.webp",
+    "telephone": "+41562211872",
+    "email": "info@leonsido.ch",
+    "url": "https://leonsido.ch",
+    "address": {"@type": "PostalAddress", "streetAddress": "Zürcherstrasse 10", "postalCode": "5400", "addressLocality": "Baden", "addressCountry": "CH"},
+    "openingHoursSpecification": [
+      {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "12:00"},
+      {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday","Wednesday","Thursday","Friday"], "opens": "13:30", "closes": "18:00"},
+      {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "12:00"},
+      {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "13:00", "closes": "16:00"}
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --soft: #f4f3f1;
+      --ink: #1b1b1b;
+      --muted: #5f5f5f;
+      --line: #e3e1dd;
+      --red: #d52b1e;
+      --red-dark: #b0231a;
+      --dark: #1b1b1b;
+      --radius: 8px;
+      --max: 1140px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #151515; --soft: #1e1e1e; --ink: #eeeeec; --muted: #a8a8a4; --line: #2f2f2f;
+        --red: #e5483b; --red-dark: #ff6a5d; --dark: #0d0d0d;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #151515; --soft: #1e1e1e; --ink: #eeeeec; --muted: #a8a8a4; --line: #2f2f2f;
+      --red: #e5483b; --red-dark: #ff6a5d; --dark: #0d0d0d;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+    body {
+      margin: 0; background: var(--bg); color: var(--ink);
+      font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 16px; }
+    @media (min-width: 720px) { .wrap { padding: 0 32px; } }
+
+    /* Logo */
+    .logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; letter-spacing: .06em; font-size: 19px; }
+    .cross { width: 22px; height: 22px; flex: none; }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 94%, transparent);
+      backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+    }
+    header::after { content: ""; display: block; height: 3px; background: var(--red); position: absolute; left: 0; right: 0; bottom: -1px; }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+    .nav ul { display: none; list-style: none; margin: 0; padding: 0; gap: 26px; }
+    .nav ul a { text-decoration: none; color: var(--muted); font-size: 15px; font-weight: 500; }
+    .nav ul a:hover { color: var(--ink); }
+    @media (min-width: 860px) { .nav ul { display: flex; } }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 20px;
+      border-radius: var(--radius); font-weight: 600; font-size: 16px; text-decoration: none;
+      border: 1px solid transparent; cursor: pointer; transition: background .15s, border-color .15s;
+    }
+    .btn svg { width: 18px; height: 18px; }
+    .btn-red { background: var(--red); color: #fff; }
+    .btn-red:hover { background: var(--red-dark); }
+    .btn-line { border-color: var(--line); background: var(--bg); }
+    .btn-line:hover { border-color: var(--ink); }
+    .btn-sm { padding: 8px 14px; font-size: 15px; }
+
+    /* Hero */
+    .hero { position: relative; background: var(--dark); color: #fff; overflow: hidden; }
+    .hero img { position: absolute; inset: 0; width: 100%; height: 100% !important; object-fit: cover; object-position: 60% 30%; opacity: .55; }
+    .hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.75) 0%, rgba(0,0,0,.35) 60%, rgba(0,0,0,.1) 100%); z-index: 1; }
+    .hero .wrap { position: relative; z-index: 2; padding-top: 88px; padding-bottom: 88px; }
+    @media (min-width: 900px) { .hero .wrap { padding-top: 140px; padding-bottom: 140px; } }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; margin: 0 0 16px; }
+    .eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: #9a9a9a; }
+    .eyebrow .dot.open { background: #3ecf6e; box-shadow: 0 0 0 4px rgba(62,207,110,.25); }
+    h1 { font-size: clamp(36px, 6.5vw, 64px); line-height: 1.04; margin: 0 0 20px; letter-spacing: -.02em; max-width: 12em; }
+    .hero .lead { font-size: clamp(18px, 2.2vw, 21px); color: #e6e6e6; margin: 0 0 32px; max-width: 32em; }
+    .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero .btn-line { background: transparent; color: #fff; border-color: rgba(255,255,255,.5); }
+    .hero .btn-line:hover { border-color: #fff; }
+
+    .strip { border-bottom: 1px solid var(--line); }
+    .strip ul { list-style: none; margin: 0; padding: 18px 0; display: grid; gap: 10px 32px; grid-template-columns: 1fr; font-weight: 600; font-size: 15px; }
+    @media (min-width: 640px) { .strip ul { grid-template-columns: repeat(2, auto); justify-content: start; } }
+    @media (min-width: 980px) { .strip ul { grid-template-columns: repeat(4, auto); justify-content: space-between; } }
+    .strip li { display: flex; align-items: center; gap: 10px; }
+    .strip li .cross { width: 16px; height: 16px; }
+
+    /* Sections */
+    section { padding: 80px 0; }
+    .soft { background: var(--soft); }
+    h2 { font-size: clamp(28px, 4vw, 40px); line-height: 1.12; margin: 0 0 12px; letter-spacing: -.015em; }
+    .sub { color: var(--muted); margin: 0 0 40px; max-width: 40em; font-size: 18px; }
+
+    .services { display: grid; gap: 16px; }
+    @media (min-width: 600px) { .services { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1000px) { .services { grid-template-columns: repeat(3, 1fr); } }
+    .svc { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
+    .svc img { aspect-ratio: 16/10; width: 100%; object-fit: cover; }
+    .svc div { padding: 20px 22px 24px; }
+    .svc h3 { margin: 0 0 6px; font-size: 19px; }
+    .svc p { margin: 0; color: var(--muted); font-size: 16px; }
+    .svc .tag { display: inline-block; margin-top: 12px; font-size: 13px; font-weight: 700; color: var(--red); }
+    .svc-note { background: var(--red); color: #fff; border-color: var(--red); justify-content: center; }
+    .svc-note div { padding: 28px; }
+    .svc-note p { color: #fff; opacity: .92; }
+    .svc-note a { color: #fff; font-weight: 700; }
+
+    .split { display: grid; gap: 40px; align-items: center; }
+    @media (min-width: 900px) { .split { grid-template-columns: 1fr 1fr; gap: 64px; } }
+    .split img.wide { border-radius: var(--radius); width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+    blockquote { margin: 28px 0 0; padding: 4px 0 4px 20px; border-left: 3px solid var(--red); font-size: 19px; }
+    blockquote footer { font-size: 14px; color: var(--muted); margin-top: 8px; font-style: normal; }
+    .person { display: flex; align-items: center; gap: 16px; margin-top: 28px; }
+    .person img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; }
+    .person small { display: block; color: var(--muted); }
+
+    .timeline { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 14px; }
+    .timeline li { display: grid; grid-template-columns: 64px 1fr; gap: 12px; }
+    .timeline b { color: var(--red); }
+
+    /* Hours + contact */
+    .visit { display: grid; gap: 24px; }
+    @media (min-width: 900px) { .visit { grid-template-columns: 1fr 1fr 1.1fr; } }
+    .box { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
+    .box h3 { margin: 0 0 16px; font-size: 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .status { font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 99px; background: var(--soft); color: var(--muted); white-space: nowrap; }
+    .status.open { background: #e2f6e9; color: #17663a; }
+    @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .status.open { background: #173a25; color: #7be0a0; } }
+    table { width: 100%; border-collapse: collapse; font-size: 16px; }
+    td { padding: 9px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+    tr:last-child td { border-bottom: 0; }
+    td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+    tr.today td { font-weight: 700; }
+    tr.today td:first-child::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--red); margin: 0 8px 2px 0; }
+    .closed { color: var(--muted); }
+    dl { margin: 0; display: grid; gap: 14px; }
+    dt { font-size: 12px; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); font-weight: 700; }
+    dd { margin: 2px 0 0; font-size: 17px; }
+    dd a { text-decoration: none; border-bottom: 1px solid var(--red); }
+    .shop { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: var(--bg); display: flex; flex-direction: column; }
+    .shop img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+    .shop div { padding: 20px 22px 24px; display: grid; gap: 12px; }
+    .shop p { margin: 0; color: var(--muted); font-size: 16px; }
+
+    /* Form */
+    form { display: grid; gap: 14px; margin-top: 8px; }
+    label { font-size: 14px; font-weight: 600; display: grid; gap: 6px; }
+    input, textarea {
+      font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line);
+      border-radius: 6px; padding: 11px 12px; width: 100%;
+    }
+    input:focus, textarea:focus { outline: 2px solid var(--red); outline-offset: 1px; border-color: transparent; }
+    textarea { min-height: 120px; resize: vertical; }
+    .row { display: grid; gap: 14px; }
+    @media (min-width: 560px) { .row { grid-template-columns: 1fr 1fr; } }
+    .hint { font-size: 13px; color: var(--muted); margin: 0; }
+    .contact-grid { display: grid; gap: 40px; }
+    @media (min-width: 900px) { .contact-grid { grid-template-columns: 1fr 1.3fr; } }
+
+    /* Footer */
+    .foot { background: var(--dark); color: #cfcfcf; padding: 48px 0 32px; font-size: 15px; }
+    .foot .logo { color: #fff; }
+    .foot-grid { display: grid; gap: 28px; }
+    @media (min-width: 800px) { .foot-grid { grid-template-columns: 1.4fr 1fr 1fr; } }
+    .foot a { text-decoration: none; }
+    .foot a:hover { color: #fff; }
+    .foot p { margin: 0; }
+    .legal { margin-top: 36px; padding-top: 20px; border-top: 1px solid #333; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; font-size: 14px; color: #9a9a9a; }
+    details { margin-top: 20px; color: #bdbdbd; font-size: 14px; }
+    details summary { cursor: pointer; color: #e6e6e6; font-weight: 600; }
+    details p { margin: 10px 0 0; max-width: 60em; }
+
+    .mobile-cta { position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 20; box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+    @media (min-width: 860px) { .mobile-cta { display: none; } }
+    @media (max-width: 859px) { .foot { padding-bottom: 100px; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="cross" viewBox="0 0 32 32"><rect width="32" height="32" fill="#d52b1e"/><path d="M13 6h6v7h7v6h-7v7h-6v-7H6v-6h7z" fill="#fff"/></symbol>
+  <symbol id="phone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></symbol>
+</svg>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top" aria-label="Leon Sido – zur Startseite">LEON SIDO <svg class="cross"><use href="#cross"/></svg></a>
+    <ul>
+      <li><a href="#leistungen">Leistungen</a></li>
+      <li><a href="#ueber">Über mich</a></li>
+      <li><a href="#besuch">Öffnungszeiten</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+    <a class="btn btn-red btn-sm" href="tel:+41562211872"><svg><use href="#phone"/></svg>056 221 18 72</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" style="padding:0">
+    <img src="img/atelier.webp" alt="Leon Sido beim Zuschneiden im Atelier" width="1600" height="858" fetchpriority="high">
+    <div class="wrap">
+      <p class="eyebrow"><span class="dot" id="hero-dot"></span><span id="hero-status">Zürcherstrasse 10 · Baden</span></p>
+      <h1>Schneiderei Leon&nbsp;Sido.</h1>
+      <p class="lead">Ich ändere, flicke und fertige Ihre Kleider nach Mass, seit 2003 in Baden. Qualität und Termintreue sind meine obersten Prioritäten. Dafür stehe ich mit meinem Namen ein.</p>
+      <div class="cta">
+        <a class="btn btn-red" href="#besuch">Öffnungszeiten &amp; Anfahrt</a>
+        <a class="btn btn-line" href="#leistungen">Leistungen</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="wrap">
+      <ul>
+        <li><svg class="cross"><use href="#cross"/></svg>Kleine Reparaturen sofort, zum Warten vor Ort</li>
+        <li><svg class="cross"><use href="#cross"/></svg>Leder bis 10 mm Dicke</li>
+        <li><svg class="cross"><use href="#cross"/></svg>Massanfertigung für Damen &amp; Herren</li>
+        <li><svg class="cross"><use href="#cross"/></svg>Persönliche Beratung im Atelier</li>
+      </ul>
+    </div>
+  </div>
+
+  <section id="leistungen">
+    <div class="wrap">
+      <h2>Leistungen</h2>
+      <p class="sub">Hose zu eng? Ärmel zu lang? Fast alles lässt sich auf Ihre Masse ändern. Bringen Sie das Stück vorbei. Ich schaue es mir an und sage Ihnen ehrlich, ob es sich lohnt und was es kostet.</p>
+      <div class="services">
+        <article class="svc">
+          <img src="img/aenderung.webp" alt="Farbige Garnspulen" loading="lazy" width="400" height="400">
+          <div>
+            <h3>Änderungsschneiderei</h3>
+            <p>Kürzen, auslassen, einnehmen oder flicken. Ihr Lieblingsstück erhält wieder die richtige Form.</p>
+          </div>
+        </article>
+        <article class="svc">
+          <img src="img/mass.webp" alt="Zuschnitt mit Kreide und Schneiderwinkel" loading="lazy" width="400" height="400">
+          <div>
+            <h3>Massanfertigungen</h3>
+            <p>Abendkleid, Gilet, Hemd oder Hose, auch als Kopie eines Lieblingsstücks. Sie besprechen es mit mir, ich nehme Mass, Sie probieren den Probeschnitt an, dann wird alles fertig verarbeitet.</p>
+          </div>
+        </article>
+        <article class="svc">
+          <img src="img/leder.webp" alt="Industrie-Nähmaschine für Leder" loading="lazy" width="400" height="400">
+          <div>
+            <h3>Leder- &amp; Motorradbekleidung</h3>
+            <p>Lederjacken, Lederhosen und Motorradkombis. Ich arbeite mit JUKI-Industriemaschinen, die Leder bis 10 mm Dicke verarbeiten.</p>
+          </div>
+        </article>
+        <article class="svc">
+          <img src="img/sport.webp" alt="Radhose im Einsatz" loading="lazy" width="400" height="400">
+          <div>
+            <h3>Sportbekleidung</h3>
+            <p>Jogging- und Velobekleidung, Gymnastikanzüge, Skibekleidung und Funktionswäsche. Mit Spezialmaschinen für elastische Stoffe: Säume, Nähte, Reissverschlüsse.</p>
+          </div>
+        </article>
+        <article class="svc">
+          <img src="img/express.webp" alt="Blick auf die Armbanduhr" loading="lazy" width="400" height="400">
+          <div>
+            <h3>Express-Service</h3>
+            <p>Knopf, geplatzte Naht oder Saum: Sie warten vor Ort. Grössere Arbeiten sind innert max. 3 Arbeitstagen fertig.</p>
+            <span class="tag">Expresszuschlag: +50 %</span>
+          </div>
+        </article>
+        <article class="svc">
+          <img src="img/buegeln.webp" alt="Bügeln eines Hemdes" loading="lazy" width="400" height="400">
+          <div>
+            <h3>Wasch- &amp; Bügelservice</h3>
+            <p>Keine Lust auf Waschen und Bügeln? Das mache ich gerne für Sie.</p>
+          </div>
+        </article>
+        <article class="svc">
+          <img src="img/reinigung.webp" alt="Gereinigte Hemden auf Bügeln" loading="lazy" width="400" height="400">
+          <div>
+            <h3>Textilreinigung</h3>
+            <p>Bei problematischen Flecken oder empfindlichen Stoffen: schonende Reinigung in kürzester Zeit.</p>
+          </div>
+        </article>
+        <article class="svc svc-note">
+          <div>
+            <h3>Was kostet das?</h3>
+            <p>Das hängt vom Stück und vom Aufwand ab. Ich mache den Preis vor Ort mit Ihnen ab, bevor ich mit der Arbeit beginne. Oder Sie rufen an: <a href="tel:+41562211872">056 221 18 72</a></p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="ueber" class="soft">
+    <div class="wrap split">
+      <img class="wide" src="img/theke.webp" alt="Beratung an der Theke im Atelier an der Zürcherstrasse" loading="lazy" width="1200" height="598">
+      <div>
+        <h2>Über mich</h2>
+        <p>Das Handwerk habe ich von meiner Mutter gelernt. Sie nähte in meinem Heimatdorf in Syrien die Kleider für das ganze Dorf. 2001 kam ich in den Aargau. 2003 eröffnete ich mein erstes Atelier: 20 m² in der Bahnhofunterführung in Baden, ohne Tageslicht und mit einer Nähmaschine aus zweiter Hand.</p>
+        <p>Die Kundschaft wuchs stetig. Seit Mai 2019 arbeite ich an der Zürcherstrasse 10, auf 90 m² mit grossen Fenstern und modernen Leder-, Schnellnäh- und Kettelmaschinen.</p>
+        <ul class="timeline">
+          <li><b>2003</b><span>Atelier in der Bahnhofunterführung Baden</span></li>
+          <li><b>2019</b><span>Umzug an die Zürcherstrasse 10</span></li>
+          <li><b>heute</b><span>Grosse Stammkundschaft, Änderungen und Massanfertigungen</span></li>
+        </ul>
+        <blockquote>
+          «Es gibt immer noch viele Leute, die sich Qualität wünschen und nicht ab Stange kaufen wollen.»
+          <footer>Leon Sido in der Aargauer Zeitung, 24.06.2019</footer>
+        </blockquote>
+        <div class="person">
+          <img src="img/portrait.webp" alt="Porträt Leon Sido" loading="lazy" width="400" height="400">
+          <div><b>Leon Sido</b><small>Schneider und Inhaber</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="besuch">
+    <div class="wrap">
+      <h2>Öffnungszeiten &amp; Anfahrt</h2>
+      <p class="sub">Für Massanfertigungen lohnt sich ein kurzer Anruf vorab.</p>
+      <div class="visit">
+        <div class="box">
+          <h3>Öffnungszeiten <span class="status" id="status">–</span></h3>
+          <table id="hours">
+            <tr data-d="1"><td>Montag</td><td class="closed">geschlossen</td></tr>
+            <tr data-d="2"><td>Dienstag</td><td>09:00–12:00<br>13:30–18:00</td></tr>
+            <tr data-d="3"><td>Mittwoch</td><td>09:00–12:00<br>13:30–18:00</td></tr>
+            <tr data-d="4"><td>Donnerstag</td><td>09:00–12:00<br>13:30–18:00</td></tr>
+            <tr data-d="5"><td>Freitag</td><td>09:00–12:00<br>13:30–18:00</td></tr>
+            <tr data-d="6"><td>Samstag</td><td>09:00–12:00<br>13:00–16:00</td></tr>
+            <tr data-d="0"><td>Sonntag</td><td class="closed">geschlossen</td></tr>
+          </table>
+        </div>
+        <div class="box">
+          <h3>Adresse</h3>
+          <dl>
+            <div><dt>Schneiderei</dt><dd>Leon Sido<br>Zürcherstrasse 10<br>5400 Baden</dd></div>
+            <div><dt>Telefon</dt><dd><a href="tel:+41562211872">056 221 18 72</a></dd></div>
+            <div><dt>Mobile</dt><dd><a href="tel:+41799459656">079 945 96 56</a></dd></div>
+            <div><dt>E-Mail</dt><dd><a href="mailto:info@leonsido.ch">info@leonsido.ch</a></dd></div>
+          </dl>
+        </div>
+        <div class="shop">
+          <img src="img/laden.webp" alt="Ladenfront der Schneiderei Leon Sido an der Zürcherstrasse 10" loading="lazy" width="1200" height="609">
+          <div>
+            <p>Das Atelier liegt an der Ecke mit dem roten «LEON SIDO»-Schild.</p>
+            <a class="btn btn-line" href="https://www.openstreetmap.org/search?query=Z%C3%BCrcherstrasse%2010%2C%205400%20Baden" target="_blank" rel="noopener">Route auf der Karte</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontakt" class="soft">
+    <div class="wrap contact-grid">
+      <div>
+        <h2>Kontakt</h2>
+        <p class="sub">Am schnellsten erreichen Sie mich per Telefon während der Öffnungszeiten. Fragen zu einer Massanfertigung beantworte ich auch gerne per E-Mail.</p>
+        <div class="cta">
+          <a class="btn btn-red" href="tel:+41562211872"><svg><use href="#phone"/></svg>056 221 18 72</a>
+          <a class="btn btn-line" href="mailto:info@leonsido.ch">info@leonsido.ch</a>
+        </div>
+      </div>
+      <form id="f" class="box" novalidate>
+        <div class="row">
+          <label>Name<input name="name" autocomplete="name" required></label>
+          <label>Telefon<input name="tel" type="tel" autocomplete="tel"></label>
+        </div>
+        <label>E-Mail<input name="email" type="email" autocomplete="email" required></label>
+        <label>Ihr Anliegen<textarea name="msg" required placeholder="z. B. Lederjacke Ärmel kürzen, Hosensaum, Massanfertigung Hemd …"></textarea></label>
+        <button class="btn btn-red" type="submit">Nachricht vorbereiten</button>
+        <p class="hint">Der Klick öffnet Ihr E-Mail-Programm mit der fertigen Nachricht. Es werden keine Daten über diese Website gespeichert.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="logo" href="#top">LEON SIDO <svg class="cross"><use href="#cross"/></svg></a>
+        <p style="margin-top:12px">Schneiderei. Qualität und Termintreue.</p>
+      </div>
+      <div>
+        <p>Zürcherstrasse 10<br>5400 Baden</p>
+      </div>
+      <div>
+        <p><a href="tel:+41562211872">056 221 18 72</a><br><a href="tel:+41799459656">079 945 96 56</a><br><a href="mailto:info@leonsido.ch">info@leonsido.ch</a></p>
+      </div>
+    </div>
+    <details id="impressum">
+      <summary>Impressum</summary>
+      <p>Verantwortlich: Schneiderei Leon Sido, Zürcherstrasse 10, 5400 Baden, Schweiz. Tel. +41 56 221 18 72, Mobile +41 79 945 96 56, info@leonsido.ch.</p>
+      <p>Haftungsausschluss: Ich übernehme keine Gewähr für die Richtigkeit, Aktualität und Vollständigkeit der Informationen. Links auf Webseiten Dritter liegen ausserhalb meines Verantwortungsbereichs.</p>
+      <p>Urheberrecht: Texte und Bilder auf dieser Website gehören Leon Sido oder den genannten Rechteinhabern. Jede Reproduktion braucht vorab eine schriftliche Zustimmung.</p>
+    </details>
+    <details id="datenschutz">
+      <summary>Datenschutz</summary>
+      <p>Diese Website setzt keine Cookies und kein Tracking ein und lädt keine externen Schriften oder Karten. Der Webserver speichert technisch notwendige Zugriffsdaten wie IP-Adresse, Datum und aufgerufene Seite in Protokolldateien. Diese Daten werden nicht mit Ihrer Person verknüpft.</p>
+      <p>Angaben, die Sie per E-Mail oder Telefon übermitteln, verwende ich ausschliesslich zur Bearbeitung Ihrer Anfrage und gebe sie nicht an Dritte weiter. Es gilt das Schweizer Datenschutzgesetz (DSG). Auskunft und Löschung können Sie über info@leonsido.ch verlangen.</p>
+    </details>
+    <div class="legal">
+      <span>© <span id="y">2026</span> Schneiderei Leon Sido, Baden</span>
+      <span><a href="#impressum" data-open>Impressum</a> · <a href="#datenschutz" data-open>Datenschutz</a></span>
+    </div>
+  </div>
+</footer>
+
+<a class="btn btn-red mobile-cta" href="tel:+41562211872"><svg><use href="#phone"/></svg>Jetzt anrufen</a>
+
+<script>
+  (function () {
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Öffnungszeiten, immer in Europe/Zurich gerechnet
+    var H = { 2: [[540, 720], [810, 1080]], 3: [[540, 720], [810, 1080]], 4: [[540, 720], [810, 1080]], 5: [[540, 720], [810, 1080]], 6: [[540, 720], [780, 960]] };
+    var NAMES = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+    function fmt(m) { return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); }
+    try {
+      var p = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Zurich', weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(new Date());
+      var get = function (t) { return (p.find(function (x) { return x.type === t; }) || {}).value; };
+      var d = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(get('weekday'));
+      var now = (+get('hour') % 24) * 60 + (+get('minute'));
+      var row = document.querySelector('#hours tr[data-d="' + d + '"]');
+      if (row) row.classList.add('today');
+
+      var open = null, nextText = '';
+      (H[d] || []).forEach(function (s) { if (now >= s[0] && now < s[1]) open = s; });
+      if (open) {
+        nextText = 'Jetzt geöffnet bis ' + fmt(open[1]);
+      } else {
+        var later = (H[d] || []).filter(function (s) { return s[0] > now; })[0];
+        if (later) nextText = 'Geschlossen, öffnet heute um ' + fmt(later[0]);
+        else {
+          for (var i = 1; i <= 7; i++) {
+            var nd = (d + i) % 7;
+            if (H[nd]) { nextText = 'Geschlossen, öffnet ' + (i === 1 ? 'morgen' : NAMES[nd]) + ' um ' + fmt(H[nd][0][0]); break; }
+          }
+        }
+      }
+      var st = document.getElementById('status');
+      st.textContent = open ? 'Jetzt geöffnet' : 'Geschlossen';
+      st.classList.toggle('open', !!open);
+      document.getElementById('hero-status').textContent = nextText + ' · Zürcherstrasse 10, Baden';
+      document.getElementById('hero-dot').classList.toggle('open', !!open);
+    } catch (e) { /* statische Tabelle reicht */ }
+
+    // Impressum/Datenschutz-Links klappen das jeweilige Element auf
+    document.querySelectorAll('[data-open]').forEach(function (a) {
+      a.addEventListener('click', function () { var el = document.querySelector(a.getAttribute('href')); if (el) el.open = true; });
+    });
+
+    document.getElementById('f').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var f = e.target;
+      if (!f.reportValidity()) return;
+      var body = f.msg.value + '\n\n' + f.name.value + (f.tel.value ? '\nTel. ' + f.tel.value : '') + '\n' + f.email.value;
+      location.href = 'mailto:info@leonsido.ch?subject=' + encodeURIComponent('Anfrage Schneiderei – ' + f.name.value) + '&body=' + encodeURIComponent(body);
+    });
+  })();
+</script>
+</body>
+</html>
