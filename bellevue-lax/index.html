@@ -74,6 +74,8 @@ h2.t+.sub,h2.t.tight{margin-top:-10px}
 .list .opt{padding-left:18px;position:relative}
 .list .opt::before{content:"-";position:absolute;left:2px}
 .list .opt b{font-size:16.5px}
+.pl{color:var(--wine);font-size:13px;margin:0 3px 0 12px}
+.pl:first-child{margin-left:0}
 .note{text-align:center;font-size:13px;font-weight:700;line-height:1.55;margin:26px auto 0;max-width:600px}
 .note.caps{text-transform:uppercase;letter-spacing:.02em}
 .note span{display:block;font-weight:400}
@@ -82,7 +84,7 @@ table.beer{width:100%;border-collapse:collapse;font-size:17px}
 table.beer th{font-weight:700;color:var(--wine);font-size:15px;text-align:right;padding:0 0 6px 14px}
 table.beer td{padding:4px 0}
 table.beer td+td{text-align:right;padding-left:14px;white-space:nowrap}
-@media (max-width:640px){.list b{font-size:16.5px}.list .pr{font-size:16px}table.beer{font-size:15.5px}}
+@media (max-width:640px){.list li.multi .pr{grid-column:1/-1;grid-row:3;text-align:left;margin-top:2px}.list b{font-size:16.5px}.list .pr{font-size:16px}table.beer{font-size:15.5px}}
 
 /* hours & contact */
 .info{display:grid;grid-template-columns:1fr 1fr;gap:10px 46px}
@@ -108,7 +110,7 @@ footer a{color:#fff}
   </div>
   <p class="addr">Furkastrasse 100 · 3994 Lax<br><a href="tel:+41279713030" style="text-decoration:none;white-space:nowrap">027 971 30 30</a></p>
   <nav>
-    <a href="#pizze">Pizze</a><a href="#pasta">Pasta</a><a href="#carne">Carne</a><a href="#dolci">Dolci</a><a href="#bar">Bar</a><a href="#orari">Orari</a>
+    <a href="#antipasti">Antipasti</a><a href="#pizze">Pizze</a><a href="#pasta">Pasta</a><a href="#carne">Carne</a><a href="#dolci">Dolci</a><a href="#bar">Bar</a><a href="#orari">Orari</a>
   </nav>
 </section>
 
@@ -136,6 +138,30 @@ footer a{color:#fff}
   </div>
 </section>
 
+<section class="page" id="antipasti">
+  <div class="frame">
+      <h2 class="t script">Antipasti <span class="tl">~</span> Vorspeisen</h2>
+      <ul class="list bold">
+        <li class="multi"><b>Tagliere Toscano</b><span class="pr"><span class="pl">1 pers.</span>15.-<span class="pl">2 pers.</span>22.-<span class="pl">4 pers.</span>35.-</span><small>Variation verschiedener italienischer Salami</small></li>
+        <li><b>Coccoli, Stracchino e Crudo</b><span class="pr">16.-</span><small>Frittierte Teigkugeln mit Frischkäse und Rohschinken</small></li>
+        <li><b>Parmigiana di Melanzane</b><span class="pr">20.-</span><small>Auflauf mit Tomaten, Auberginen, Mozzarella und Parmesan</small></li>
+        <li><b>Burrata, Pomodorini e Olive</b><span class="pr">16.-</span><small>Burrata, frische Kirschtomaten, Oliven und Balsamico</small></li>
+        <li class="multi"><b>Carpaccio di Manzo con Rucola e Grana</b><span class="pr"><span class="pl">Kl</span>20.-<span class="pl">Gr</span>28.-</span><small>Rindscarpaccio mit Rucola und Parmesan, Focaccia inklusive</small></li>
+        <li class="multi"><b>Carpaccio di Bresaola con Rucola e Grana</b><span class="pr"><span class="pl">Kl</span>20.-<span class="pl">Gr</span>28.-</span><small>Trockenfleisch mit Rucola und Parmesan, Focaccia inklusive</small></li>
+        <li><b>Insalata verde</b><span class="pr">7.-</span><small>Grüner Salat</small></li>
+        <li><b>Insalata mista</b><span class="pr">10.-</span><small>Gemischter Salat</small></li>
+        <li><b>Caprese</b><span class="pr">15.-</span><small>Büffelmozzarella mit frischen Tomaten</small></li>
+        <li><b>Crostini misti</b><span class="pr">14.-</span><small>Vier Bruschette mit verschiedenen frischen Zutaten</small></li>
+      </ul>
+      <h2 class="t script mt">Zuppe <span class="tl">~</span> Suppen</h2>
+      <ul class="list bold">
+        <li><b>Bellevue</b><span class="pr">12.-</span><small>Lauch, Kartoffeln und Speck</small></li>
+        <li><b>Minestrone Toscano</b><span class="pr">12.-</span><small>Gemischtes Gemüse</small></li>
+        <li><b>Zuppa del Giorno</b><span class="pr">12.-</span><small>Tagessuppe</small></li>
+      </ul>
+      <p class="note">I prodotti contrassegnati con questo simbolo ° potrebbero essere congelati<span>Speisen mit ° versehen können gefroren sein</span></p>
+  </div>
+</section>
 <section class="page" id="pizze">
   <div class="frame">
       <h2 class="t script">Pizze</h2>
