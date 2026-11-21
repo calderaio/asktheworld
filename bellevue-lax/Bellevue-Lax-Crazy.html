@@ -104,6 +104,36 @@ label.f input[type=number],select{width:100%;padding:6px 8px;border:2px solid va
 .toast.on{transform:translateX(-50%) translateY(0)}
 footer{text-align:center;padding:40px 20px 70px;color:var(--pencil);font-size:15px}
 @media (prefers-reduced-motion:reduce){#fx{display:none}}
+
+/* clock */
+#clock{width:min(100%,360px);aspect-ratio:1;display:block;margin:0 auto}
+/* cart */
+.fab{position:fixed;right:16px;bottom:16px;z-index:45;background:var(--wine);color:#fff;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:10px 16px;cursor:pointer;font-family:"IM Fell English SC",serif;letter-spacing:.06em;font-size:16px}
+.fab b{display:inline-block;min-width:1.6em;background:#fff;color:var(--wine);border-radius:999px;margin-left:6px;text-align:center}
+.fab.bump{animation:bump .35s}
+@keyframes bump{40%{transform:scale(1.18) rotate(-4deg)}}
+.cart{position:fixed;top:62px;right:0;bottom:0;width:min(100%,400px);z-index:46;background:var(--paper);border-left:2px solid var(--ink);transform:translateX(105%);transition:transform .3s;overflow:auto;padding:18px;box-shadow:-10px 0 30px rgba(0,0,0,.15)}
+.cart.on{transform:none}
+.receipt{background:#fffdf7;font:14px/1.45 ui-monospace,Menlo,Consolas,monospace;padding:18px 16px;margin:12px 0;box-shadow:0 2px 6px rgba(0,0,0,.15);
+  -webkit-mask:radial-gradient(circle 6px at 50% 100%,transparent 98%,#000) 0 0/14px 100%;mask:radial-gradient(circle 6px at 50% 100%,transparent 98%,#000) 0 100%/14px 12px repeat-x,linear-gradient(#000,#000) 0 0/100% calc(100% - 11px) no-repeat}
+.receipt .l{display:flex;justify-content:space-between;gap:8px}
+.receipt .l span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.receipt hr{border:0;border-top:1px dashed #999;margin:6px 0}
+.receipt .tot{font-weight:700;font-size:16px}
+.qty{display:inline-flex;gap:4px;margin-left:6px}
+.qty button{border:1px solid var(--ink);background:var(--paper);width:22px;height:22px;line-height:18px;padding:0;cursor:pointer}
+.row .add{grid-row:1;grid-column:3;border:1.5px solid var(--ink);background:var(--paper);width:26px;height:26px;cursor:pointer;font-size:16px;line-height:1}
+.row{grid-template-columns:1fr auto auto}
+.row small,.row .pbar{grid-column:1/-1}
+/* terminal */
+.term{position:fixed;left:50%;top:50%;width:min(94vw,720px);height:min(70vh,460px);transform:translate(-50%,-50%) scale(.9);opacity:0;pointer-events:none;z-index:70;background:#14110f;color:#e9dcc4;border:2px solid var(--wine);box-shadow:0 20px 60px rgba(0,0,0,.5);display:flex;flex-direction:column;font:14px/1.5 ui-monospace,Menlo,Consolas,monospace;transition:.2s}
+.term.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
+.term .bar{background:var(--wine);color:#fff;padding:4px 10px;display:flex;justify-content:space-between}
+.term .out{flex:1;overflow:auto;padding:10px;white-space:pre-wrap}
+.term .in{display:flex;border-top:1px solid #3a322c;padding:6px 10px}
+.term .in input{flex:1;background:transparent;border:0;color:#9fe28a;font:inherit;outline:none}
+.term .g{color:#9fe28a}.term .r{color:#ff8a7a}.term .y{color:#ffd24a}
+@media print{body *{visibility:hidden}#receipt,#receipt *{visibility:visible}#receipt{position:absolute;left:0;top:0;width:80mm;box-shadow:none;-webkit-mask:none;mask:none}}
 </style>
 </head>
 <body>
@@ -129,6 +159,20 @@ footer{text-align:center;padding:40px 20px 70px;color:var(--pencil);font-size:15
   </div>
   <div class="sky" id="sky"><div class="sun" id="sun"></div><div class="ground"></div><div class="label" id="skyLabel"></div></div>
   <p class="hand" style="font-size:18px;margin-top:8px">Sonnenstand live berechnet für 46.3899° N, 8.1222° O. Völlig unnötig. Trotzdem korrekt.</p>
+</section>
+<div class="stripe"></div>
+
+<section id="orologio">
+  <h2 class="script">Orologio a Pizza</h2>
+  <p class="lead">Eine 24-Stunden-Uhr aus Pizza. Grüner Rand = Ofen an (heute, Zürcher Zeit). Der Slice zeigt die Stunde, der Grissino die Minute.</p>
+  <div class="grid2" style="align-items:center">
+    <canvas id="clock" width="720" height="720"></canvas>
+    <div>
+      <p id="clockTxt" style="font-size:22px"></p>
+      <p><button class="btn" id="nonna">Nonna, leggi!</button> <button class="btn alt" id="voice">Bestellen per Stimme</button> <button class="btn alt" id="termBtn">&gt;_ Terminal</button></p>
+      <p class="hand" style="font-size:19px" id="nonnaTxt">Nonna liest ein zufälliges Gericht vor, auf Italienisch, inklusive Preis in Worten.</p>
+    </div>
+  </div>
 </section>
 <div class="stripe"></div>
 
@@ -207,6 +251,15 @@ footer{text-align:center;padding:40px 20px 70px;color:var(--pencil);font-size:15
   <span class="hand" style="font-size:19px">Diese Seite ist absichtlich übertrieben. Die Pizza ist es nicht. Tipp: ↑ ↑ ↓ ↓ ← → ← → B A</span>
 </footer>
 <div class="toast" id="toast"></div>
+<button class="fab" id="fab">Warenkorb <b id="cnt">0</b></button>
+<aside class="cart" id="cart" aria-label="Warenkorb">
+  <div style="display:flex;justify-content:space-between;align-items:center"><span class="script" style="font-size:34px">Il Conto</span><button class="btn alt" id="closeCart">×</button></div>
+  <div id="cartList"></div>
+  <div class="receipt" id="receipt"></div>
+  <p><a class="btn" style="text-decoration:none;display:inline-block" href="tel:+41279713030">Per Telefon bestellen</a> <button class="btn alt" id="printBtn">Beleg drucken</button> <button class="btn alt" id="emptyBtn">Leeren</button></p>
+  <p class="hand" style="font-size:17px">Die Seite bestellt nichts selbst. Das Telefon schon.</p>
+</aside>
+<div class="term" id="term" role="dialog" aria-label="Terminal"><div class="bar"><span>bellevue@lax:~</span><span style="cursor:pointer" id="termX">×</span></div><div class="out" id="tout"></div><div class="in"><span class="g">$&nbsp;</span><input id="tin" autocomplete="off" spellcheck="false" aria-label="Befehl"></div></div>
 
 <script>
 "use strict";
@@ -239,7 +292,7 @@ function tick() {
     if (p.kind === "flake") {
       const dx = p.x - mouse.x, dy = p.y - mouse.y, d2 = dx * dx + dy * dy;
       if (d2 < 9000) { const d = Math.sqrt(d2) || 1, f = (95 - d) / 95 * 1.2; p.vx += dx / d * f; p.vy += dy / d * f * .5; }
-      p.vx *= .94; p.vy = p.vy * .96 + (.5 + p.r * .12) * .04 * 1.6; p.x += p.vx + Math.sin((p.y + p.rot * 50) / 60) * .3; p.y += p.vy; p.rot += .01;
+      p.vx = p.vx * .94 + wind * .25; p.vy = p.vy * .96 + (.5 + p.r * .12) * .04 * 1.6; p.x += p.vx + Math.sin((p.y + p.rot * 50) / 60) * .3; p.y += p.vy; p.rot += .01;
       if (p.y > H + 10 || p.x < -20 || p.x > W + 20) { Object.assign(p, flake()); }
       if (pizzaMode) drawSlice(p.x, p.y, p.r * 2.2, p.rot);
       else { ctx.fillStyle = "rgba(250,240,205,.9)"; ctx.strokeStyle = "rgba(160,140,90,.35)"; ctx.beginPath(); ctx.ellipse(p.x, p.y, p.r, p.r * .6, p.rot, 0, 7); ctx.fill(); ctx.stroke(); }
@@ -335,7 +388,7 @@ $("#spin").onclick = () => {
     wAng += wVel; wVel *= .987; frames++; if (wVel > .002) { drawWheel(); requestAnimationFrame(loop); return; }
     spinning = false; drawWheel();
     const n = wPool.length, seg = Math.PI * 2 / n, a = ((-Math.PI / 2 - wAng) % (Math.PI * 2) + Math.PI * 4) % (Math.PI * 2), it = wPool[Math.floor(a / seg)];
-    $("#wres").innerHTML = `Das Schicksal sagt:<br><b>${it.n}</b><br><span class="hand">${it.d || it.cat} · CHF ${it.p}</span>`;
+    $("#wres").innerHTML = `Das Schicksal sagt:<br><b>${it.n}</b><br><span class="hand">${it.d || it.cat} · CHF ${it.p}</span><br><button class="btn alt" onclick="addToCart(${ITEMS.indexOf(it)})">In den Warenkorb</button>`;
     $("#wphys").textContent = `ω₀ = ${v0.toFixed(3)} rad/frame · Reibung 1.3 %/frame · ${frames} Frames · Gesamtwinkel ${(wAng / (2 * Math.PI)).toFixed(2)} Umdrehungen`;
     const b = wc.getBoundingClientRect(); burst(b.left + b.width / 2, b.top + 20, 80, ["#2f8a45", "#ffffff", "#c8312f"]);
   };
@@ -397,6 +450,7 @@ $("#clear").onclick = () => { chosen.clear(); pieces = []; document.querySelecto
 drawPizza();
 
 // ---------- group optimizer: 0/1 knapsack, minimise cost subject to satiety >= target ----------
+let lastOrder = [];
 const SAT = { "Antipasti": 3, "Zuppe": 2, "Pizze": 6, "Pizze Speciali": 6, "Calzoni": 7, "Pasta fresca": 5, "Risotti": 5, "La Pietra Ardente": 7, "Secondi Piatti": 6, "Dolci": 2 };
 const HUNGER = ["", "Grissini würde reichen", "leicht", "mässig", "normal", "solide", "Pizza-Hunger", "Furka-Pass gelaufen", "Doppelschicht", "seit Brig nichts gegessen", "Ich esse die Karte"];
 function optimize() {
@@ -417,7 +471,8 @@ function optimize() {
   const over = cost > budget;
   $("#orderOut").innerHTML = `<div class="panel"><div class="script" style="font-size:30px">La Comanda</div><ul class="order">${pick.sort((a, b) => a.cat.localeCompare(b.cat)).map(i => `<li>${i.n} <span class="hand">(${i.cat})</span> · ${i.p}</li>`).join("")}${drinks ? `<li>${drinks}× Bellevue Spritz · ${drinks * sp.p}</li>` : ""}</ul>
     <p style="margin:10px 0 0;font-size:22px">Total: <b>CHF ${cost.toFixed(2)}</b> ${over ? `<span style="color:var(--wine)">· ${(cost - budget).toFixed(2)} über Budget. Hunger reduzieren oder Margherita teilen.</span>` : `<span style="color:var(--basil)">· ${(budget - cost).toFixed(2)} Reserve für Tiramisù</span>`}</p>
-    <p class="hand" style="font-size:18px;margin:6px 0 0">Ca. CHF ${(cost / people).toFixed(2)} pro Person.</p></div>`;
+    <p class="hand" style="font-size:18px;margin:6px 0 0">Ca. CHF ${(cost / people).toFixed(2)} pro Person.</p><button class="btn alt" onclick="lastOrder.forEach(i=>addToCart(i))">Alles in den Warenkorb</button></div>`;
+  lastOrder = pick.map(i => ITEMS.findIndex(x => x.n === i.n)).concat(drinks ? Array(drinks).fill(ITEMS.indexOf(sp)) : []);
   $("#optStats").textContent = `Ziel ${T} Sättigungspunkte · erreicht ${sat} · ${cand.length} Kandidaten · ${ops.toLocaleString("de-CH")} DP-Übergänge · Strategie ${dice ? "gewürfelt" : "kostenminimal"}`;
   const b = $("#orderOut").getBoundingClientRect(); burst(b.left + b.width / 2, b.top + 30, 50, ["#8c2a2e", "#f3ebdd", "#3f7a3a"]);
 }
@@ -447,10 +502,117 @@ function render() {
   const ps = list.map(i => i.p).sort((a, b) => a - b), med = ps.length ? (ps.length % 2 ? ps[(ps.length - 1) / 2] : (ps[ps.length / 2 - 1] + ps[ps.length / 2]) / 2) : 0, avg = ps.reduce((a, b) => a + b, 0) / (ps.length || 1);
   const sd = Math.sqrt(ps.reduce((a, b) => a + (b - avg) ** 2, 0) / (ps.length || 1));
   $("#stats").innerHTML = [["Gerichte", list.length], ["Ø Preis", avg.toFixed(2)], ["Median", med.toFixed(2)], ["Std.-Abw.", sd.toFixed(2)], ["Spanne", ps.length ? `${ps[0]}–${ps[ps.length - 1]}` : "–"]].map(([a, b]) => `<div>${a}<b>${b}</b></div>`).join("");
-  $("#rows").innerHTML = list.map(i => `<div class="row"><span>${i.n} <span class="c">${i.cat}</span></span><span>${i.p}</span>${i.d ? `<small>${i.d}</small>` : ""}<div class="pbar" style="width:${(i.p / pmax * 100).toFixed(1)}%"></div></div>`).join("") || `<p class="hand" style="font-size:20px">Nichts gefunden.</p>`;
+  $("#rows").innerHTML = list.map(i => `<div class="row"><span>${i.n} <span class="c">${i.cat}</span></span><span>${i.p}</span><button class="add" title="In den Warenkorb" onclick="addToCart(${i.idx})">+</button>${i.d ? `<small>${i.d}</small>` : ""}<div class="pbar" style="width:${(i.p / pmax * 100).toFixed(1)}%"></div></div>`).join("") || `<p class="hand" style="font-size:20px">Nichts gefunden.</p>`;
 }
 $("#hist").onclick = e => { const d = e.target.closest("div[data-k]"); if (!d) return; const k = +d.dataset.k; range = range === k ? null : k; render(); };
 $("#q").oninput = render; render();
+
+// ---------- cart & Swiss receipt ----------
+const CART = new Map();
+function addToCart(i, silent) { CART.set(i, (CART.get(i) || 0) + 1); renderCart(); const f = $("#fab"); f.classList.remove("bump"); void f.offsetWidth; f.classList.add("bump"); if (!silent) toast(`+1 ${ITEMS[i].n}`); }
+window.addToCart = addToCart;
+const r05 = x => Math.round(x * 20) / 20; // Swiss cash rounding to 5 Rappen
+function renderCart() {
+  let n = 0, sum = 0; CART.forEach((q, i) => { n += q; sum += q * ITEMS[i].p; });
+  $("#cnt").textContent = n;
+  $("#cartList").innerHTML = [...CART].map(([i, q]) => `<div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px dotted var(--rule);padding:4px 0"><span>${ITEMS[i].n}</span><span class="qty"><button onclick="chg(${i},-1)">−</button>${q}<button onclick="chg(${i},1)">+</button></span></div>`).join("") || `<p class="hand" style="font-size:19px">Noch leer. Wie ein Teller vor der Pizza.</p>`;
+  const vat = sum * 8.1 / 108.1, tot = r05(sum), now = new Date();
+  $("#receipt").innerHTML = `<div style="text-align:center"><b>RISTORANTE BELLEVUE</b><br>Furkastrasse 100 · 3994 Lax<br>027 971 30 30</div><hr>` +
+    [...CART].map(([i, q]) => `<div class="l"><span>${q}× ${ITEMS[i].n}</span><span>${(q * ITEMS[i].p).toFixed(2)}</span></div>`).join("") +
+    `<hr><div class="l"><span>Zwischensumme</span><span>${sum.toFixed(2)}</span></div><div class="l"><span>Rundung 5 Rp.</span><span>${(tot - sum).toFixed(2)}</span></div><div class="l tot"><span>TOTAL CHF</span><span>${tot.toFixed(2)}</span></div>` +
+    `<div class="l"><span>inkl. MWST 8.1%</span><span>${vat.toFixed(2)}</span></div><hr><div style="text-align:center">${now.toLocaleString("de-CH", { timeZone: "Europe/Zurich" })}<br>Grazie e arrivederci!<br>** KEINE QUITTUNG. NUR LIEBE. **</div>`;
+}
+window.chg = (i, d) => { const q = (CART.get(i) || 0) + d; q > 0 ? CART.set(i, q) : CART.delete(i); renderCart(); };
+$("#fab").onclick = () => $("#cart").classList.toggle("on"); $("#closeCart").onclick = () => $("#cart").classList.remove("on");
+$("#emptyBtn").onclick = () => { CART.clear(); renderCart(); }; $("#printBtn").onclick = () => print();
+renderCart();
+
+// ---------- fuzzy matching (shared by voice + terminal) ----------
+const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
+function lev(a, b) { const m = a.length, n = b.length, d = Array.from({ length: m + 1 }, (_, i) => [i]); for (let j = 1; j <= n; j++) d[0][j] = j; for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); return d[m][n]; }
+function fuzzy(q) {
+  const qt = norm(q).split(" ").filter(w => w.length > 1); if (!qt.length) return null; let best = null;
+  ITEMS.forEach((it, i) => { const nt = norm(it.n).split(" "); let sc = qt.reduce((a, w) => a + Math.max(...nt.map(t => 1 - lev(w, t) / Math.max(w.length, t.length))), 0) / qt.length; if (norm(it.n) === norm(q)) sc = 2; if (!best || sc > best.sc) best = { i, sc }; });
+  return best && best.sc >= .62 ? best : null;
+}
+
+// ---------- 24h pizza clock ----------
+const ck = $("#clock"), cx2 = ck.getContext("2d");
+function drawClock() {
+  const C = 360, R = 330, z = zurichNow(), [hh, mm] = z.hm.split(":").map(Number), sec = new Date().getSeconds(), tod = hh + mm / 60 + sec / 3600;
+  const ang = h => h / 24 * Math.PI * 2 - Math.PI / 2;
+  cx2.clearRect(0, 0, 720, 720);
+  cx2.beginPath(); cx2.arc(C, C, R, 0, 7); cx2.fillStyle = "#e7b673"; cx2.fill();
+  cx2.lineWidth = 26; cx2.strokeStyle = "rgba(140,42,46,.35)"; cx2.beginPath(); cx2.arc(C, C, R - 14, 0, 7); cx2.stroke();
+  (HOURS[z.day] || []).forEach(([a, b]) => { const t = s => { const [h, m] = s.split(":").map(Number); return h + m / 60; }; cx2.strokeStyle = "#2f8a45"; cx2.beginPath(); cx2.arc(C, C, R - 14, ang(t(a)), ang(t(b))); cx2.stroke(); });
+  cx2.beginPath(); cx2.arc(C, C, R - 34, 0, 7); cx2.fillStyle = "#c8312f"; cx2.fill();
+  cx2.fillStyle = "#fffaf0"; cx2.font = "bold 30px 'IM Fell English'"; cx2.textAlign = "center"; cx2.textBaseline = "middle";
+  for (let h = 0; h < 24; h++) { const a = ang(h), r = R - 70; if (h % 3 === 0) cx2.fillText(String(h).padStart(2, "0"), C + Math.cos(a) * r, C + Math.sin(a) * r); else { cx2.beginPath(); cx2.arc(C + Math.cos(a) * (r + 6), C + Math.sin(a) * (r + 6), 6, 0, 7); cx2.fill(); } }
+  // hour hand: a slice
+  cx2.save(); cx2.translate(C, C); cx2.rotate(ang(tod) + Math.PI / 2);
+  cx2.beginPath(); cx2.moveTo(0, 0); cx2.lineTo(-38, -200); cx2.quadraticCurveTo(0, -222, 38, -200); cx2.closePath(); cx2.fillStyle = "#f2c14e"; cx2.fill(); cx2.strokeStyle = "#b07a2a"; cx2.lineWidth = 5; cx2.stroke();
+  [[-6, -80], [10, -140], [-8, -175]].forEach(([x, y]) => { cx2.beginPath(); cx2.arc(x, y, 11, 0, 7); cx2.fillStyle = "#8f1f1b"; cx2.fill(); });
+  cx2.restore();
+  // minute hand: a grissino
+  cx2.save(); cx2.translate(C, C); cx2.rotate((mm + sec / 60) / 60 * Math.PI * 2); cx2.fillStyle = "#d9a85a"; cx2.fillRect(-6, -270, 12, 290); cx2.fillStyle = "rgba(255,255,255,.5)"; for (let y = -260; y < 10; y += 24) cx2.fillRect(-5, y, 10, 3); cx2.restore();
+  cx2.beginPath(); cx2.arc(C, C, 16, 0, 7); cx2.fillStyle = "#2b2420"; cx2.fill();
+  const open = (HOURS[z.day] || []).some(([a, b]) => z.hm >= a && z.hm < b);
+  $("#clockTxt").innerHTML = `Es ist <b>${z.hm}</b> in Lax. ${open ? "Der Ofen ist an." : "Der Ofen ruht."}<br><span class="hand" style="font-size:19px">${DAYS[z.day]}: ${(HOURS[z.day] || []).map(x => x.join("–")).join(", ") || "Ruhetag"}</span>`;
+}
+drawClock(); setInterval(drawClock, 1000);
+
+// ---------- Nonna reads (Italian TTS, numbers as words) ----------
+const U = ["zero", "un", "due", "tre", "quattro", "cinque", "sei", "sette", "otto", "nove", "dieci", "undici", "dodici", "tredici", "quattordici", "quindici", "sedici", "diciassette", "diciotto", "diciannove"], TENS = ["", "", "venti", "trenta", "quaranta", "cinquanta", "sessanta", "settanta", "ottanta", "novanta"];
+function itNum(n) { if (n < 20) return U[n]; const t = TENS[Math.floor(n / 10)], u = n % 10; if (!u) return t; return (u === 1 || u === 8 ? t.slice(0, -1) : t) + (u === 3 ? "tré" : U[u] === "un" ? "uno" : U[u]); }
+function itPrice(p) { const f = Math.floor(p), c = Math.round((p - f) * 100); return (f === 1 ? "un franco" : itNum(f) + " franchi") + (c ? " e " + itNum(c) : ""); }
+$("#nonna").onclick = () => {
+  const it = ITEMS[Math.floor(Math.random() * ITEMS.length)], txt = `${it.n}. ${itPrice(it.p)}. Buon appetito!`;
+  $("#nonnaTxt").innerHTML = `«${txt}»`;
+  if (!("speechSynthesis" in window)) { toast("Nonna ist heiser (kein Sprachausgabe-Support)."); return; }
+  const u = new SpeechSynthesisUtterance(txt); u.lang = "it-IT"; u.rate = .92; u.pitch = 1.1; const v = speechSynthesis.getVoices().find(v => v.lang.startsWith("it")); if (v) u.voice = v; speechSynthesis.cancel(); speechSynthesis.speak(u);
+};
+
+// ---------- voice ordering ----------
+$("#voice").onclick = () => {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition; if (!SR) { toast("Ihr Browser hört leider nicht zu. Terminal geht auch: order margherita"); return; }
+  const r = new SR(); r.lang = "de-CH"; r.maxAlternatives = 5; toast("Ich höre … sagen Sie ein Gericht.");
+  r.onresult = e => { const alts = [...e.results[0]].map(a => a.transcript); let hit = null; for (const a of alts) { const f = fuzzy(a); if (f && (!hit || f.sc > hit.sc)) hit = f; } if (hit) addToCart(hit.i); else toast(`«${alts[0]}» steht nicht auf der Karte.`); };
+  r.onerror = () => toast("Mikrofon verweigert oder zu viel Lärm in der Küche."); r.start();
+};
+
+// ---------- terminal ----------
+const term = $("#term"), tout = $("#tout"), tin = $("#tin"); const hist = []; let hpos = 0;
+const tp = (s, c = "") => { tout.innerHTML += `<span class="${c}">${s.replace(/</g, "&lt;")}</span>\n`; tout.scrollTop = 1e9; };
+function openTerm() { term.classList.add("on"); tin.focus(); if (!tout.textContent) tp("BellevueOS 1.0 (Lax) · 'help' für Befehle", "y"); }
+$("#termBtn").onclick = openTerm; $("#termX").onclick = () => term.classList.remove("on");
+const CMDS = {
+  help: () => tp("menu [kategorie] · price <gericht> · order <gericht> · cart · clear-cart · spin · hours · sun · nonna · sudo make me a pizza · clear · exit"),
+  menu: a => { const c = a.join(" ").toLowerCase(); const cats = [...new Set(ITEMS.map(i => i.cat))]; if (!c) return tp(cats.map(x => `${x} (${ITEMS.filter(i => i.cat === x).length})`).join("\n")); ITEMS.filter(i => i.cat.toLowerCase().startsWith(c)).forEach(i => tp(`${i.n.padEnd(46, ".")} ${String(i.p).padStart(5)}`)); },
+  price: a => { const f = fuzzy(a.join(" ")); f ? tp(`${ITEMS[f.i].n}: CHF ${ITEMS[f.i].p}  (match ${(Math.min(1, f.sc) * 100).toFixed(0)}%)`, "g") : tp("nicht gefunden", "r"); },
+  order: a => { const f = fuzzy(a.join(" ")); if (!f) return tp("Gericht unbekannt. Tipp: menu", "r"); addToCart(f.i, true); tp(`+1 ${ITEMS[f.i].n} → Warenkorb`, "g"); },
+  cart: () => { if (!CART.size) return tp("Warenkorb leer"); let s = 0; CART.forEach((q, i) => { s += q * ITEMS[i].p; tp(`${q}× ${ITEMS[i].n}`); }); tp(`TOTAL CHF ${r05(s).toFixed(2)}`, "y"); },
+  "clear-cart": () => { CART.clear(); renderCart(); tp("geleert", "g"); },
+  spin: () => { term.classList.remove("on"); $("#roulette").scrollIntoView(); setTimeout(() => $("#spin").click(), 500); },
+  hours: () => HOURS.forEach((h, i) => tp(`${DAYS[i].padEnd(11)} ${h.map(x => x.join("-")).join(", ") || "Ruhetag"}`)),
+  sun: () => { const s = sunPos(Date.now(), 46.3899, 8.1222); tp(`Elevation ${s.el.toFixed(2)}°  Azimut ${s.az.toFixed(2)}°`); },
+  nonna: () => $("#nonna").click(),
+  sudo: a => a.join(" ") === "make me a pizza" ? (tp("[sudo] Passwort für pizzaiolo: ********", "y"), setTimeout(() => { const m = ITEMS.findIndex(i => i.n === "Margherita"); addToCart(m, true); tp("Okay. Eine Margherita liegt im Warenkorb. Backen müssen Sie selbst anrufen: 027 971 30 30", "g"); burst(innerWidth / 2, innerHeight / 2, 120, ["#2f8a45", "#ffffff", "#c8312f"]); }, 700)) : tp("sudo: Nur Pizzas erlaubt.", "r"),
+  make: a => tp(a.join(" ") === "me a pizza" ? "Was? Machen Sie es selbst. (Versuchen Sie: sudo make me a pizza)" : "make: *** Keine Regel, um Ziel zu erstellen.", "r"),
+  clear: () => tout.innerHTML = "", exit: () => term.classList.remove("on"), ls: () => tp("antipasti/  pizze/  pasta/  dolci/  segreti.txt"), cat: a => tp(a[0] === "segreti.txt" ? "Das Geheimrezept ist: Zeit, Hitze und keine Ananas.\n(Ananas gibt es trotzdem. Hawaii, 26.-)" : "cat: Datei nicht gefunden", a[0] === "segreti.txt" ? "y" : "r")
+};
+tin.addEventListener("keydown", e => {
+  if (e.key === "Enter") { const line = tin.value.trim(); tin.value = ""; if (!line) return; hist.push(line); hpos = hist.length; tp("$ " + line, "g"); const [c, ...a] = line.split(/\s+/); (CMDS[c.toLowerCase()] || (() => tp(`${c}: Befehl nicht gefunden. 'help'?`, "r")))(a); }
+  else if (e.key === "ArrowUp") { hpos = Math.max(0, hpos - 1); tin.value = hist[hpos] || ""; e.preventDefault(); e.stopPropagation(); }
+  else if (e.key === "ArrowDown") { hpos = Math.min(hist.length, hpos + 1); tin.value = hist[hpos] || ""; e.preventDefault(); e.stopPropagation(); }
+  else if (e.key === "Escape") term.classList.remove("on");
+  e.stopPropagation();
+});
+addEventListener("keydown", e => { if (e.key === "`" || e.key === "§") { if (/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) return; e.preventDefault(); term.classList.contains("on") ? term.classList.remove("on") : openTerm(); } });
+
+// ---------- tilt: phone orientation blows the parmesan ----------
+let wind = 0;
+addEventListener("deviceorientation", e => { if (e.gamma != null) wind = Math.max(-1, Math.min(1, e.gamma / 45)); });
+addEventListener("pointerdown", function ask() { if (window.DeviceOrientationEvent && DeviceOrientationEvent.requestPermission) DeviceOrientationEvent.requestPermission().catch(() => { }); removeEventListener("pointerdown", ask); }, { once: true });
 
 // ---------- Konami ----------
 const KON = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"]; let kpos = 0;
