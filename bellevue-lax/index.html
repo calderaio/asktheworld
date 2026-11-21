@@ -3,443 +3,327 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pizzeria Bistro Bellevue · Lax</title>
-<meta name="description" content="Ein Stück Italien im Goms: neapolitanische Pizza, hausgemachte Pasta, Fleischspezialitäten und italienische Desserts an der Furkastrasse 100 in Lax. Terrasse, Take-away, glutenfreie Optionen.">
-<meta property="og:image" content="img/spaghetti.jpg">
+<title>Bellevue · Pizzeria Bistro · Lax</title>
+<meta name="description" content="Pizzeria Bistro Bellevue, Furkastrasse 100, Lax. Neapolitanische Pizza, Pasta fresca, Risotti, Fleisch vom heissen Stein, Dolci. Tel. 027 971 30 30.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Kaushan+Script&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#fbf6ef; --paper:#fff; --ink:#2a211c; --muted:#6f625a; --line:#e8ddd0;
-  --tomato:#c8412b; --tomato-ink:#fff; --basil:#3f6b4a; --sky:#dbe7ee; --snow:#fff; --rock:#9aa9b3; --rock2:#6f818d;
-  --shadow:0 10px 30px rgba(60,35,20,.08);
-}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#1b1714; --paper:#25201c; --ink:#f3ebe2; --muted:#b5a79b; --line:#3a322c;
-  --tomato:#e2583f; --basil:#7fb08b; --sky:#22303a; --snow:#e9eef1; --rock:#4b5c68; --rock2:#3a4954;
-  --shadow:0 10px 30px rgba(0,0,0,.35);
-}}
-:root[data-theme="dark"]{
-  --bg:#1b1714; --paper:#25201c; --ink:#f3ebe2; --muted:#b5a79b; --line:#3a322c;
-  --tomato:#e2583f; --basil:#7fb08b; --sky:#22303a; --snow:#e9eef1; --rock:#4b5c68; --rock2:#3a4954;
-  --shadow:0 10px 30px rgba(0,0,0,.35);
+  --paper:#f3ebdd; --ink:#2b2420; --wine:#8c2a2e; --pencil:#7b6f65; --basil:#4f6a39; --rule:#cdbfa8;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif}
-h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.1;margin:0}
-a{color:inherit}
-img{display:block;max-width:100%}
-.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+html{background:#e9dfcd}
+body{
+  margin:0 auto;max-width:980px;color:var(--ink);
+  font:19px/1.55 "IM Fell English",Georgia,serif;
+  background-color:var(--paper);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .38 0 0 0 0 .3 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  box-shadow:0 0 0 1px #d8ccb6, 0 0 60px rgba(80,60,30,.12);
+  min-height:100vh;
+}
+a{color:var(--wine);text-decoration-thickness:1px;text-underline-offset:3px}
+p{margin:0 0 .8em}
+.hand{font-family:Caveat,cursive;font-weight:500;color:var(--pencil);line-height:1.15}
+.sc{font-family:"IM Fell English SC",serif;letter-spacing:.08em}
+.script{font-family:"Kaushan Script",cursive;color:var(--wine);font-weight:400}
 
-header.nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-header.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
-.logo{font-family:Fraunces,serif;font-weight:700;font-size:20px;text-decoration:none;white-space:nowrap}
-.logo span{color:var(--tomato)}
-nav{display:flex;align-items:center}
-nav a.l{text-decoration:none;color:var(--muted);font-weight:500;margin-right:20px;font-size:15px}
-nav a.l:hover{color:var(--ink)}
-.btn{display:inline-flex;align-items:center;gap:8px;background:var(--tomato);color:var(--tomato-ink);text-decoration:none;font-weight:600;padding:12px 20px;border-radius:999px;border:0;white-space:nowrap}
-.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
-.btn.sm{padding:8px 14px;font-size:14px}
-@media (max-width:760px){nav a.l{display:none}}
+/* masthead */
+.mast{padding:48px 40px 10px;position:relative}
+.mast .top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:15px;border-bottom:1px solid var(--ink);padding-bottom:6px}
+.mast h1{margin:22px 0 0;font-size:clamp(78px,17vw,168px);line-height:.9;transform:rotate(-3deg);transform-origin:left;margin-left:-6px}
+.mast .sub{font-size:clamp(17px,2.6vw,22px);margin:14px 0 0 6px}
+.mast .note{position:absolute;right:44px;top:120px;width:190px;font-size:25px;transform:rotate(5deg);text-align:center}
+.mast .note svg{display:block;margin:4px auto 0}
+nav.idx{margin:30px 40px 0;font-size:17px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:6px 0;display:flex;gap:6px 22px;flex-wrap:wrap}
+nav.idx a{color:var(--ink);text-decoration:none}
+nav.idx a:hover{color:var(--wine);text-decoration:underline}
+@media (max-width:700px){.mast{padding:32px 18px 6px}.mast .note{position:static;transform:rotate(-2deg);width:auto;margin:22px 0 0;text-align:left}.mast .note svg{display:none}nav.idx{margin:22px 18px 0}}
 
-/* hero */
-.hero{position:relative;overflow:hidden;background:var(--sky)}
-.hero .grid{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:56px 16px 150px}
-.hero svg.alps{position:absolute;left:0;right:0;bottom:0;width:100%;height:auto;display:block}
-.eyebrow{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.hero h1{font-size:clamp(42px,7.5vw,80px);margin:12px 0 16px}
-.hero h1 em{font-style:normal;color:var(--tomato)}
-.hero p{font-size:clamp(17px,2.1vw,19px);max-width:42ch;color:var(--muted);margin:0 0 26px}
-.cta{display:flex;flex-wrap:wrap;gap:12px}
-.status{display:inline-flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--line);padding:6px 12px;border-radius:999px;font-size:14px;font-weight:500;margin-bottom:14px}
-.dot{width:9px;height:9px;border-radius:50%;background:var(--rock);flex:none}
-.dot.open{background:#2fa35a;box-shadow:0 0 0 4px rgba(47,163,90,.18)}
-.hero-photo{position:relative;justify-self:center;width:min(100%,430px)}
-.hero-photo img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:28px;box-shadow:0 30px 60px rgba(40,25,15,.25);transform:rotate(1.5deg)}
-.sticker{position:absolute;left:-18px;bottom:28px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:10px 14px;box-shadow:var(--shadow);font-size:14px;transform:rotate(-3deg)}
-.sticker b{font-family:Fraunces,serif;font-size:20px;display:block}
-@media (max-width:860px){.hero .grid{grid-template-columns:1fr;padding-bottom:120px}.hero-photo{width:min(100%,360px)}.sticker{left:8px}}
+/* welcome */
+.welcome{display:grid;grid-template-columns:1fr 1fr;gap:0 44px;padding:44px 40px 8px}
+.welcome h2{font-size:34px;margin:0 0 6px}
+.welcome .it{font-style:italic;color:#4a3f38}
+.welcome .it,.welcome .de{font-size:18px}
+.welcome .de{border-left:1px solid var(--rule);padding-left:44px;margin-left:-22px}
+@media (max-width:760px){.welcome{grid-template-columns:1fr;padding:34px 18px 4px}.welcome .de{border:0;padding:0;margin:0 0 20px;order:-1}}
 
-section{padding:80px 0}
-.sec-head{margin-bottom:32px}
-.sec-head h2{font-size:clamp(32px,5vw,48px)}
-.sec-head p{color:var(--muted);margin:8px 0 0;max-width:56ch}
-
-/* facts strip */
-.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.fact{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
-.fact .ic{font-size:24px}
-.fact b{display:block;font-family:Fraunces,serif;font-size:19px;margin-top:6px}
-.fact span{color:var(--muted);font-size:14.5px}
-@media (max-width:860px){.facts{grid-template-columns:1fr 1fr}}
-
-/* kitchen */
-.dishes{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.dish{background:var(--paper);border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
-.dish img{width:100%;aspect-ratio:1;object-fit:cover}
-.dish div{padding:14px 16px 18px}
-.dish h3{font-size:19px}
-.dish p{margin:4px 0 0;color:var(--muted);font-size:14.5px}
-@media (max-width:960px){.dishes{grid-template-columns:1fr 1fr}}
-
-.dish h3{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-.dish .pr{flex:none;font-family:Inter,sans-serif;font-size:14px;font-weight:600;color:var(--tomato)}
-@media (max-width:520px){.facts{grid-template-columns:1fr}.dishes{gap:10px}.dish div{padding:10px 12px 14px}.dish h3{font-size:16px;flex-direction:column;gap:2px}.dish p{font-size:13px}}
+/* snapshots */
+.snaps{position:relative;display:flex;justify-content:center;flex-wrap:wrap;gap:8px 4px;padding:36px 20px 26px}
+.snap{background:#fbf8f1;padding:10px 10px 0;width:220px;box-shadow:1px 2px 6px rgba(40,30,20,.25);position:relative;margin:6px}
+.snap img{display:block;width:100%;height:200px;object-fit:cover;filter:saturate(.9) contrast(1.02)}
+.snap figcaption{font-family:Caveat,cursive;font-size:22px;line-height:1.1;color:#3c332d;padding:8px 2px 12px;text-align:center}
+.snap::before{content:"";position:absolute;top:-12px;left:50%;width:84px;height:24px;margin-left:-42px;background:rgba(222,208,170,.75);transform:rotate(-4deg);box-shadow:0 1px 1px rgba(0,0,0,.06)}
+.snap:nth-child(1){transform:rotate(-4deg) translateY(8px)}
+.snap:nth-child(2){transform:rotate(2.5deg)}
+.snap:nth-child(2)::before{transform:rotate(5deg)}
+.snap:nth-child(3){transform:rotate(-1.5deg) translateY(14px)}
+.snap:nth-child(4){transform:rotate(4deg) translateY(2px)}
+.snap:nth-child(4)::before{transform:rotate(-8deg);left:30%}
+@media (max-width:520px){.snap{width:44%;margin:4px}.snap img{height:130px}.snap figcaption{font-size:18px}}
 
 /* menu */
-#karte{scroll-margin-top:70px}
-.tabs{position:sticky;top:60px;z-index:5;display:flex;gap:8px;overflow-x:auto;padding:12px 0;margin:0 0 8px;background:var(--bg);scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab{flex:none;font:inherit;font-weight:600;font-size:15px;padding:9px 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer}
-.tab[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
-.tools input[type=search]{flex:1;min-width:200px;font:inherit;padding:10px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink)}
-.tools label{display:inline-flex;gap:6px;align-items:center;font-size:14.5px;color:var(--muted);cursor:pointer}
-.menu{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:4px 24px 8px;box-shadow:var(--shadow);columns:2;column-gap:48px}
-@media (max-width:860px){.menu{columns:1;padding:4px 18px 8px}}
-.grp{break-inside:avoid;font-family:Fraunces,serif;font-size:20px;color:var(--tomato);padding:18px 0 4px;column-span:all}
-.item{break-inside:avoid;display:grid;grid-template-columns:1fr auto;gap:2px 16px;padding:12px 0;border-bottom:1px dashed var(--line)}
-.item b{font-family:Fraunces,serif;font-size:18px;font-weight:500}
-.item .price{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
-.item small{grid-column:1/-1;color:var(--muted);font-size:14px;line-height:1.45}
-.tag{display:inline-block;font-family:Inter,sans-serif;font-size:11px;font-weight:600;color:var(--basil);border:1px solid currentColor;border-radius:6px;padding:0 5px;margin-left:6px;vertical-align:2px}
-.tag.tr{color:var(--muted)}
-.empty{padding:24px 0;color:var(--muted)}
-.notes{margin:14px 0 0;padding:0;list-style:none;font-size:13.5px;color:var(--muted)}
-.notes li{padding:2px 0}
+.carta{padding:30px 40px 10px}
+.carta>header{text-align:center;margin-bottom:10px}
+.carta>header h2{font-size:clamp(56px,10vw,92px);margin:0;line-height:1}
+.carta>header p{margin:4px 0 0}
+.carta .cols{columns:2;column-gap:56px;column-rule:1px solid var(--rule)}
+@media (max-width:760px){.carta{padding:24px 18px 6px}.carta .cols{columns:1}}
+.sec{margin:0 0 30px}
+.sec h3{font-family:"Kaushan Script",cursive;color:var(--wine);font-weight:400;font-size:34px;margin:6px 0 2px;line-height:1.2;break-after:avoid}
+.sec h3 small{font-family:"IM Fell English",serif;font-style:italic;color:var(--pencil);font-size:17px;margin-left:6px}
+.sec h3::after{content:"";display:block;height:8px;width:150px;margin-top:-2px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 8'%3E%3Cpath d='M2 5c20-4 34 2 52-1s30-3 46 0 30 1 48-2' fill='none' stroke='%238c2a2e' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat}
+.sec .aside{font-size:21px;margin:2px 0 6px;transform:rotate(-1deg)}
+.sec ul{list-style:none;margin:8px 0 0;padding:0}
+.sec li{margin:0 0 9px;break-inside:avoid}
+.ln{display:flex;align-items:flex-end;gap:6px}
+.ln .n{flex:0 1 auto}
+.ln .n{font-size:19px}
+.ln .d{flex:1 0 24px;border-bottom:1.5px dotted #9d8f7e;margin-bottom:7px}
+.ln .p{padding-bottom:1px}
+.ln .p{font-variant-numeric:oldstyle-nums;white-space:nowrap}
+.sec li em{display:block;font-size:15.5px;color:#5d524a;line-height:1.35;padding-right:40px}
+.v{font-family:Caveat,cursive;color:var(--basil);font-size:18px;font-weight:700;margin-left:2px}
+.fine{font-size:15px;font-style:italic;color:var(--pencil);text-align:center;margin:4px 0 0}
 
-/* about */
-.about{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
-.about blockquote{margin:0 0 18px;font-family:Fraunces,serif;font-size:clamp(24px,3.2vw,34px);line-height:1.25}
-.about p{font-size:17.5px;color:var(--muted);margin:0 0 12px}
-.about img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:24px;box-shadow:var(--shadow)}
-@media (max-width:860px){.about{grid-template-columns:1fr}}
+/* hours & where */
+.giu{display:grid;grid-template-columns:1fr 1fr;gap:0 56px;padding:30px 40px 10px;border-top:1px solid var(--ink);margin:20px 40px 0;padding-left:0;padding-right:0}
+.giu h2{font-size:40px;margin:0 0 6px}
+.giu .closed{color:var(--wine);font-style:italic}
+.giu .big{font-size:30px;display:inline-block;margin:6px 0 2px;color:var(--ink)}
+.giu .scribble{font-size:23px;transform:rotate(-2deg);margin-top:14px}
+@media (max-width:760px){.giu{grid-template-columns:1fr;margin:14px 18px 0}.giu>div+div{margin-top:30px}}
 
-/* visit */
-.visit{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.card{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:var(--shadow)}
-.card h3{font-size:24px;margin-bottom:14px}
-.hours{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
-.hours td{padding:9px 0;border-bottom:1px solid var(--line);vertical-align:top}
-.hours td:last-child{text-align:right}
-.hours tr.today td{font-weight:600;color:var(--tomato)}
-.hours .closed{color:var(--muted);font-style:italic}
-.small{font-size:13px;color:var(--muted);margin:12px 0 0}
-.contact p{margin:0 0 6px}
-.contact .big{font-family:Fraunces,serif;font-size:28px;text-decoration:none;display:inline-block;margin:6px 0 4px}
-.contact .mail{display:block;margin-bottom:14px;color:var(--muted)}
-.map{margin-top:16px;border-radius:14px;overflow:hidden;border:1px solid var(--line);aspect-ratio:16/10;background:var(--sky)}
-.map iframe{width:100%;height:100%;border:0;display:block}
-@media (max-width:860px){.visit{grid-template-columns:1fr}}
-
-footer{border-top:1px solid var(--line);padding:28px 0 96px;color:var(--muted);font-size:14px}
-footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-
-.callbar{display:none}
-@media (max-width:760px){
-  .callbar{display:flex;gap:8px;position:fixed;left:12px;right:12px;bottom:12px;z-index:20}
-  .callbar .btn{flex:1;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.2)}
-  .callbar .btn.ghost{background:var(--paper)}
-}
+footer{margin:40px 40px 0;padding:14px 0 40px;border-top:1px solid var(--ink);font-size:15px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+@media (max-width:700px){footer{margin:30px 18px 0}}
 </style>
 </head>
 <body>
 
-<header class="nav">
-  <div class="wrap">
-    <a class="logo" href="#top">Bellevue<span>.</span></a>
-    <nav><a class="l" href="#karte">Karte</a><a class="l" href="#ueber-uns">Über uns</a><a class="l" href="#besuch">Besuch</a>
-      <a class="btn sm" href="tel:+41279713030">📞 Reservieren</a></nav>
+<header class="mast">
+  <div class="top sc"><span>Furkastrasse 100 · 3994 Lax</span><span><a href="tel:+41279713030" style="color:inherit">027 971 30 30</a></span></div>
+  <h1 class="script">Bellevue</h1>
+  <p class="sub sc">Pizzeria · Bistro · Ristorante</p>
+  <div class="note hand">Tisch reservieren?<br>Einfach anrufen!
+    <svg width="60" height="34" viewBox="0 0 60 34" aria-hidden="true"><path d="M50 4C44 18 30 26 10 28m0 0l8-7m-8 7l9 4" fill="none" stroke="#7b6f65" stroke-width="2" stroke-linecap="round"/></svg>
   </div>
 </header>
 
-<main id="top">
-  <section class="hero" style="padding:0">
-    <div class="wrap grid">
-      <div>
-        <div class="status" id="status"><span class="dot"></span><span>Öffnungszeiten …</span></div>
-        <div class="eyebrow">Restaurant · Pizzeria · Bistro — Lax, Goms</div>
-        <h1>Ein Stück <em>Italien</em> im Goms.</h1>
-        <p>Neapolitanische Pizza, Pasta, Fleischspezialitäten, italienische Dolci und Gelati. Dazu Weine aus dem Wallis und aus Italien. An der Furkastrasse 100, mit Terrasse.</p>
-        <div class="cta">
-          <a class="btn" href="tel:+41279713030">Tisch reservieren</a>
-          <a class="btn ghost" href="#karte">Zur Karte</a>
-        </div>
-      </div>
-      <div class="hero-photo">
-        <img src="img/spaghetti.jpg" alt="Spaghetti mit Peperoncino, angerichtet im tiefen Teller" width="1080" height="1350">
-        <div class="sticker"><b>Auch zum Mitnehmen</b>Pizza &amp; Pasta Take-away</div>
-      </div>
-    </div>
-    <svg class="alps" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true">
-      <path fill="var(--rock)" d="M0 160V110l120-45 90 30 140-80 110 60 80-30 150 85 120-55 140 45 160-95 130 70 100-25 100 40v50z"/>
-      <path fill="var(--snow)" d="M350 30l-34 24 20 3 14-9 17 11 22-5zM1110 40l-40 28 22 2 18-11 19 13 26-4z"/>
-      <path fill="var(--rock2)" d="M0 160v-30l160-38 140 45 180-55 160 55 170-40 200 45 180-45 250 60z"/>
-      <path fill="var(--bg)" d="M0 160v-18c240-24 480-24 720-6s480 16 720-5v29z"/>
-    </svg>
-  </section>
+<nav class="idx sc">
+  <a href="#benvenuti">Benvenuti</a><a href="#carta">La Carta</a><a href="#orari">Orari</a><a href="#dove">Dove siamo</a>
+</nav>
 
-  <section style="padding:40px 0 0">
-    <div class="wrap facts">
-      <div class="fact"><div class="ic">🍕</div><b>Über 40 Pizzen</b><span>Alle auch klein, CHF 3.– günstiger</span></div>
-      <div class="fact"><div class="ic">🌾</div><b>Glutenfrei möglich</b><span>Auch vegetarische Gerichte</span></div>
-      <div class="fact"><div class="ic">☀️</div><b>75 Plätze</b><span>50 drinnen, 25 auf der Terrasse</span></div>
-      <div class="fact"><div class="ic">🥡</div><b>Take-away</b><span>Gratis WLAN · Parkplätze</span></div>
-    </div>
-  </section>
+<section class="welcome" id="benvenuti">
+  <div class="it">
+    <h2 class="script">Benvenuti</h2>
+    <p>Siamo lieti di ospitarvi in questo piccolo angolo d'Italia per farvi assaporare il gusto della nostra terra. Dalla pasta alla tipica pizza napoletana, vi coccoleremo con gli inconfondibili sapori legati alla tradizione mediterranea, senza dimenticare le nostre specialità di carne e i nostri più sfiziosi dolci e gelati italiani.</p>
+    <p>Nella selezione dei nostri vini troverete inoltre una fusione fra aromi vallesani e italiani. Bellevue nasce dalla passione e dalla voglia di portare il nostro concetto di cucina italiana nell'Alto Vallese.</p>
+  </div>
+  <div class="de">
+    <h2 class="script">Willkommen</h2>
+    <p>Wir freuen uns, Sie in dieser kleinen Ecke Italiens begrüssen zu dürfen. Von Pasta bis zur typischen neapolitanischen Pizza verwöhnen wir Sie mit den unverwechselbaren Aromen der mediterranen Tradition, ohne unsere Fleischspezialitäten und unsere italienischen Desserts und Glaces zu vergessen.</p>
+    <p>In unserer Weinauswahl treffen Walliser und italienische Aromen aufeinander. Das Bellevue entstand aus der Leidenschaft und dem Wunsch, unser Konzept der italienischen Küche ins Oberwallis zu bringen.</p>
+  </div>
+</section>
 
-  <section id="kueche">
-    <div class="wrap">
-      <div class="sec-head">
-        <h2>Aus unserer Küche</h2>
-        <p>Italienische Klassiker, frisch zubereitet. Dazu kommen wechselnde Tagesempfehlungen, die Ihnen das Team gerne am Tisch vorstellt.</p>
-      </div>
-      <div class="dishes">
-        <article class="dish"><img src="img/zucchini.jpg" alt="Scialatielli mit frittierten Zucchini und Käse" loading="lazy"><div><h3>Scialatielli alla Nerano <span class="pr">25.–</span></h3><p>Frittierte Zucchini, Basilikum, Parmesan, Provola.</p></div></article>
-        <article class="dish"><img src="img/pesto.jpg" alt="Cavatelli mit Basilikumpesto und Guanciale" loading="lazy"><div><h3>Cavatelli al Pesto <span class="pr">28.–</span></h3><p>Hausgemachtes Pesto, Guanciale, Dörrtomaten.</p></div></article>
-        <article class="dish"><img src="img/lasagne.jpg" alt="Gratinierte Lasagne in der Form" loading="lazy"><div><h3>Lasagna alla Bolognese <span class="pr">31.–</span></h3><p>Bolognese, Béchamel, Mozzarella, Parmesan.</p></div></article>
-        <article class="dish"><img src="img/spaghetti.jpg" alt="Frische Pasta im tiefen Teller" loading="lazy"><div><h3>Pasta fresca</h3><p>Frische Teigwaren, über ein Dutzend Varianten.</p></div></article>
-      </div>
-    </div>
-  </section>
+<div class="snaps" aria-label="Fotos aus der Küche">
+  <figure class="snap"><img src="img/zucchini.jpg" alt="Scialatielli mit frittierten Zucchini"><figcaption>Scialatielli alla Nerano</figcaption></figure>
+  <figure class="snap"><img src="img/lasagne.jpg" alt="Lasagne aus dem Ofen"><figcaption>Lasagna, frisch aus dem Ofen</figcaption></figure>
+  <figure class="snap"><img src="img/pesto.jpg" alt="Cavatelli mit Pesto und Guanciale"><figcaption>Cavatelli al Pesto</figcaption></figure>
+  <figure class="snap"><img src="img/spaghetti.jpg" alt="Pasta im tiefen Teller"><figcaption>semplice è meglio</figcaption></figure>
+</div>
 
-  <section id="karte" style="padding-top:0">
-    <div class="wrap">
-      <div class="sec-head">
-        <h2>Die Karte</h2>
-        <p>Pizze, frische Pasta, Risotti, Fleisch vom heissen Stein und Dolci. Alle Preise in CHF.</p>
-      </div>
-      <div class="tabs" role="tablist" id="tabs"></div>
-      <div class="tools">
-        <input id="q" type="search" placeholder="Suchen, z. B. Trüffel, Burrata, Nduja …" aria-label="Karte durchsuchen">
-        <label><input type="checkbox" id="veg"> nur vegetarisch</label>
-      </div>
-      <div class="menu" id="menu" role="tabpanel"></div>
-      <ul class="notes">
-        <li><b>Alle Pizzen gibt es auch klein, CHF 3.– günstiger.</b></li>
-        <li>° Kann tiefgekühlt sein. &nbsp;·&nbsp; Frischer schwarzer Trüffel nach Verfügbarkeit.</li>
-        <li>Fleischgerichte werden mit 2 Beilagen nach Wahl serviert (ausser **).</li>
-        <li>Glutenfreie Optionen auf Anfrage. Preise und Angebot können sich ändern.</li>
+<section class="carta" id="carta">
+  <header>
+    <h2 class="script">La Carta</h2>
+    <p class="sc" style="font-size:15px">Preise in Franken</p>
+  </header>
+  <div class="cols">
+    <div class="sec">
+      <h3>Pizze</h3>
+      <p class="hand aside">alle Pizzen auch klein, 3.– weniger</p>
+      <ul>
+      <li><div class="ln"><span class="n">Focaccia <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">16.–</span></div><em>Olivenöl, Majoran, Salz</em></li>
+      <li><div class="ln"><span class="n">Marinara <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">18.–</span></div><em>Tomatensauce, Knoblauch, Majoran</em></li>
+      <li><div class="ln"><span class="n">Margherita <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">19.–</span></div><em>Tomatensauce, Mozzarella</em></li>
+      <li><div class="ln"><span class="n">Bufala <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">22.–</span></div><em>Tomatensauce, Büffelmozzarella</em></li>
+      <li><div class="ln"><span class="n">Salsiccia e Cipolla</span><span class="d"></span><span class="p">23.–</span></div><em>Tomatensauce, Mozzarella, Wurst, Zwiebeln</em></li>
+      <li><div class="ln"><span class="n">Prosciutto</span><span class="d"></span><span class="p">21.–</span></div><em>Tomatensauce, Mozzarella, Schinken</em></li>
+      <li><div class="ln"><span class="n">Prosciutto e Funghi</span><span class="d"></span><span class="p">22.–</span></div><em>Tomatensauce, Mozzarella, Schinken, Pilze</em></li>
+      <li><div class="ln"><span class="n">Prosciutto e Porcini</span><span class="d"></span><span class="p">24.–</span></div><em>Tomatensauce, Mozzarella, Schinken, Steinpilze°</em></li>
+      <li><div class="ln"><span class="n">Capricciosa</span><span class="d"></span><span class="p">23.–</span></div><em>Tomatensauce, Mozzarella, Schinken, Pilze, Artischocken</em></li>
+      <li><div class="ln"><span class="n">4 Stagioni</span><span class="d"></span><span class="p">24.–</span></div><em>Tomatensauce, Mozzarella, Schinken, Pilze, Artischocken, Oliven</em></li>
+      <li><div class="ln"><span class="n">4 Formaggi <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">24.–</span></div><em>Vier verschiedene Käsesorten</em></li>
+      <li><div class="ln"><span class="n">Nerano <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">23.–</span></div><em>Mozzarella, Zucchini, Provola, Kirschtomaten, Parmesanflocken</em></li>
+      <li><div class="ln"><span class="n">Salame Dolce</span><span class="d"></span><span class="p">21.–</span></div><em>Tomatensauce, Mozzarella, Salami</em></li>
+      <li><div class="ln"><span class="n">Diavola</span><span class="d"></span><span class="p">21.–</span></div><em>Tomatensauce, Mozzarella, scharfe Salami (Calabrese)</em></li>
+      <li><div class="ln"><span class="n">Calabrese</span><span class="d"></span><span class="p">24.–</span></div><em>Tomatensauce, Mozzarella, scharfe Salami, Paprika, Oliven</em></li>
+      <li><div class="ln"><span class="n">Nduja</span><span class="d"></span><span class="p">25.–</span></div><em>Tomatensauce, Nduja, scharfe Salami, Zwiebeln, Knoblauch, Parmesanflocken</em></li>
+      <li><div class="ln"><span class="n">Hawaii</span><span class="d"></span><span class="p">26.–</span></div><em>Tomatensauce, Mozzarella, Ananas, Schinken</em></li>
+      <li><div class="ln"><span class="n">Wallis</span><span class="d"></span><span class="p">24.–</span></div><em>Tomatensauce, Mozzarella, Speck, Zwiebeln, Ei</em></li>
+      <li><div class="ln"><span class="n">Vegetariana <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">23.–</span></div><em>Tomatensauce, Mozzarella, grilliertes Gemüse</em></li>
+      <li><div class="ln"><span class="n">Napoli</span><span class="d"></span><span class="p">21.–</span></div><em>Tomatensauce, Mozzarella, Sardellen, Kapern, Majoran</em></li>
+      <li><div class="ln"><span class="n">Siciliana</span><span class="d"></span><span class="p">21.–</span></div><em>Tomatensauce, Mozzarella, Sardellen, Oliven, Majoran</em></li>
+      <li><div class="ln"><span class="n">Mediterranea</span><span class="d"></span><span class="p">22.–</span></div><em>Tomatensauce, Knoblauch, Kapern, Oliven, Sardellen, Majoran</em></li>
+      <li><div class="ln"><span class="n">Tonno e Cipolla</span><span class="d"></span><span class="p">23.–</span></div><em>Tomatensauce, Mozzarella, Thunfisch, Zwiebeln</em></li>
+      <li><div class="ln"><span class="n">Frutti di Mare</span><span class="d"></span><span class="p">22.–</span></div><em>Tomatensauce, Meeresfrüchte°, Knoblauch, Petersilie</em></li>
+      <li><div class="ln"><span class="n">Salsiccia e Friarielli</span><span class="d"></span><span class="p">23.–</span></div><em>Mozzarella, Wurst, Friarielli (neapolitanisches Stängelkohlgemüse)</em></li>
+      <li><div class="ln"><span class="n">Valtellina</span><span class="d"></span><span class="p">27.–</span></div><em>Tomatensauce, Mozzarella, Bresaola, Rucola, Stracchino</em></li>
+      <li><div class="ln"><span class="n">Burrata <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">25.–</span></div><em>Tomatensauce, Auberginen, Knoblauch, Majoran, Burrata</em></li>
       </ul>
     </div>
-  </section>
-
-  <section id="ueber-uns" style="background:var(--paper);border-block:1px solid var(--line)">
-    <div class="wrap about">
-      <div>
-        <div class="eyebrow" style="margin-bottom:10px">Benvenuti a Bellevue</div>
-        <blockquote>«Wir freuen uns, Sie in dieser kleinen Ecke Italiens begrüssen zu dürfen.»</blockquote>
-        <p>Von Pasta bis zur typischen neapolitanischen Pizza verwöhnen wir Sie mit den unverwechselbaren Aromen der mediterranen Tradition, ohne unsere Fleischspezialitäten und unsere köstlichsten italienischen Desserts und Glaces zu vergessen.</p>
-        <p>In unserer Weinauswahl treffen Walliser und italienische Aromen aufeinander. Das Bellevue entstand aus der Leidenschaft und dem Wunsch, unser Konzept der italienischen Küche ins Oberwallis zu bringen.</p>
-        <p>Sie finden uns direkt an der Furkastrasse in Lax, drinnen in der rustikalen Stube oder draussen auf der Terrasse.</p>
-      </div>
-      <img src="img/lasagne.jpg" alt="Lasagne frisch aus dem Ofen" loading="lazy">
+    <div class="sec">
+      <h3>Pizze Speciali</h3>
+      <ul>
+      <li><div class="ln"><span class="n">Bellevue</span><span class="d"></span><span class="p">29.–</span></div><em>Schwarze Trüffelsauce, Mozzarella, Steinpilze°, Lardo</em></li>
+      <li><div class="ln"><span class="n">Angelo</span><span class="d"></span><span class="p">29.–</span></div><em>Tomatensauce, Büffelmozzarella, schwarze Trüffelsauce, Wurst, Zwiebeln, Rucola</em></li>
+      <li><div class="ln"><span class="n">Alex</span><span class="d"></span><span class="p">26.–</span></div><em>Tomatensauce, Mozzarella, Rucola, Rohschinken, Parmesanflocken</em></li>
+      <li><div class="ln"><span class="n">Claudia</span><span class="d"></span><span class="p">27.–</span></div><em>Mozzarella, Rohschinken, Rucola, frische Kirschtomaten, Stracchino</em></li>
+      <li><div class="ln"><span class="n">Cristina</span><span class="d"></span><span class="p">24.–</span></div><em>Mozzarella, Gorgonzola, Speck, Nüsse</em></li>
+      <li><div class="ln"><span class="n">Alberto 2.0</span><span class="d"></span><span class="p">28.–</span></div><em>Focaccia baciata mit Rucola, Rohschinken, frischen Kirschtomaten, Büffelmozzarella</em></li>
+      <li><div class="ln"><span class="n">Eliza</span><span class="d"></span><span class="p">24.–</span></div><em>Mozzarella, Spinat°, Speck, Mascarpone</em></li>
+      <li><div class="ln"><span class="n">Pizzaiolo</span><span class="d"></span><span class="p">25.–</span></div><em>Mozzarella, Rohschinken, frische Kirschtomaten, Mascarpone</em></li>
+      <li><div class="ln"><span class="n">La Montanina</span><span class="d"></span><span class="p">28.–</span></div><em>Tomatensauce, Mozzarella, schwarze Trüffelsauce, Speck, Rucola, Kirschtomaten, Parmesanflocken</em></li>
+      <li><div class="ln"><span class="n">A Sorpresa</span><span class="d"></span><span class="p">23.–</span></div><em>Überraschung des Pizzaiolo</em></li>
+      <li><div class="ln"><span class="n">La Sfiziosa</span><span class="d"></span><span class="p">29.–</span></div><em>Focaccia baciata mit Trüffelmortadella, Burrata, Pistazien</em></li>
+      </ul>
     </div>
-  </section>
-
-  <section id="besuch">
-    <div class="wrap">
-      <div class="sec-head"><h2>Besuchen Sie uns</h2><p>Reservation am einfachsten per Telefon. Dienstag ist Ruhetag.</p></div>
-      <div class="visit">
-        <div class="card">
-          <h3>Öffnungszeiten</h3>
-          <table class="hours" id="hours"></table>
-          <p class="small">Saisonale Änderungen möglich. Im Zweifel kurz anrufen.</p>
-        </div>
-        <div class="card contact">
-          <h3>Kontakt &amp; Anfahrt</h3>
-          <p>Restaurant Pizzeria Bistro Bellevue<br>Furkastrasse 100<br>3994 Lax VS</p>
-          <a class="big" href="tel:+41279713030">027 971 30 30</a>
-          <a class="mail" href="mailto:restaurantbellevue100@gmail.com">restaurantbellevue100@gmail.com</a>
-          <a class="btn ghost sm" href="https://www.openstreetmap.org/?mlat=46.389931&mlon=8.122242#map=17/46.389931/8.122242" target="_blank" rel="noopener">Route planen ↗</a>
-          <div class="map"><iframe title="Karte: Furkastrasse 100, Lax" loading="lazy"
-            src="https://www.openstreetmap.org/export/embed.html?bbox=8.1172%2C46.3874%2C8.1272%2C46.3924&layer=mapnik&marker=46.389931%2C8.122242"></iframe></div>
-        </div>
-      </div>
+    <div class="sec">
+      <h3>Calzoni</h3>
+      <ul>
+      <li><div class="ln"><span class="n">Calzone</span><span class="d"></span><span class="p">22.–</span></div><em>Tomatensauce, Mozzarella, Schinken</em></li>
+      <li><div class="ln"><span class="n">Calzone Farcito</span><span class="d"></span><span class="p">25.–</span></div><em>Tomatensauce, Mozzarella, Schinken, Pilze, Ei</em></li>
+      <li><div class="ln"><span class="n">Calzone Piccante</span><span class="d"></span><span class="p">22.–</span></div><em>Tomatensauce, Mozzarella, scharfe Salami</em></li>
+      <li><div class="ln"><span class="n">Calzone Vegetariano <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">24.–</span></div><em>Tomatensauce, Mozzarella, grilliertes Gemüse</em></li>
+      </ul>
     </div>
-  </section>
-</main>
+    <div class="sec">
+      <h3>Pasta fresca</h3>
+      <ul>
+      <li><div class="ln"><span class="n">Pappardelle al Ragù bianco di Coniglio</span><span class="d"></span><span class="p">31.–</span></div><em>Karotten, Zwiebeln, Sellerie, Kaninchenfleisch</em></li>
+      <li><div class="ln"><span class="n">Pappardelle alla Bolognese</span><span class="d"></span><span class="p">29.–</span></div><em>Karotten, Zwiebeln, Sellerie, Rindshackfleisch, Tomatensauce</em></li>
+      <li><div class="ln"><span class="n">Tagliatelle ai Funghi Porcini <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">26.–</span></div><em>Butter, Steinpilze°, Petersilie</em></li>
+      <li><div class="ln"><span class="n">Scialatielli alla Nerano <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">25.–</span></div><em>Frittierte Zucchini, Basilikum, Parmesan, Provola</em></li>
+      <li><div class="ln"><span class="n">Tagliatelle al Tartufo Nero di stagione <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">33.–</span></div><em>Butter, frischer schwarzer Trüffel</em></li>
+      <li><div class="ln"><span class="n">Tagliatelle al Salmone</span><span class="d"></span><span class="p">26.–</span></div><em>Tomatensauce, Rahm, Lachs°</em></li>
+      <li><div class="ln"><span class="n">Cavatelli al Pomodoro e Burrata <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">26.–</span></div><em>Karotten, Zwiebeln, Sellerie, Basilikum, Tomatensauce, Parmesan, Burrata</em></li>
+      <li><div class="ln"><span class="n">Scialatielli alla Carbonara</span><span class="d"></span><span class="p">28.–</span></div><em>Ei, Guanciale, Pecorino Romano</em></li>
+      <li><div class="ln"><span class="n">Lasagna alla Bolognese</span><span class="d"></span><span class="p">31.–</span></div><em>Bolognese, Béchamel, Mozzarella, Parmesan</em></li>
+      <li><div class="ln"><span class="n">Cavatelli al Pesto con Guanciale e Pomodori secchi</span><span class="d"></span><span class="p">28.–</span></div><em>Hausgemachtes Basilikumpesto, Guanciale, Dörrtomaten</em></li>
+      <li><div class="ln"><span class="n">Garganelli all'Arrabbiata <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">24.–</span></div><em>Tomatensauce, Knoblauch, Chili, Parmesan, Petersilie</em></li>
+      <li><div class="ln"><span class="n">Ravioli Burro, Salvia e Noci <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">21.–</span></div><em>Butter, Salbei, Nüsse</em></li>
+      <li><div class="ln"><span class="n">Garganelli alla Mediterranea</span><span class="d"></span><span class="p">26.–</span></div><em>Tomatensauce, Kapern, Oliven, Sardellen, Thunfisch</em></li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h3>Risotti</h3>
+      <ul>
+      <li><div class="ln"><span class="n">Risotto allo Zafferano con Guanciale croccante</span><span class="d"></span><span class="p">29.–</span></div><em>Safranrisotto mit knusprigem Guanciale</em></li>
+      <li><div class="ln"><span class="n">Risotto al Tartufo Nero di stagione <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">33.–</span></div><em>Risotto mit frischem schwarzem Trüffel</em></li>
+      <li><div class="ln"><span class="n">Risotto Nduja, Salsiccia e Pecorino</span><span class="d"></span><span class="p">29.–</span></div><em>Tomatensauce, Nduja, italienische Wurst, Pecorino</em></li>
+      <li><div class="ln"><span class="n">Risotto Gorgonzola, Speck, Noci e Rucola</span><span class="d"></span><span class="p">29.–</span></div><em>Gorgonzola, Speck, Nüsse, Rucola</em></li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h3>Vom heissen Stein <small>La Pietra Ardente</small></h3>
+      <p class="hand aside">mit 2 Beilagen nach Wahl (ausser **)</p>
+      <ul>
+      <li><div class="ln"><span class="n">Filetto di Manzo</span><span class="d"></span><span class="p">53.–</span></div><em>Rindsfilet, 220 g</em></li>
+      <li><div class="ln"><span class="n">Entrecôte di Manzo</span><span class="d"></span><span class="p">48.–</span></div><em>Rindsentrecôte, 220 g</em></li>
+      <li><div class="ln"><span class="n">Costolette di Agnello</span><span class="d"></span><span class="p">50.–</span></div><em>Lammkotelett, 200 g</em></li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h3>Secondi Piatti <small>Hauptgang</small></h3>
+      <ul>
+      <li><div class="ln"><span class="n">Tartare Eliza**</span><span class="d"></span><span class="p">40.–</span></div><em>Rindstatar mit Pommes frites° und Toastbrot</em></li>
+      <li><div class="ln"><span class="n">Tartare al Tartufo Nero di stagione**</span><span class="d"></span><span class="p">48.–</span></div><em>Rindstatar mit frischem schwarzem Trüffel und Toastbrot</em></li>
+      <li><div class="ln"><span class="n">Filetto di Manzo alla griglia</span><span class="d"></span><span class="p">48.–</span></div><em>Rindsfilet 220 g, grilliert</em></li>
+      <li><div class="ln"><span class="n">Filetto di Manzo al Tartufo Nero</span><span class="d"></span><span class="p">58.–</span></div><em>Rindsfilet 220 g, mit frischem schwarzem Trüffel</em></li>
+      <li><div class="ln"><span class="n">Filetto di Manzo Lardellato</span><span class="d"></span><span class="p">54.–</span></div><em>Rindsfilet 220 g, mit Speck</em></li>
+      <li><div class="ln"><span class="n">Filetto di Manzo ai Funghi Porcini</span><span class="d"></span><span class="p">51.–</span></div><em>Rindsfilet 220 g, mit Steinpilzen°</em></li>
+      <li><div class="ln"><span class="n">Entrecôte di Manzo alla griglia</span><span class="d"></span><span class="p">43.–</span></div><em>Rindsentrecôte 220 g, grilliert</em></li>
+      <li><div class="ln"><span class="n">Entrecôte di Manzo al Tartufo Nero</span><span class="d"></span><span class="p">53.–</span></div><em>Rindsentrecôte 220 g, mit frischem schwarzem Trüffel</em></li>
+      <li><div class="ln"><span class="n">Entrecôte di Manzo Lardellato</span><span class="d"></span><span class="p">49.–</span></div><em>Rindsentrecôte 220 g, mit Speck</em></li>
+      <li><div class="ln"><span class="n">Entrecôte di Manzo ai Funghi Porcini</span><span class="d"></span><span class="p">46.–</span></div><em>Rindsentrecôte 220 g, mit Steinpilzen°</em></li>
+      <li><div class="ln"><span class="n">Saltimbocca alla Romana</span><span class="d"></span><span class="p">40.–</span></div><em>Kalbfleisch, Salbei, Rohschinken</em></li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h3>Dolci</h3>
+      <ul>
+      <li><div class="ln"><span class="n">Tiramisù <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">10.–</span></div><em>Savoiardi, Kaffee, Mascarpone, Kakao</em></li>
+      <li><div class="ln"><span class="n">Tiramisù al Pistacchio <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">12.–</span></div><em>Savoiardi, Kaffee, Mascarpone, Pistaziencrème, Kakao</em></li>
+      <li><div class="ln"><span class="n">Profiteroles <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">10.–</span></div><em>Windbeutel° mit Rahm und Schokolade</em></li>
+      <li><div class="ln"><span class="n">Panna Cotta al Pistacchio con Gelato <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">12.–</span></div><em>Rahm und Pistaziencrème, mit einer Kugel Glace</em></li>
+      <li><div class="ln"><span class="n">Panna Cotta con Gelato <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">10.–</span></div><em>Rahm, mit einer Kugel Glace</em></li>
+      <li><div class="ln"><span class="n">Vin Santo con Cantucci <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">11.–</span></div><em>Toskanischer Süsswein mit Mandelgebäck</em></li>
+      <li><div class="ln"><span class="n">Crêpe allo Zucchero <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">9.–</span></div><em>Mit Zucker</em></li>
+      <li><div class="ln"><span class="n">Crêpe alla Nutella <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">10.–</span></div><em>Mit Nutella</em></li>
+      <li><div class="ln"><span class="n">Crêpe alla Marmellata <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">10.–</span></div><em>Mit Erdbeer- oder Aprikosenkonfitüre</em></li>
+      <li><div class="ln"><span class="n">Torta della Nonna <span class="v" title="vegetarisch">(v)</span></span><span class="d"></span><span class="p">13.–</span></div><em>Mürbeteig, Vanillecrème, Pinienkerne</em></li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h3>Aperitivi</h3>
+      <ul>
+      <li><div class="ln"><span class="n">Bellevue Spritz</span><span class="d"></span><span class="p">12.–</span></div><em>Limoncello, Prosecco, Soda</em></li>
+      <li><div class="ln"><span class="n">Aperol Spritz</span><span class="d"></span><span class="p">12.–</span></div><em>Aperol, Prosecco, Soda</em></li>
+      <li><div class="ln"><span class="n">Campari Spritz</span><span class="d"></span><span class="p">12.–</span></div><em>Campari, Prosecco, Soda</em></li>
+      <li><div class="ln"><span class="n">Angelo Spritz</span><span class="d"></span><span class="p">12.–</span></div><em>Campari, Aperol, Prosecco, Soda</em></li>
+      <li><div class="ln"><span class="n">Prosecco</span><span class="d"></span><span class="p">7.–</span></div></li>
+      <li><div class="ln"><span class="n">Moscato</span><span class="d"></span><span class="p">7.–</span></div></li>
+      <li><div class="ln"><span class="n">Martini Bianco o Rosso</span><span class="d"></span><span class="p">7.–</span></div></li>
+      <li><div class="ln"><span class="n">Campari</span><span class="d"></span><span class="p">7.–</span></div></li>
+      <li><div class="ln"><span class="n">Campari Orange o Soda</span><span class="d"></span><span class="p">7.50</span></div></li>
+      <li><div class="ln"><span class="n">Cynar</span><span class="d"></span><span class="p">7.–</span></div></li>
+      <li><div class="ln"><span class="n">San Bitter</span><span class="d"></span><span class="p">4.50</span></div><em>alkoholfrei</em></li>
+      <li><div class="ln"><span class="n">Crodino</span><span class="d"></span><span class="p">4.50</span></div><em>alkoholfrei</em></li>
+      </ul>
+    </div>
+    <div class="sec">
+      <h3>Birre <small>Bier</small></h3>
+      <ul>
+      <li><div class="ln"><span class="n">Angelo Poretti</span><span class="d"></span><span class="p">ab 3.60</span></div><em>2 dl 3.60 · 3 dl 4.– · 5 dl 6.–</em></li>
+      <li><div class="ln"><span class="n">Valaisanne</span><span class="d"></span><span class="p">ab 3.60</span></div><em>2 dl 3.60 · 3 dl 4.– · 5 dl 6.–</em></li>
+      <li><div class="ln"><span class="n">Schneider Weisse</span><span class="d"></span><span class="p">6.50</span></div><em>5 dl</em></li>
+      <li><div class="ln"><span class="n">Schneider Weisse alkoholfrei</span><span class="d"></span><span class="p">6.50</span></div><em>5 dl</em></li>
+      <li><div class="ln"><span class="n">Feldschlösschen alkoholfrei</span><span class="d"></span><span class="p">4.50</span></div><em>3 dl</em></li>
+      <li><div class="ln"><span class="n">Bellevue Gold</span><span class="d"></span><span class="p">5.–</span></div><em>3 dl</em></li>
+      <li><div class="ln"><span class="n">Bellevue Dunkel</span><span class="d"></span><span class="p">5.–</span></div><em>3 dl</em></li>
+      </ul>
+    </div>
 
-<footer><div class="wrap"><span>© <span id="yr"></span> Restaurant Pizzeria Bistro Bellevue, Lax</span><span>Furkastrasse 100 · 3994 Lax · 027 971 30 30</span></div></footer>
+  </div>
+  <p class="fine">° kann tiefgekühlt sein · frischer schwarzer Trüffel nach Verfügbarkeit · glutenfrei auf Anfrage</p>
+</section>
 
-<div class="callbar"><a class="btn" href="tel:+41279713030">📞 Anrufen</a><a class="btn ghost" href="#karte">Karte</a></div>
+<section class="giu">
+  <div id="orari">
+    <h2 class="script">Orari</h2>
+    <div class="sec" style="margin:0"><ul>
+      <li><div class="ln"><span class="n">Montag</span><span class="d"></span><span class="p">09:30–14:30</span></div></li>
+      <li><div class="ln"><span class="n">Dienstag</span><span class="d"></span><span class="p"><span class="closed">chiuso</span></span></div></li>
+      <li><div class="ln"><span class="n">Mittwoch</span><span class="d"></span><span class="p">09:30–22:00</span></div></li>
+      <li><div class="ln"><span class="n">Donnerstag</span><span class="d"></span><span class="p">09:30–14:30 · 17:00–22:00</span></div></li>
+      <li><div class="ln"><span class="n">Freitag</span><span class="d"></span><span class="p">09:30–14:30 · 17:00–22:00</span></div></li>
+      <li><div class="ln"><span class="n">Samstag</span><span class="d"></span><span class="p">10:00–22:00</span></div></li>
+      <li><div class="ln"><span class="n">Sonntag</span><span class="d"></span><span class="p">10:00–21:00</span></div></li>
+    </ul></div>
+    <p class="hand scribble">Dienstag ist Ruhetag. Saisonal kann es ändern, im Zweifel kurz anrufen.</p>
+  </div>
+  <div id="dove">
+    <h2 class="script">Dove siamo</h2>
+    <p>Restaurant Pizzeria Bistro Bellevue<br>Furkastrasse 100<br>3994 Lax VS</p>
+    <a class="big" href="tel:+41279713030">027 971 30 30</a><br>
+    <a href="mailto:restaurantbellevue100@gmail.com">restaurantbellevue100@gmail.com</a>
+    <p style="margin-top:14px"><a href="https://www.openstreetmap.org/?mlat=46.389931&amp;mlon=8.122242#map=17/46.389931/8.122242">Auf der Karte ansehen</a></p>
+    <p class="hand scribble">50 Plätze drinnen, 25 auf der Terrasse. Alles auch zum Mitnehmen.</p>
+  </div>
+</section>
 
-<script>
-// Menu, transcribed from the restaurant's Instagram menu (story highlight "MENÙ").
-// Item: [name, description, price, flags]  flags: v = vegetarian, t = truffle (by availability)
-const MENU=[
- {cat:"Pizze",groups:[{items:[
-  ["Focaccia","Olivenöl, Majoran, Salz","16.–","v"],
-  ["Marinara","Tomatensauce, Knoblauch, Majoran","18.–","v"],
-  ["Margherita","Tomatensauce, Mozzarella","19.–","v"],
-  ["Bufala","Tomatensauce, Büffelmozzarella","22.–","v"],
-  ["Salsiccia e Cipolla","Tomatensauce, Mozzarella, Wurst, Zwiebeln","23.–"],
-  ["Prosciutto","Tomatensauce, Mozzarella, Schinken","21.–"],
-  ["Prosciutto e Funghi","Tomatensauce, Mozzarella, Schinken, Pilze","22.–"],
-  ["Prosciutto e Porcini","Tomatensauce, Mozzarella, Schinken, Steinpilze°","24.–"],
-  ["Capricciosa","Tomatensauce, Mozzarella, Schinken, Pilze, Artischocken","23.–"],
-  ["4 Stagioni","Tomatensauce, Mozzarella, Schinken, Pilze, Artischocken, Oliven","24.–"],
-  ["4 Formaggi","Vier verschiedene Käsesorten","24.–","v"],
-  ["Nerano","Mozzarella, Zucchini, Provola, Kirschtomaten, Parmesanflocken","23.–","v"],
-  ["Salame Dolce","Tomatensauce, Mozzarella, Salami","21.–"],
-  ["Diavola","Tomatensauce, Mozzarella, scharfe Salami (Calabrese)","21.–"],
-  ["Calabrese","Tomatensauce, Mozzarella, scharfe Salami, Paprika, Oliven","24.–"],
-  ["Nduja","Tomatensauce, Nduja, scharfe Salami, Zwiebeln, Knoblauch, Parmesanflocken","25.–"],
-  ["Hawaii","Tomatensauce, Mozzarella, Ananas, Schinken","26.–"],
-  ["Wallis","Tomatensauce, Mozzarella, Speck, Zwiebeln, Ei","24.–"],
-  ["Vegetariana","Tomatensauce, Mozzarella, grilliertes Gemüse","23.–","v"],
-  ["Napoli","Tomatensauce, Mozzarella, Sardellen, Kapern, Majoran","21.–"],
-  ["Siciliana","Tomatensauce, Mozzarella, Sardellen, Oliven, Majoran","21.–"],
-  ["Mediterranea","Tomatensauce, Knoblauch, Kapern, Oliven, Sardellen, Majoran","22.–"],
-  ["Tonno e Cipolla","Tomatensauce, Mozzarella, Thunfisch, Zwiebeln","23.–"],
-  ["Frutti di Mare","Tomatensauce, Meeresfrüchte°, Knoblauch, Petersilie","22.–"],
-  ["Salsiccia e Friarielli","Mozzarella, Wurst, Friarielli (neapolitanisches Stängelkohlgemüse)","23.–"],
-  ["Valtellina","Tomatensauce, Mozzarella, Bresaola, Rucola, Stracchino","27.–"],
-  ["Burrata","Tomatensauce, Auberginen, Knoblauch, Majoran, Burrata","25.–","v"],
- ]},{title:"Pizze Speciali",items:[
-  ["Bellevue","Schwarze Trüffelsauce, Mozzarella, Steinpilze°, Lardo","29.–"],
-  ["Angelo","Tomatensauce, Büffelmozzarella, schwarze Trüffelsauce, Wurst, Zwiebeln, Rucola","29.–"],
-  ["Alex","Tomatensauce, Mozzarella, Rucola, Rohschinken, Parmesanflocken","26.–"],
-  ["Claudia","Mozzarella, Rohschinken, Rucola, frische Kirschtomaten, Stracchino","27.–"],
-  ["Cristina","Mozzarella, Gorgonzola, Speck, Nüsse","24.–"],
-  ["Alberto 2.0","Focaccia baciata mit Rucola, Rohschinken, frischen Kirschtomaten, Büffelmozzarella","28.–"],
-  ["Eliza","Mozzarella, Spinat°, Speck, Mascarpone","24.–"],
-  ["Pizzaiolo","Mozzarella, Rohschinken, frische Kirschtomaten, Mascarpone","25.–"],
-  ["La Montanina","Tomatensauce, Mozzarella, schwarze Trüffelsauce, Speck, Rucola, Kirschtomaten, Parmesanflocken","28.–"],
-  ["A Sorpresa","Überraschung des Pizzaiolo","23.–"],
-  ["La Sfiziosa","Focaccia baciata mit Trüffelmortadella, Burrata, Pistazien","29.–"],
- ]},{title:"Calzoni",items:[
-  ["Calzone","Tomatensauce, Mozzarella, Schinken","22.–"],
-  ["Calzone Farcito","Tomatensauce, Mozzarella, Schinken, Pilze, Ei","25.–"],
-  ["Calzone Piccante","Tomatensauce, Mozzarella, scharfe Salami","22.–"],
-  ["Calzone Vegetariano","Tomatensauce, Mozzarella, grilliertes Gemüse","24.–","v"],
- ]}]},
- {cat:"Pasta fresca",groups:[{items:[
-  ["Pappardelle al Ragù bianco di Coniglio","Karotten, Zwiebeln, Sellerie, Kaninchenfleisch","31.–"],
-  ["Pappardelle alla Bolognese","Karotten, Zwiebeln, Sellerie, Rindshackfleisch, Tomatensauce","29.–"],
-  ["Tagliatelle ai Funghi Porcini","Butter, Steinpilze°, Petersilie","26.–","v"],
-  ["Scialatielli alla Nerano","Frittierte Zucchini, Basilikum, Parmesan, Provola","25.–","v"],
-  ["Tagliatelle al Tartufo Nero di stagione","Butter, frischer schwarzer Trüffel","33.–","vt"],
-  ["Tagliatelle al Salmone","Tomatensauce, Rahm, Lachs°","26.–"],
-  ["Cavatelli al Pomodoro e Burrata","Karotten, Zwiebeln, Sellerie, Basilikum, Tomatensauce, Parmesan, Burrata","26.–","v"],
-  ["Scialatielli alla Carbonara","Ei, Guanciale, Pecorino Romano","28.–"],
-  ["Lasagna alla Bolognese","Bolognese, Béchamel, Mozzarella, Parmesan","31.–"],
-  ["Cavatelli al Pesto con Guanciale e Pomodori secchi","Hausgemachtes Basilikumpesto, Guanciale, Dörrtomaten","28.–"],
-  ["Garganelli all'Arrabbiata","Tomatensauce, Knoblauch, Chili, Parmesan, Petersilie","24.–","v"],
-  ["Ravioli Burro, Salvia e Noci","Butter, Salbei, Nüsse","21.–","v"],
-  ["Garganelli alla Mediterranea","Tomatensauce, Kapern, Oliven, Sardellen, Thunfisch","26.–"],
- ]}]},
- {cat:"Risotti",groups:[{items:[
-  ["Risotto allo Zafferano con Guanciale croccante","Safranrisotto mit knusprigem Guanciale","29.–"],
-  ["Risotto al Tartufo Nero di stagione","Risotto mit frischem schwarzem Trüffel","33.–","vt"],
-  ["Risotto Nduja, Salsiccia e Pecorino","Tomatensauce, Nduja, italienische Wurst, Pecorino","29.–"],
-  ["Risotto Gorgonzola, Speck, Noci e Rucola","Gorgonzola, Speck, Nüsse, Rucola","29.–"],
- ]}]},
- {cat:"Carne",groups:[{title:"Vom heissen Stein · La Pietra Ardente",items:[
-  ["Filetto di Manzo","Rindsfilet, 220 g","53.–"],
-  ["Entrecôte di Manzo","Rindsentrecôte, 220 g","48.–"],
-  ["Costolette di Agnello","Lammkotelett, 200 g","50.–"],
- ]},{title:"Secondi Piatti · Hauptgang",items:[
-  ["Tartare Eliza**","Rindstatar mit Pommes frites° und Toastbrot","40.–"],
-  ["Tartare al Tartufo Nero di stagione**","Rindstatar mit frischem schwarzem Trüffel und Toastbrot","48.–","t"],
-  ["Filetto di Manzo alla griglia","Rindsfilet 220 g, grilliert","48.–"],
-  ["Filetto di Manzo al Tartufo Nero","Rindsfilet 220 g, mit frischem schwarzem Trüffel","58.–","t"],
-  ["Filetto di Manzo Lardellato","Rindsfilet 220 g, mit Speck","54.–"],
-  ["Filetto di Manzo ai Funghi Porcini","Rindsfilet 220 g, mit Steinpilzen°","51.–"],
-  ["Entrecôte di Manzo alla griglia","Rindsentrecôte 220 g, grilliert","43.–"],
-  ["Entrecôte di Manzo al Tartufo Nero","Rindsentrecôte 220 g, mit frischem schwarzem Trüffel","53.–","t"],
-  ["Entrecôte di Manzo Lardellato","Rindsentrecôte 220 g, mit Speck","49.–"],
-  ["Entrecôte di Manzo ai Funghi Porcini","Rindsentrecôte 220 g, mit Steinpilzen°","46.–"],
-  ["Saltimbocca alla Romana","Kalbfleisch, Salbei, Rohschinken","40.–"],
- ]}]},
- {cat:"Dolci",groups:[{items:[
-  ["Tiramisù","Savoiardi, Kaffee, Mascarpone, Kakao","10.–","v"],
-  ["Tiramisù al Pistacchio","Savoiardi, Kaffee, Mascarpone, Pistaziencrème, Kakao","12.–","v"],
-  ["Profiteroles","Windbeutel° mit Rahm und Schokolade","10.–","v"],
-  ["Panna Cotta al Pistacchio con Gelato","Rahm und Pistaziencrème, mit einer Kugel Glace","12.–","v"],
-  ["Panna Cotta con Gelato","Rahm, mit einer Kugel Glace","10.–","v"],
-  ["Vin Santo con Cantucci","Toskanischer Süsswein mit Mandelgebäck","11.–","v"],
-  ["Crêpe allo Zucchero","Mit Zucker","9.–","v"],
-  ["Crêpe alla Nutella","Mit Nutella","10.–","v"],
-  ["Crêpe alla Marmellata","Mit Erdbeer- oder Aprikosenkonfitüre","10.–","v"],
-  ["Torta della Nonna","Mürbeteig, Vanillecrème, Pinienkerne","13.–","v"],
- ]}]},
- {cat:"Aperitivi & Bier",groups:[{title:"Aperitivi",items:[
-  ["Bellevue Spritz","Limoncello, Prosecco, Soda","12.–"],
-  ["Aperol Spritz","Aperol, Prosecco, Soda","12.–"],
-  ["Campari Spritz","Campari, Prosecco, Soda","12.–"],
-  ["Angelo Spritz","Campari, Aperol, Prosecco, Soda","12.–"],
-  ["Prosecco","","7.–"],["Moscato","","7.–"],["Martini Bianco o Rosso","","7.–"],
-  ["Campari","","7.–"],["Campari Orange o Soda","","7.50"],["Cynar","","7.–"],
-  ["San Bitter","alkoholfrei","4.50"],["Crodino","alkoholfrei","4.50"],
- ]},{title:"Birre · Bier",items:[
-  ["Angelo Poretti","2 dl 3.60 · 3 dl 4.– · 5 dl 6.–","ab 3.60"],
-  ["Valaisanne","2 dl 3.60 · 3 dl 4.– · 5 dl 6.–","ab 3.60"],
-  ["Schneider Weisse","5 dl","6.50"],
-  ["Schneider Weisse alkoholfrei","5 dl","6.50"],
-  ["Feldschlösschen alkoholfrei","3 dl","4.50"],
-  ["Bellevue Gold","3 dl","5.–"],
-  ["Bellevue Dunkel","3 dl","5.–"],
- ]}]},
-];
+<footer class="sc"><span>Bellevue · Lax</span><span>Furkastrasse 100 · 027 971 30 30</span></footer>
 
-(function(){
-  const tabs=document.getElementById("tabs"),box=document.getElementById("menu"),q=document.getElementById("q"),veg=document.getElementById("veg");
-  let active=MENU[0].cat;
-  const esc=s=>s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
-  const row=([n,d,p,f=""])=>`<div class="item"><b>${esc(n)}${f.includes("v")?'<span class="tag">vegi</span>':""}${f.includes("t")?'<span class="tag tr">nach Verfügbarkeit</span>':""}</b><span class="price">${p}</span>${d?`<small>${esc(d)}</small>`:""}</div>`;
-  function render(){
-    const term=q.value.trim().toLowerCase(), onlyVeg=veg.checked;
-    const cats=term?MENU:MENU.filter(c=>c.cat===active);
-    [...tabs.children].forEach(b=>b.setAttribute("aria-selected",!term&&b.textContent===active));
-    let html="";
-    for(const c of cats) for(const g of c.groups){
-      const its=g.items.filter(([n,d,,f=""])=>(!onlyVeg||f.includes("v"))&&(!term||(n+" "+d).toLowerCase().includes(term)));
-      if(!its.length) continue;
-      const title=term?(g.title?`${c.cat} · ${g.title}`:c.cat):g.title;
-      html+=(title?`<div class="grp">${esc(title)}</div>`:"")+its.map(row).join("");
-    }
-    box.innerHTML=html||'<div class="empty">Nichts gefunden. Fragen Sie das Team, es gibt auch Tagesempfehlungen.</div>';
-  }
-  MENU.forEach(c=>{const b=document.createElement("button");b.className="tab";b.setAttribute("role","tab");b.textContent=c.cat;b.onclick=()=>{active=c.cat;q.value="";render();};tabs.append(b);});
-  q.oninput=render; veg.onchange=render; render();
-})();
-
-// Opening hours (source: Aletsch Arena listing, updated 20.11.2026). Index 0 = Montag.
-const HOURS=[
-  ["Montag",[["09:30","14:30"]]],
-  ["Dienstag",[]],
-  ["Mittwoch",[["09:30","22:00"]]],
-  ["Donnerstag",[["09:30","14:30"],["17:00","22:00"]]],
-  ["Freitag",[["09:30","14:30"],["17:00","22:00"]]],
-  ["Samstag",[["10:00","22:00"]]],
-  ["Sonntag",[["10:00","21:00"]]],
-];
-const $=s=>document.querySelector(s);
-const fmt=r=>r.length?r.map(([a,b])=>`${a}–${b}`).join("<br>"):'<span class="closed">Ruhetag</span>';
-
-// Current time in Zurich, regardless of the visitor's timezone
-const p=Object.fromEntries(new Intl.DateTimeFormat("de-CH",{timeZone:"Europe/Zurich",weekday:"long",hour:"2-digit",minute:"2-digit",hour12:false}).formatToParts(new Date()).map(x=>[x.type,x.value]));
-const d=HOURS.findIndex(h=>h[0]===p.weekday), now=`${p.hour.padStart(2,"0")}:${p.minute}`;
-$("#hours").innerHTML=HOURS.map((h,i)=>`<tr class="${i===d?"today":""}"><td>${h[0]}</td><td>${fmt(h[1])}</td></tr>`).join("");
-
-if(d>=0){
-  const cur=HOURS[d][1].find(([a,b])=>now>=a&&now<b);
-  let msg;
-  if(cur) msg=`Jetzt geöffnet · bis ${cur[1]}`;
-  else{
-    const later=HOURS[d][1].find(([a])=>now<a);
-    if(later) msg=`Geschlossen · öffnet heute um ${later[0]}`;
-    else{
-      for(let k=1;k<=7;k++){const n=HOURS[(d+k)%7];if(n[1].length){msg=`Geschlossen · öffnet ${k===1?"morgen":n[0]} um ${n[1][0][0]}`;break;}}
-    }
-  }
-  $("#status").innerHTML=`<span class="dot ${cur?"open":""}"></span><span>${msg}</span>`;
-}
-$("#yr").textContent=new Date().getFullYear();
-</script>
 </body>
 </html>
