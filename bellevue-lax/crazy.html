@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BELLEVUE · Die übertriebene Edition</title>
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Kaushan+Script&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f3ebdd;--ink:#2b2420;--wine:#8c2a2e;--pencil:#7b6f65;--basil:#3f7a3a;--flag-g:#2f8a45;--flag-r:#c8312f;--rule:#cdbfa8;--sky1:#9fc3dd;--sky2:#f3ebdd}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font:18px/1.55 "IM Fell English",Georgia,serif;background:var(--paper);overflow-x:hidden;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .38 0 0 0 0 .3 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:var(--wine)}
+button,input,select{font:inherit}
+.script{font-family:"Kaushan Script",cursive;color:var(--wine);font-weight:400}
+.hand{font-family:Caveat,cursive;color:var(--pencil)}
+.sc{font-family:"IM Fell English SC",serif;letter-spacing:.08em}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
+
+/* scroll train */
+.rail{position:fixed;top:0;left:0;right:0;height:62px;z-index:40;overflow:hidden;
+  background:linear-gradient(var(--sky1),var(--sky2));border-bottom:2px solid var(--ink)}
+.viaduct{position:absolute;left:0;right:0;bottom:0;height:26px;
+  background:radial-gradient(circle at 50% 100%,transparent 9px,#a9a39a 10px) 0 0/34px 26px repeat-x;border-top:3px solid #6e675f}
+.train{position:absolute;bottom:25px;left:0;display:flex;gap:2px;will-change:transform}
+.train img{height:30px;width:auto;mix-blend-mode:multiply}
+.rail .km{position:absolute;right:10px;top:4px;font:13px Caveat,cursive;color:var(--ink)}
+main{padding-top:62px}
+
+section{max-width:1060px;margin:0 auto;padding:60px 20px;position:relative}
+h2.script{font-size:clamp(40px,7vw,64px);margin:0 0 6px;line-height:1.05}
+.lead{color:var(--pencil);margin:0 0 24px;max-width:60ch}
+.stripe{height:8px;background:linear-gradient(90deg,var(--flag-g) 0 33.3%,#fff 0 66.6%,var(--flag-r) 0)}
+.btn{background:var(--wine);color:#fff;border:0;padding:10px 18px;cursor:pointer;font-family:"IM Fell English SC",serif;letter-spacing:.06em;box-shadow:3px 3px 0 var(--ink);transition:transform .08s}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn.alt{background:var(--paper);color:var(--ink);border:2px solid var(--ink)}
+.panel{border:2px solid var(--ink);background:rgba(255,255,255,.45);padding:18px;box-shadow:6px 6px 0 rgba(43,36,32,.18)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:820px){.grid2{grid-template-columns:1fr}}
+
+/* hero */
+.hero{text-align:center;padding-top:40px}
+.hero h1{font-size:clamp(70px,17vw,190px);margin:10px 0 0;line-height:1;white-space:nowrap;user-select:none}
+.hero h1 span{display:inline-block;will-change:transform}
+.hero .sub{font-size:20px;margin-top:6px}
+.badges{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:22px}
+.badge{border:2px solid var(--ink);padding:6px 12px;background:var(--paper);font-size:16px}
+.badge b{color:var(--wine)}
+.sky{height:120px;margin-top:26px;border:2px solid var(--ink);position:relative;overflow:hidden}
+.sky .sun{position:absolute;width:34px;height:34px;border-radius:50%;background:#ffd24a;box-shadow:0 0 30px #ffd24a;transform:translate(-50%,50%)}
+.sky .ground{position:absolute;left:0;right:0;bottom:0;height:28px;background:radial-gradient(circle at 50% 100%,transparent 11px,#8a847b 12px) 0 0/40px 28px repeat-x;border-top:3px solid #5e5850}
+.sky .label{position:absolute;left:10px;top:8px;font:17px Caveat,cursive;color:#1d1a18;background:rgba(255,255,255,.6);padding:0 6px}
+
+/* roulette */
+.wheelwrap{position:relative;display:flex;flex-direction:column;align-items:center}
+#wheel{width:min(100%,420px);aspect-ratio:1;display:block}
+.pointer{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:0;height:0;border:16px solid transparent;border-top:30px solid var(--ink)}
+.result{font-size:26px;text-align:center;min-height:2.6em;margin-top:10px}
+.result b{font-family:"Kaushan Script",cursive;color:var(--wine);font-weight:400;font-size:32px}
+
+/* lab */
+#pizza{width:min(100%,380px);aspect-ratio:1;display:block;margin:0 auto}
+.tops{display:flex;flex-wrap:wrap;gap:6px}
+.tops button{border:1.5px solid var(--ink);background:var(--paper);padding:3px 10px;cursor:pointer;font-size:16px}
+.tops button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.match{margin:4px 0;font-size:17px}
+.match .bar{height:6px;background:var(--wine);margin-top:2px}
+
+/* optimizer */
+label.f{display:block;margin:0 0 12px;font-size:16px}
+label.f input[type=range]{width:100%}
+label.f input[type=number],select{width:100%;padding:6px 8px;border:2px solid var(--ink);background:var(--paper)}
+.order li{margin:2px 0}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;color:var(--pencil)}
+
+/* converter */
+.conv{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;font-size:22px}
+.conv input{width:120px;font-size:28px;border:0;border-bottom:3px solid var(--wine);background:transparent;color:var(--wine);text-align:right}
+.convout{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:16px}
+.convout div{border:2px dashed var(--ink);padding:10px;text-align:center}
+.convout b{display:block;font-family:"Kaushan Script",cursive;color:var(--wine);font-size:34px;font-weight:400;line-height:1.1}
+
+/* explorer */
+.tools{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.hist{display:flex;align-items:flex-end;gap:3px;height:110px;border-bottom:2px solid var(--ink);margin:10px 0 4px}
+.hist div{flex:1;background:var(--wine);opacity:.75;cursor:pointer;position:relative;min-height:2px}
+.hist div:hover,.hist div.on{opacity:1;background:var(--basil)}
+.histax{display:flex;justify-content:space-between;font-size:13px;color:var(--pencil)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin:14px 0}
+.stats div{border-left:3px solid var(--wine);padding-left:10px;font-size:15px}
+.stats b{display:block;font-size:22px}
+.rows{columns:2;column-gap:36px}
+@media (max-width:820px){.rows{columns:1}}
+.row{break-inside:avoid;display:grid;grid-template-columns:1fr auto;gap:0 10px;padding:6px 0;border-bottom:1px dotted var(--rule)}
+.row small{grid-column:1/-1;color:var(--pencil);font-size:14px}
+.row .pbar{grid-column:1/-1;height:3px;background:linear-gradient(90deg,var(--basil),var(--wine));margin-top:3px}
+.row .c{font-size:12px;color:var(--pencil);font-family:"IM Fell English SC",serif}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--ink);color:var(--paper);padding:10px 18px;z-index:60;transition:transform .35s;font-size:17px}
+.toast.on{transform:translateX(-50%) translateY(0)}
+footer{text-align:center;padding:40px 20px 70px;color:var(--pencil);font-size:15px}
+@media (prefers-reduced-motion:reduce){#fx{display:none}}
+</style>
+</head>
+<body>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<div class="rail" aria-hidden="true">
+  <div class="viaduct"></div>
+  <div class="train" id="train"><img src="img/wagon.png" alt=""><img src="img/wagon.png" alt=""><img src="img/wagon.png" alt=""></div>
+  <div class="km" id="km">km 0.00 · Lax</div>
+</div>
+
+<main>
+<section class="hero">
+  <div class="sc" style="font-size:15px">Restaurant · Pizzeria · Bistro · Furkastrasse 100 · 3994 Lax</div>
+  <h1 class="script" id="title" aria-label="Bellevue">Bellevue</h1>
+  <div class="hand sub">Die übertriebene Edition. Mit Algorithmen. Und Parmesan.</div>
+  <div class="badges">
+    <div class="badge" id="openBadge">Ofen-Status wird berechnet …</div>
+    <div class="badge"><b id="nItems">0</b> Gerichte indexiert</div>
+    <div class="badge"><a href="tel:+41279713030" style="color:inherit">027 971 30 30</a></div>
+    <button class="btn alt" id="music">♪ Atmosfera</button>
+  </div>
+  <div class="sky" id="sky"><div class="sun" id="sun"></div><div class="ground"></div><div class="label" id="skyLabel"></div></div>
+  <p class="hand" style="font-size:18px;margin-top:8px">Sonnenstand live berechnet für 46.3899° N, 8.1222° O. Völlig unnötig. Trotzdem korrekt.</p>
+</section>
+<div class="stripe"></div>
+
+<section id="roulette">
+  <h2 class="script">Roulette della Cena</h2>
+  <p class="lead">Entscheidungsmüde? Das Rad entscheidet. Physikalisch plausibel gebremst, rechtlich nicht bindend.</p>
+  <div class="grid2">
+    <div class="wheelwrap"><div class="pointer"></div><canvas id="wheel" width="840" height="840"></canvas></div>
+    <div>
+      <label class="f">Kategorie<select id="wcat"></select></label>
+      <button class="btn" id="spin">Girare! (drehen)</button>
+      <div class="result" id="wres"><span class="hand">Noch nichts gedreht.</span></div>
+      <p class="mono" id="wphys"></p>
+    </div>
+  </div>
+</section>
+<div class="stripe"></div>
+
+<section id="lab">
+  <h2 class="script">Laboratorio Pizza</h2>
+  <p class="lead">Belegen Sie Ihre Traumpizza. Die Zutaten fallen mit Schwerkraft. Danach findet ein Jaccard-Ähnlichkeitsvergleich die nächste echte Pizza auf der Karte.</p>
+  <div class="grid2">
+    <canvas id="pizza" width="760" height="760"></canvas>
+    <div>
+      <div class="tops" id="tops"></div>
+      <p style="margin:14px 0 6px"><button class="btn alt" id="clear">Teig zurücksetzen</button></p>
+      <div id="matches"><p class="hand" style="font-size:20px">Noch kein Belag. Ein nackter Teig ist eine Focaccia (16.-).</p></div>
+    </div>
+  </div>
+</section>
+<div class="stripe"></div>
+
+<section id="opt">
+  <h2 class="script">Ottimizzatore di Gruppo</h2>
+  <p class="lead">Dynamische Programmierung (0/1-Rucksack über Sättigungspunkte) berechnet die günstigste Bestellung, die Ihre Gruppe satt macht. Wissenschaftlich nicht geprüft, kulinarisch nur bedingt.</p>
+  <div class="grid2">
+    <div class="panel">
+      <label class="f">Personen: <b id="pv">4</b><input type="range" id="people" min="1" max="12" value="4"></label>
+      <label class="f">Hunger: <b id="hv">6</b> / 10 <span class="hand" id="hdesc"></span><input type="range" id="hunger" min="1" max="10" value="6"></label>
+      <label class="f">Budget (CHF)<input type="number" id="budget" value="160" min="10" step="5"></label>
+      <label class="f">Strategie<select id="strat"><option value="cheap">Sparfuchs (minimale Kosten)</option><option value="dice">Gewürfelt (Abwechslung)</option></select></label>
+      <label class="f"><input type="checkbox" id="spritz"> pro Person ein Bellevue Spritz</label>
+      <button class="btn" id="run">Berechnen</button>
+    </div>
+    <div>
+      <div id="orderOut"><p class="hand" style="font-size:20px">Parameter einstellen, dann rechnen lassen.</p></div>
+      <p class="mono" id="optStats"></p>
+    </div>
+  </div>
+</section>
+<div class="stripe"></div>
+
+<section id="conv">
+  <h2 class="script">Cambio Valuta</h2>
+  <p class="lead">Franken sind abstrakt. Pizza ist konkret. Wechselkurse direkt aus der Karte.</p>
+  <div class="conv"><span>CHF</span><input type="number" id="chf" value="50" min="0" step="1"><span>entsprechen:</span></div>
+  <div class="convout" id="convOut"></div>
+</section>
+<div class="stripe"></div>
+
+<section id="karte">
+  <h2 class="script">La Carta, analizzata</h2>
+  <p class="lead">Die ganze Karte als Datensatz. Balken im Histogramm anklicken, um nach Preis zu filtern.</p>
+  <div class="tools" id="sorts"></div>
+  <input type="search" id="q" placeholder="Suchen …" style="width:100%;padding:8px 10px;border:2px solid var(--ink);background:var(--paper);margin-bottom:6px">
+  <div class="hist" id="hist"></div>
+  <div class="histax"><span id="hmin"></span><span id="hlabel" class="hand" style="font-size:16px"></span><span id="hmax"></span></div>
+  <div class="stats" id="stats"></div>
+  <div class="rows" id="rows"></div>
+</section>
+</main>
+
+<footer>
+  <div class="script" style="font-size:40px">Bellevue</div>
+  Furkastrasse 100 · 3994 Lax · 027 971 30 30 · <a href="mailto:restaurantbellevue100@gmail.com">restaurantbellevue100@gmail.com</a><br>
+  <span class="hand" style="font-size:19px">Diese Seite ist absichtlich übertrieben. Die Pizza ist es nicht. Tipp: ↑ ↑ ↓ ↓ ← → ← → B A</span>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+// ---------- data ----------
+const RAW = [{"cat":"Antipasti","items":[{"n":"Tagliere Toscano","d":"Variation italienischer Salami (1 Pers.; 2 Pers. 22.-, 4 Pers. 35.-)","p":15},{"n":"Coccoli, Stracchino e Crudo","d":"Frittierte Teigkugeln mit Frischkäse und Rohschinken","p":16},{"n":"Parmigiana di Melanzane","d":"Auflauf mit Tomaten, Auberginen, Mozzarella, Parmesan","p":20},{"n":"Burrata, Pomodorini e Olive","d":"Burrata, Kirschtomaten, Oliven, Balsamico","p":16},{"n":"Carpaccio di Manzo","d":"Rindscarpaccio, Rucola, Parmesan, Focaccia (klein; gross 28.-)","p":20},{"n":"Carpaccio di Bresaola","d":"Trockenfleisch, Rucola, Parmesan, Focaccia (klein; gross 28.-)","p":20},{"n":"Insalata verde","d":"Grüner Salat","p":7},{"n":"Insalata mista","d":"Gemischter Salat","p":10},{"n":"Caprese","d":"Büffelmozzarella mit frischen Tomaten","p":15},{"n":"Crostini misti","d":"Vier Bruschette","p":14}]},{"cat":"Zuppe","items":[{"n":"Zuppa Bellevue","d":"Lauch, Kartoffeln, Speck","p":12},{"n":"Minestrone Toscano","d":"Gemischtes Gemüse","p":12},{"n":"Zuppa del Giorno","d":"Tagessuppe","p":12}]},{"cat":"Pizze","items":[{"n":"Focaccia","d":"Olivenöl, Majoran, Salz","p":16},{"n":"Marinara","d":"Tomatensauce, Knoblauch, Majoran","p":18},{"n":"Margherita","d":"Tomatensauce, Mozzarella","p":19},{"n":"Bufala","d":"Tomatensauce, Büffelmozzarella","p":22},{"n":"Salsiccia e Cipolla","d":"Tomatensauce, Mozzarella, Wurst, Zwiebeln","p":23},{"n":"Prosciutto","d":"Tomatensauce, Mozzarella, Schinken","p":21},{"n":"Prosciutto e Funghi","d":"Tomatensauce, Mozzarella, Schinken, Pilze","p":22},{"n":"Prosciutto e Porcini","d":"Tomatensauce, Mozzarella, Schinken, Steinpilze°","p":24},{"n":"Capricciosa","d":"Tomatensauce, Mozzarella, Schinken, Pilze, Artischocken","p":23},{"n":"4 Stagioni","d":"Tomatensauce, Mozzarella, Schinken, Pilze, Artischocken, Oliven","p":24},{"n":"4 Formaggi","d":"Vier verschiedene Käsesorten","p":24},{"n":"Nerano","d":"Mozzarella, Zucchini, Provola, Kirschtomaten, Parmesanflocken","p":23},{"n":"Salame Dolce","d":"Tomatensauce, Mozzarella, Salami","p":21},{"n":"Diavola","d":"Tomatensauce, Mozzarella, scharfe Salami (Calabrese)","p":21},{"n":"Calabrese","d":"Tomatensauce, Mozzarella, scharfe Salami, Paprika, Oliven","p":24},{"n":"Nduja","d":"Tomatensauce, Nduja, scharfe Salami, Zwiebeln, Knoblauch, Parmesanflocken","p":25},{"n":"Hawaii","d":"Tomatensauce, Mozzarella, Ananas, Schinken","p":26},{"n":"Wallis","d":"Tomatensauce, Mozzarella, Speck, Zwiebeln, Ei","p":24},{"n":"Vegetariana","d":"Tomatensauce, Mozzarella, grilliertes Gemüse","p":23},{"n":"Napoli","d":"Tomatensauce, Mozzarella, Sardellen, Kapern, Majoran","p":21},{"n":"Siciliana","d":"Tomatensauce, Mozzarella, Sardellen, Oliven, Majoran","p":21},{"n":"Mediterranea","d":"Tomatensauce, Knoblauch, Kapern, Oliven, Sardellen, Majoran","p":22},{"n":"Tonno e Cipolla","d":"Tomatensauce, Mozzarella, Thunfisch, Zwiebeln","p":23},{"n":"Frutti di Mare","d":"Tomatensauce, Meeresfrüchte°, Knoblauch, Petersilie","p":22},{"n":"Salsiccia e Friarielli","d":"Mozzarella, Wurst, Friarielli (neapolitanisches Stängelkohlgemüse)","p":23},{"n":"Valtellina","d":"Tomatensauce, Mozzarella, Bresaola, Rucola, Stracchino","p":27},{"n":"Burrata","d":"Tomatensauce, Auberginen, Knoblauch, Majoran, Burrata","p":25}]},{"cat":"Pizze Speciali","items":[{"n":"Bellevue","d":"Schwarze Trüffelsauce, Mozzarella, Steinpilze°, Lardo","p":29},{"n":"Angelo","d":"Tomatensauce, Büffelmozzarella, schwarze Trüffelsauce, Wurst, Zwiebeln, Rucola","p":29},{"n":"Alex","d":"Tomatensauce, Mozzarella, Rucola, Rohschinken, Parmesanflocken","p":26},{"n":"Claudia","d":"Mozzarella, Rohschinken, Rucola, frische Kirschtomaten, Stracchino","p":27},{"n":"Cristina","d":"Mozzarella, Gorgonzola, Speck, Nüsse","p":24},{"n":"Alberto 2.0","d":"Focaccia baciata mit Rucola, Rohschinken, frischen Kirschtomaten, Büffelmozzarella","p":28},{"n":"Eliza","d":"Mozzarella, Spinat°, Speck, Mascarpone","p":24},{"n":"Pizzaiolo","d":"Mozzarella, Rohschinken, frische Kirschtomaten, Mascarpone","p":25},{"n":"La Montanina","d":"Tomatensauce, Mozzarella, schwarze Trüffelsauce, Speck, Rucola, Kirschtomaten, Parmesanflocken","p":28},{"n":"A Sorpresa","d":"Überraschung des Pizzaiolo","p":23},{"n":"La Sfiziosa","d":"Focaccia baciata mit Trüffelmortadella, Burrata, Pistazien","p":29}]},{"cat":"Calzoni","items":[{"n":"Calzone","d":"Tomatensauce, Mozzarella, Schinken","p":22},{"n":"Calzone Farcito","d":"Tomatensauce, Mozzarella, Schinken, Pilze, Ei","p":25},{"n":"Calzone Piccante","d":"Tomatensauce, Mozzarella, scharfe Salami","p":22},{"n":"Calzone Vegetariano","d":"Tomatensauce, Mozzarella, grilliertes Gemüse","p":24}]},{"cat":"Pasta fresca","items":[{"n":"Pappardelle al Ragù bianco di Coniglio","d":"Karotten, Zwiebeln, Sellerie, Kaninchenfleisch","p":31},{"n":"Pappardelle alla Bolognese","d":"Karotten, Zwiebeln, Sellerie, Rindshackfleisch, Tomatensauce","p":29},{"n":"Tagliatelle ai Funghi Porcini","d":"Butter, Steinpilze°, Petersilie","p":26},{"n":"Scialatielli alla Nerano","d":"Frittierte Zucchini, Basilikum, Parmesan, Provola","p":25},{"n":"Tagliatelle al Tartufo Nero di stagione","d":"Butter, frischer schwarzer Trüffel","p":33},{"n":"Tagliatelle al Salmone","d":"Tomatensauce, Rahm, Lachs°","p":26},{"n":"Cavatelli al Pomodoro e Burrata","d":"Karotten, Zwiebeln, Sellerie, Basilikum, Tomatensauce, Parmesan, Burrata","p":26},{"n":"Scialatielli alla Carbonara","d":"Ei, Guanciale, Pecorino Romano","p":28},{"n":"Lasagna alla Bolognese","d":"Bolognese, Béchamel, Mozzarella, Parmesan","p":31},{"n":"Cavatelli al Pesto con Guanciale e Pomodori secchi","d":"Hausgemachtes Basilikumpesto, Guanciale, Dörrtomaten","p":28},{"n":"Garganelli all'Arrabbiata","d":"Tomatensauce, Knoblauch, Chili, Parmesan, Petersilie","p":24},{"n":"Ravioli Burro, Salvia e Noci","d":"Butter, Salbei, Nüsse","p":21},{"n":"Garganelli alla Mediterranea","d":"Tomatensauce, Kapern, Oliven, Sardellen, Thunfisch","p":26}]},{"cat":"Risotti","items":[{"n":"Risotto allo Zafferano con Guanciale croccante","d":"Safranrisotto mit knusprigem Guanciale","p":29},{"n":"Risotto al Tartufo Nero di stagione","d":"Risotto mit frischem schwarzem Trüffel","p":33},{"n":"Risotto Nduja, Salsiccia e Pecorino","d":"Tomatensauce, Nduja, italienische Wurst, Pecorino","p":29},{"n":"Risotto Gorgonzola, Speck, Noci e Rucola","d":"Gorgonzola, Speck, Nüsse, Rucola","p":29}]},{"cat":"La Pietra Ardente","items":[{"n":"Filetto di Manzo","d":"Rindsfilet, 220 g","p":53},{"n":"Entrecôte di Manzo","d":"Rindsentrecôte, 220 g","p":48},{"n":"Costolette di Agnello","d":"Lammkotelett, 200 g","p":50}]},{"cat":"Secondi Piatti","items":[{"n":"Tartare Eliza**","d":"Rindstatar mit Pommes frites° und Toastbrot","p":40},{"n":"Tartare al Tartufo Nero di stagione**","d":"Rindstatar mit frischem schwarzem Trüffel und Toastbrot","p":48},{"n":"Filetto di Manzo alla griglia","d":"Rindsfilet 220 g, grilliert","p":48},{"n":"Filetto di Manzo al Tartufo Nero","d":"Rindsfilet 220 g, mit frischem schwarzem Trüffel","p":58},{"n":"Filetto di Manzo Lardellato","d":"Rindsfilet 220 g, mit Speck","p":54},{"n":"Filetto di Manzo ai Funghi Porcini","d":"Rindsfilet 220 g, mit Steinpilzen°","p":51},{"n":"Entrecôte di Manzo alla griglia","d":"Rindsentrecôte 220 g, grilliert","p":43},{"n":"Entrecôte di Manzo al Tartufo Nero","d":"Rindsentrecôte 220 g, mit frischem schwarzem Trüffel","p":53},{"n":"Entrecôte di Manzo Lardellato","d":"Rindsentrecôte 220 g, mit Speck","p":49},{"n":"Entrecôte di Manzo ai Funghi Porcini","d":"Rindsentrecôte 220 g, mit Steinpilzen°","p":46},{"n":"Saltimbocca alla Romana","d":"Kalbfleisch, Salbei, Rohschinken","p":40}]},{"cat":"Dolci","items":[{"n":"Tiramisù","d":"Savoiardi, Kaffee, Mascarpone, Kakao","p":10},{"n":"Tiramisù al Pistacchio","d":"Savoiardi, Kaffee, Mascarpone, Pistaziencrème, Kakao","p":12},{"n":"Profiteroles","d":"Windbeutel° mit Rahm und Schokolade","p":10},{"n":"Panna Cotta al Pistacchio con Gelato","d":"Rahm und Pistaziencrème, mit einer Kugel Glace","p":12},{"n":"Panna Cotta con Gelato","d":"Rahm, mit einer Kugel Glace","p":10},{"n":"Vin Santo con Cantucci","d":"Toskanischer Süsswein mit Mandelgebäck","p":11},{"n":"Crêpe allo Zucchero","d":"Mit Zucker","p":9},{"n":"Crêpe alla Nutella","d":"Mit Nutella","p":10},{"n":"Crêpe alla Marmellata","d":"Mit Erdbeer- oder Aprikosenkonfitüre","p":10},{"n":"Torta della Nonna","d":"Mürbeteig, Vanillecrème, Pinienkerne","p":13}]},{"cat":"Aperitivi","items":[{"n":"Bellevue Spritz","d":"Limoncello, Prosecco, Soda","p":12},{"n":"Aperol Spritz","d":"Aperol, Prosecco, Soda","p":12},{"n":"Campari Spritz","d":"Campari, Prosecco, Soda","p":12},{"n":"Angelo Spritz","d":"Campari, Aperol, Prosecco, Soda","p":12},{"n":"Prosecco","d":"","p":7},{"n":"Moscato","d":"","p":7},{"n":"Martini Bianco o Rosso","d":"","p":7},{"n":"Campari","d":"","p":7},{"n":"Campari Orange o Soda","d":"","p":7.5},{"n":"Cynar","d":"","p":7},{"n":"San Bitter","d":"alkoholfrei","p":4.5},{"n":"Crodino","d":"alkoholfrei","p":4.5}]},{"cat":"Birre","items":[{"n":"Angelo Poretti","d":"2 dl 3.60 · 3 dl 4.– · 5 dl 6.–","p":3.6},{"n":"Valaisanne","d":"2 dl 3.60 · 3 dl 4.– · 5 dl 6.–","p":3.6},{"n":"Schneider Weisse","d":"5 dl","p":6.5},{"n":"Schneider Weisse alkoholfrei","d":"5 dl","p":6.5},{"n":"Feldschlösschen alkoholfrei","d":"3 dl","p":4.5},{"n":"Bellevue Gold","d":"3 dl","p":5},{"n":"Bellevue Dunkel","d":"3 dl","p":5}]}];
+const ITEMS = [];
+RAW.forEach(sec => sec.items.forEach(it => ITEMS.push({...it, cat: sec.cat, sub: sec.sub})));
+const $ = s => document.querySelector(s);
+const byName = n => ITEMS.find(i => i.n === n);
+$("#nItems").textContent = ITEMS.length;
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("on"), 2600); }
+
+// ---------- particle engine (parmesan, smoke, confetti, pizza mode) ----------
+const fx = $("#fx"), ctx = fx.getContext("2d");
+let W, H, DPR = Math.min(devicePixelRatio || 1, 2);
+function resize() { W = innerWidth; H = innerHeight; fx.width = W * DPR; fx.height = H * DPR; ctx.setTransform(DPR, 0, 0, DPR, 0, 0); }
+resize(); addEventListener("resize", resize);
+const parts = []; let mouse = { x: -999, y: -999 }; let pizzaMode = false;
+addEventListener("pointermove", e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+function flake() { return { kind: "flake", x: Math.random() * W, y: -10, vx: 0, vy: .4 + Math.random() * .7, r: 1.5 + Math.random() * 2.5, rot: Math.random() * 6, life: 1e9 }; }
+for (let i = 0; i < 70; i++) { const f = flake(); f.y = Math.random() * H; parts.push(f); }
+function burst(x, y, n, colors) { for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, s = 2 + Math.random() * 6; parts.push({ kind: "conf", x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 3, r: 3 + Math.random() * 4, rot: Math.random() * 6, vr: (Math.random() - .5) * .4, c: colors[i % colors.length], life: 140 }); } }
+function smoke(x, y) { parts.push({ kind: "smoke", x, y, vx: -.4 - Math.random() * .4, vy: -.3 - Math.random() * .3, r: 4, life: 70 }); }
+function drawSlice(x, y, r, rot) { ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.beginPath(); ctx.moveTo(0, -r * 2); ctx.lineTo(r * 1.4, r * 1.4); ctx.quadraticCurveTo(0, r * 2.2, -r * 1.4, r * 1.4); ctx.closePath(); ctx.fillStyle = "#f2c14e"; ctx.fill(); ctx.fillStyle = "#c8312f"; ctx.beginPath(); ctx.arc(0, 0, r * .45, 0, 7); ctx.fill(); ctx.strokeStyle = "#b07a2a"; ctx.lineWidth = r * .5; ctx.beginPath(); ctx.moveTo(r * 1.4, r * 1.4); ctx.quadraticCurveTo(0, r * 2.2, -r * 1.4, r * 1.4); ctx.stroke(); ctx.restore(); }
+function tick() {
+  ctx.clearRect(0, 0, W, H);
+  for (let i = parts.length - 1; i >= 0; i--) {
+    const p = parts[i];
+    if (p.kind === "flake") {
+      const dx = p.x - mouse.x, dy = p.y - mouse.y, d2 = dx * dx + dy * dy;
+      if (d2 < 9000) { const d = Math.sqrt(d2) || 1, f = (95 - d) / 95 * 1.2; p.vx += dx / d * f; p.vy += dy / d * f * .5; }
+      p.vx *= .94; p.vy = p.vy * .96 + (.5 + p.r * .12) * .04 * 1.6; p.x += p.vx + Math.sin((p.y + p.rot * 50) / 60) * .3; p.y += p.vy; p.rot += .01;
+      if (p.y > H + 10 || p.x < -20 || p.x > W + 20) { Object.assign(p, flake()); }
+      if (pizzaMode) drawSlice(p.x, p.y, p.r * 2.2, p.rot);
+      else { ctx.fillStyle = "rgba(250,240,205,.9)"; ctx.strokeStyle = "rgba(160,140,90,.35)"; ctx.beginPath(); ctx.ellipse(p.x, p.y, p.r, p.r * .6, p.rot, 0, 7); ctx.fill(); ctx.stroke(); }
+    } else {
+      p.life--; p.x += p.vx; p.y += p.vy;
+      if (p.kind === "conf") { p.vy += .18; p.vx *= .99; p.rot += p.vr; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.fillStyle = p.c; ctx.fillRect(-p.r, -p.r / 2, p.r * 2, p.r); ctx.restore(); }
+      else { p.r += .25; ctx.fillStyle = `rgba(120,110,100,${p.life / 180})`; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 7); ctx.fill(); }
+      if (p.life <= 0 || p.y > H + 40) parts.splice(i, 1);
+    }
+  }
+  requestAnimationFrame(tick);
+}
+if (!reduced) requestAnimationFrame(tick);
+
+// ---------- scroll train ----------
+const train = $("#train"); let lastY = scrollY, lastT = 0;
+function moveTrain() {
+  const max = document.documentElement.scrollHeight - innerHeight || 1, prog = Math.min(1, Math.max(0, scrollY / max));
+  const tw = train.offsetWidth, x = prog * (innerWidth + tw) - tw; train.style.transform = `translateX(${x}px)`;
+  $("#km").textContent = `km ${(prog * 1.37).toFixed(2)} · ${prog > .98 ? "Endstation Dessert" : prog > .5 ? "Furka-Tunnel (fast)" : "Lax"}`;
+  const now = performance.now();
+  if (!reduced && Math.abs(scrollY - lastY) > 4 && now - lastT > 40) { smoke(x + tw - 10, 30); lastT = now; }
+  lastY = scrollY;
+}
+addEventListener("scroll", moveTrain, { passive: true }); addEventListener("resize", moveTrain); moveTrain();
+
+// ---------- spring letters ----------
+const title = $("#title"); title.innerHTML = [...title.textContent].map(c => `<span>${c}</span>`).join("");
+const letters = [...title.children].map(el => ({ el, y: 0, v: 0, r: 0, vr: 0 }));
+function springs() {
+  letters.forEach(L => {
+    const b = L.el.getBoundingClientRect(), cx = b.left + b.width / 2, cy = b.top + b.height / 2, d = Math.hypot(mouse.x - cx, mouse.y - cy);
+    if (d < 140) { L.v -= (140 - d) * .03; L.vr += (mouse.x < cx ? 1 : -1) * (140 - d) * .004; }
+    L.v += -.08 * L.y - .12 * L.v; L.y += L.v; L.vr += -.08 * L.r - .14 * L.vr; L.r += L.vr;
+    L.el.style.transform = `translateY(${L.y.toFixed(2)}px) rotate(${L.r.toFixed(2)}deg)`;
+  });
+  requestAnimationFrame(springs);
+}
+if (!reduced) requestAnimationFrame(springs);
+
+// ---------- sun & opening hours ----------
+const HOURS = [[["09:30", "14:30"]], [], [["09:30", "22:00"]], [["09:30", "14:30"], ["17:00", "22:00"]], [["09:30", "14:30"], ["17:00", "22:00"]], [["10:00", "22:00"]], [["10:00", "21:00"]]];
+const DAYS = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
+function sunPos(date, lat, lon) { // low-precision solar position (Astronomical Almanac), good to ~0.1°
+  const rad = Math.PI / 180, d = date / 864e5 - 10957.5;
+  const g = (357.529 + .98560028 * d) * rad, q = 280.459 + .98564736 * d;
+  const L = (q + 1.915 * Math.sin(g) + .02 * Math.sin(2 * g)) * rad, e = (23.439 - 3.6e-7 * d) * rad;
+  const ra = Math.atan2(Math.cos(e) * Math.sin(L), Math.cos(L)), dec = Math.asin(Math.sin(e) * Math.sin(L));
+  const gmst = ((18.697374558 + 24.06570982441908 * d) % 24) * 15 * rad, ha = gmst + lon * rad - ra;
+  const el = Math.asin(Math.sin(lat * rad) * Math.sin(dec) + Math.cos(lat * rad) * Math.cos(dec) * Math.cos(ha));
+  const az = Math.atan2(-Math.sin(ha), Math.tan(dec) * Math.cos(lat * rad) - Math.sin(lat * rad) * Math.cos(ha));
+  return { el: el / rad, az: ((az / rad) + 360) % 360 };
+}
+function zurichNow() { const p = Object.fromEntries(new Intl.DateTimeFormat("de-CH", { timeZone: "Europe/Zurich", weekday: "long", hour: "2-digit", minute: "2-digit", hour12: false }).formatToParts(new Date()).map(x => [x.type, x.value])); return { day: DAYS.indexOf(p.weekday), hm: `${p.hour.padStart(2, "0")}:${p.minute}` }; }
+function updateSky() {
+  const s = sunPos(Date.now(), 46.3899, 8.1222), sky = $("#sky"), sun = $("#sun");
+  const t = Math.max(-1, Math.min(1, s.el / 30));
+  const top = t > 0 ? `hsl(205,${50 + t * 20}%,${55 + t * 15}%)` : `hsl(230,${40}%,${12 + (t + 1) * 25}%)`;
+  const bot = t > .15 ? "#e8f1f6" : t > -.3 ? "#f2a66b" : "#2a2c45";
+  const stars = s.el < -6 ? Array.from({ length: 40 }, (_, i) => { const x = (i * 37.3) % 100, y = (i * 53.7) % 70, r = i % 3 ? 1 : 1.6; return `radial-gradient(circle at ${x}% ${y}%,rgba(255,255,240,${Math.min(1, -s.el / 18)}) ${r}px,transparent ${r + .6}px)`; }).join(",") + "," : "";
+  sky.style.background = `${stars}linear-gradient(${top},${bot})`;
+  const x = ((s.az - 90) / 180) * 100; sun.style.left = Math.max(-10, Math.min(110, x)) + "%"; sun.style.bottom = (28 + Math.max(-40, s.el) * 2.2) + "px";
+  sun.style.opacity = s.el > -6 ? 1 : .15;
+  $("#skyLabel").textContent = `Sonnenhöhe ${s.el.toFixed(1)}° · Azimut ${s.az.toFixed(0)}° · ${s.el > 0 ? "Terrassenwetter möglich" : "Kerzenlicht-Modus"}`;
+  const z = zurichNow(), today = HOURS[z.day] || [], cur = today.find(([a, b]) => z.hm >= a && z.hm < b);
+  let msg;
+  if (cur) msg = `Ofen: <b>an</b> bis ${cur[1]}`;
+  else { const later = today.find(([a]) => z.hm < a); if (later) msg = `Ofen: aus · heute ab ${later[0]}`; else { for (let k = 1; k <= 7; k++) { const d = (z.day + k) % 7; if (HOURS[d].length) { msg = `Ofen: aus · ${k === 1 ? "morgen" : DAYS[d]} ab ${HOURS[d][0][0]}`; break; } } } }
+  $("#openBadge").innerHTML = msg;
+}
+updateSky(); setInterval(updateSky, 30000);
+
+// ---------- roulette ----------
+const wc = $("#wheel"), wx = wc.getContext("2d"), cats = [...new Set(ITEMS.map(i => i.cat))].filter(c => !/Aperitivi|Birre/.test(c));
+$("#wcat").innerHTML = `<option value="">Alles (außer Getränke)</option>` + cats.map(c => `<option>${c}</option>`).join("");
+let wAng = 0, wVel = 0, wPool = [], spinning = false;
+const wColors = ["#8c2a2e", "#f3ebdd", "#3f7a3a", "#e9dcc4", "#b5473c", "#fbf6ec"];
+function pool() { const c = $("#wcat").value; return ITEMS.filter(i => c ? i.cat === c : cats.includes(i.cat)); }
+function drawWheel() {
+  const n = wPool.length, R = 410, C = 420, seg = Math.PI * 2 / n;
+  wx.clearRect(0, 0, 840, 840); wx.save(); wx.translate(C, C); wx.rotate(wAng);
+  for (let i = 0; i < n; i++) {
+    wx.beginPath(); wx.moveTo(0, 0); wx.arc(0, 0, R, i * seg, (i + 1) * seg); wx.closePath(); wx.fillStyle = wColors[i % wColors.length]; wx.fill(); wx.strokeStyle = "#2b2420"; wx.lineWidth = 1.5; wx.stroke();
+    if (n <= 60) { wx.save(); wx.rotate(i * seg + seg / 2); wx.textAlign = "right"; wx.fillStyle = (i % 2 ? "#2b2420" : (i % 6 === 2 ? "#fff" : (i % 6 === 0 || i % 6 === 4 ? "#fff" : "#2b2420"))); wx.font = `${Math.min(26, 900 / n + 8)}px 'IM Fell English'`; wx.fillText(wPool[i].n.slice(0, 22), R - 16, 8); wx.restore(); }
+  }
+  wx.restore(); wx.beginPath(); wx.arc(C, C, 46, 0, 7); wx.fillStyle = "#2b2420"; wx.fill(); wx.fillStyle = "#f3ebdd"; wx.font = "30px 'Kaushan Script'"; wx.textAlign = "center"; wx.fillText("B", C, C + 11);
+}
+function resetWheel() { wPool = pool(); drawWheel(); }
+$("#wcat").onchange = resetWheel; resetWheel();
+$("#spin").onclick = () => {
+  if (spinning) return; spinning = true; wVel = .35 + Math.random() * .25; const v0 = wVel; let frames = 0;
+  const loop = () => {
+    wAng += wVel; wVel *= .987; frames++; if (wVel > .002) { drawWheel(); requestAnimationFrame(loop); return; }
+    spinning = false; drawWheel();
+    const n = wPool.length, seg = Math.PI * 2 / n, a = ((-Math.PI / 2 - wAng) % (Math.PI * 2) + Math.PI * 4) % (Math.PI * 2), it = wPool[Math.floor(a / seg)];
+    $("#wres").innerHTML = `Das Schicksal sagt:<br><b>${it.n}</b><br><span class="hand">${it.d || it.cat} · CHF ${it.p}</span>`;
+    $("#wphys").textContent = `ω₀ = ${v0.toFixed(3)} rad/frame · Reibung 1.3 %/frame · ${frames} Frames · Gesamtwinkel ${(wAng / (2 * Math.PI)).toFixed(2)} Umdrehungen`;
+    const b = wc.getBoundingClientRect(); burst(b.left + b.width / 2, b.top + 20, 80, ["#2f8a45", "#ffffff", "#c8312f"]);
+  };
+  requestAnimationFrame(loop);
+};
+
+// ---------- pizza lab ----------
+const NORM = { "tomatensauce": "Tomate", "tomaten": "Tomate", "mozzarella": "Mozzarella", "büffelmozzarella": "Büffelmozzarella", "mozz.": "Mozzarella", "schinken": "Schinken", "rohschinken": "Rohschinken", "pilze": "Pilze", "steinpilze": "Steinpilze", "artischocken": "Artischocken", "oliven": "Oliven", "salami": "Salami", "scharfe salami": "Scharfe Salami", "zwiebeln": "Zwiebeln", "zwiebel": "Zwiebeln", "knoblauch": "Knoblauch", "rucola": "Rucola", "speck": "Speck", "sardellen": "Sardellen", "kapern": "Kapern", "wurst": "Wurst", "zucchini": "Zucchini", "kirschtomaten": "Kirschtomaten", "frische kirschtomaten": "Kirschtomaten", "parmesanflocken": "Parmesan", "gorgonzola": "Gorgonzola", "ei": "Ei", "ananas": "Ananas", "majoran": "Majoran", "thunfisch": "Thunfisch", "burrata": "Burrata", "mascarpone": "Mascarpone", "stracchino": "Stracchino", "nduja": "Nduja", "schwarze trüffelsauce": "Trüffelsauce", "lardo": "Lardo", "bresaola": "Bresaola", "auberginen": "Auberginen", "spinat": "Spinat", "nüsse": "Nüsse", "provola": "Provola", "paprika": "Paprika", "grilliertes gemüse": "Gemüse", "meeresfrüchte": "Meeresfrüchte", "friarielli": "Friarielli", "pistazien": "Pistazien" };
+function ingredients(d) { return new Set(d.toLowerCase().replace(/°|\(.*?\)/g, "").replace(/ und /g, ",").split(/,/).map(s => s.trim().replace(/^frische[rn]? /, "frische ")).map(s => NORM[s] || NORM[s.replace(/^frische /, "")] || null).filter(Boolean)); }
+const PIZZE = ITEMS.filter(i => /^Pizze|Calzoni/.test(i.cat)).map(i => ({ ...i, ing: ingredients(i.d || "") }));
+const freq = {}; PIZZE.forEach(p => p.ing.forEach(x => freq[x] = (freq[x] || 0) + 1));
+const TOPS = Object.keys(freq).sort((a, b) => freq[b] - freq[a]);
+const LOOK = { Tomate: ["#c8312f", "sauce"], Mozzarella: ["#fffaf0", "blob"], "Büffelmozzarella": ["#ffffff", "blob"], Burrata: ["#fffef8", "big"], Schinken: ["#e89a9a", "rect"], Rohschinken: ["#c86a6a", "rect"], Salami: ["#a8322e", "disc"], "Scharfe Salami": ["#8f1f1b", "disc"], Pilze: ["#b89878", "mush"], Steinpilze: ["#8a6440", "mush"], Oliven: ["#2a2420", "ring"], Rucola: ["#3f7a3a", "leaf"], Zwiebeln: ["#9d5f9a", "arc"], Artischocken: ["#8aa05a", "leaf"], Speck: ["#e0b4a0", "rect"], Kirschtomaten: ["#e0402a", "disc"], Zucchini: ["#7fae5a", "disc"], Ei: ["#ffd84a", "egg"], Ananas: ["#f4d35e", "rect"], Sardellen: ["#8d8a86", "fish"], Gorgonzola: ["#dfe6d0", "blob"], Parmesan: ["#f6e8b0", "flake"], Wurst: ["#9a5a3a", "disc"], Nduja: ["#c2361e", "blob"] };
+const pz = $("#pizza"), px = pz.getContext("2d"); let chosen = new Set(), pieces = [];
+function hashColor(s) { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) % 360; return `hsl(${h},45%,45%)`; }
+function addPieces(t) {
+  const [col, shape] = LOOK[t] || [hashColor(t), "dot"]; if (shape === "sauce") return;
+  const n = shape === "big" ? 1 : shape === "egg" ? 1 : 9 + Math.floor(Math.random() * 5);
+  for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, r = shape === "big" || shape === "egg" ? 0 : Math.sqrt(Math.random()) * 240; pieces.push({ t, col, shape, tx: 380 + Math.cos(a) * r, ty: 380 + Math.sin(a) * r, y: -60 - Math.random() * 400, vy: 0, rot: Math.random() * 6, s: .8 + Math.random() * .5, settled: false }); }
+}
+function drawPiece(p, y) {
+  px.save(); px.translate(p.tx, y); px.rotate(p.rot); px.scale(p.s, p.s); px.fillStyle = p.col; px.strokeStyle = "rgba(0,0,0,.25)"; px.lineWidth = 2;
+  switch (p.shape) {
+    case "blob": px.beginPath(); px.ellipse(0, 0, 26, 20, 0, 0, 7); px.fill(); break;
+    case "big": px.beginPath(); px.arc(0, 0, 70, 0, 7); px.fill(); px.stroke(); break;
+    case "rect": px.fillRect(-22, -12, 44, 24); px.strokeRect(-22, -12, 44, 24); break;
+    case "disc": px.beginPath(); px.arc(0, 0, 18, 0, 7); px.fill(); px.stroke(); break;
+    case "mush": px.beginPath(); px.arc(0, -4, 16, Math.PI, 0); px.fill(); px.fillRect(-5, -4, 10, 16); break;
+    case "ring": px.beginPath(); px.arc(0, 0, 10, 0, 7); px.lineWidth = 6; px.strokeStyle = p.col; px.stroke(); break;
+    case "leaf": px.beginPath(); px.ellipse(0, 0, 26, 9, 0, 0, 7); px.fill(); break;
+    case "arc": px.beginPath(); px.arc(0, 0, 18, .3, 2.8); px.lineWidth = 5; px.strokeStyle = p.col; px.stroke(); break;
+    case "egg": px.fillStyle = "#fff"; px.beginPath(); px.ellipse(0, 0, 70, 56, 0, 0, 7); px.fill(); px.fillStyle = p.col; px.beginPath(); px.arc(0, 0, 26, 0, 7); px.fill(); break;
+    case "fish": px.beginPath(); px.ellipse(0, 0, 24, 6, 0, 0, 7); px.fill(); break;
+    case "flake": px.beginPath(); px.moveTo(-12, -6); px.lineTo(12, -9); px.lineTo(8, 8); px.closePath(); px.fill(); break;
+    default: px.beginPath(); px.arc(0, 0, 12, 0, 7); px.fill();
+  }
+  px.restore();
+}
+function drawPizza() {
+  px.clearRect(0, 0, 760, 760);
+  px.beginPath(); px.arc(380, 380, 340, 0, 7); px.fillStyle = "#e7b673"; px.fill();
+  for (let i = 0; i < 40; i++) { const a = i / 40 * 7; px.fillStyle = "rgba(120,60,20,.25)"; px.beginPath(); px.arc(380 + Math.cos(a) * 318, 380 + Math.sin(a) * 318, 9 + (i * 7) % 6, 0, 7); px.fill(); }
+  px.beginPath(); px.arc(380, 380, 290, 0, 7); px.fillStyle = chosen.has("Tomate") ? "#c8312f" : "#f0d6a0"; px.fill();
+  let moving = false;
+  pieces.forEach(p => { if (!p.settled) { p.vy += 1.6; p.y += p.vy; if (p.y >= p.ty) { p.y = p.ty; p.vy *= -.35; if (Math.abs(p.vy) < 1.5) p.settled = true; } moving = true; } drawPiece(p, p.y); });
+  if (moving) requestAnimationFrame(drawPizza);
+}
+function matchPizzas() {
+  const user = new Set(chosen); if (!user.size) { $("#matches").innerHTML = `<p class="hand" style="font-size:20px">Noch kein Belag. Ein nackter Teig ist eine Focaccia (16.-).</p>`; return; }
+  const scored = PIZZE.map(p => { const inter = [...user].filter(x => p.ing.has(x)).length, uni = new Set([...user, ...p.ing]).size; return { p, j: inter / uni }; }).sort((a, b) => b.j - a.j).slice(0, 4);
+  const best = scored[0];
+  $("#matches").innerHTML = `<p style="margin:0 0 8px">${best.j > .99 ? "Volltreffer! Diese Pizza gibt es wirklich:" : best.j >= .5 ? "Nah dran. Am ähnlichsten:" : "Eine eher mutige Kreation. Am nächsten kommen:"}</p>` +
+    scored.map(s => `<div class="match"><b>${s.p.n}</b> · CHF ${s.p.p} <span class="mono">J=${s.j.toFixed(2)}</span><div class="bar" style="width:${(s.j * 100).toFixed(0)}%"></div></div>`).join("") +
+    (best.j < .5 ? `<p class="hand" style="font-size:19px;margin-top:8px">Oder fragen Sie nach «A Sorpresa» (23.-): Überraschung des Pizzaiolo.</p>` : "");
+}
+$("#tops").innerHTML = TOPS.map(t => `<button aria-pressed="false" data-t="${t}">${t}</button>`).join("");
+$("#tops").onclick = e => { const b = e.target.closest("button"); if (!b) return; const t = b.dataset.t; if (chosen.has(t)) { chosen.delete(t); pieces = pieces.filter(p => p.t !== t); b.setAttribute("aria-pressed", "false"); } else { chosen.add(t); addPieces(t); b.setAttribute("aria-pressed", "true"); } drawPizza(); matchPizzas(); };
+$("#clear").onclick = () => { chosen.clear(); pieces = []; document.querySelectorAll("#tops button").forEach(b => b.setAttribute("aria-pressed", "false")); drawPizza(); matchPizzas(); };
+drawPizza();
+
+// ---------- group optimizer: 0/1 knapsack, minimise cost subject to satiety >= target ----------
+const SAT = { "Antipasti": 3, "Zuppe": 2, "Pizze": 6, "Pizze Speciali": 6, "Calzoni": 7, "Pasta fresca": 5, "Risotti": 5, "La Pietra Ardente": 7, "Secondi Piatti": 6, "Dolci": 2 };
+const HUNGER = ["", "Grissini würde reichen", "leicht", "mässig", "normal", "solide", "Pizza-Hunger", "Furka-Pass gelaufen", "Doppelschicht", "seit Brig nichts gegessen", "Ich esse die Karte"];
+function optimize() {
+  const people = +$("#people").value, hunger = +$("#hunger").value, budget = +$("#budget").value, dice = $("#strat").value === "dice";
+  const target = Math.round(people * hunger * 1.1);
+  const cand = ITEMS.filter(i => SAT[i.cat]).map(i => ({ ...i, sat: SAT[i.cat], w: dice ? i.p * (.4 + Math.random() * 1.2) : i.p }));
+  const T = target, INF = 1e12, dp = new Float64Array(T + 1).fill(INF), from = [];
+  dp[0] = 0; let ops = 0;
+  cand.forEach((it, k) => { const prev = dp.slice(); const choice = new Int16Array(T + 1).fill(-1);
+    for (let s = 0; s <= T; s++) { if (prev[s] === INF) continue; const ns = Math.min(T, s + it.sat), c = prev[s] + it.w; ops++; if (c < dp[ns]) { dp[ns] = c; choice[ns] = s; } }
+    from.push({ choice, prev }); });
+  if (dp[T] === INF) { $("#orderOut").innerHTML = `<p>Selbst die ganze Karte reicht nicht. Bitte zweimal kommen.</p>`; return; }
+  // backtrack: choice[k][s] >= 0 means item k was taken to reach state s
+  let s = T; const pick = [];
+  for (let k = cand.length - 1; k >= 0 && s > 0; k--) { const c = from[k].choice[s]; if (c >= 0) { pick.push(cand[k]); s = c; } }
+  let cost = pick.reduce((a, i) => a + i.p, 0), sat = pick.reduce((a, i) => a + i.sat, 0);
+  const drinks = $("#spritz").checked ? people : 0, sp = byName("Bellevue Spritz"); if (drinks && sp) cost += drinks * sp.p;
+  const over = cost > budget;
+  $("#orderOut").innerHTML = `<div class="panel"><div class="script" style="font-size:30px">La Comanda</div><ul class="order">${pick.sort((a, b) => a.cat.localeCompare(b.cat)).map(i => `<li>${i.n} <span class="hand">(${i.cat})</span> · ${i.p}</li>`).join("")}${drinks ? `<li>${drinks}× Bellevue Spritz · ${drinks * sp.p}</li>` : ""}</ul>
+    <p style="margin:10px 0 0;font-size:22px">Total: <b>CHF ${cost.toFixed(2)}</b> ${over ? `<span style="color:var(--wine)">· ${(cost - budget).toFixed(2)} über Budget. Hunger reduzieren oder Margherita teilen.</span>` : `<span style="color:var(--basil)">· ${(budget - cost).toFixed(2)} Reserve für Tiramisù</span>`}</p>
+    <p class="hand" style="font-size:18px;margin:6px 0 0">Ca. CHF ${(cost / people).toFixed(2)} pro Person.</p></div>`;
+  $("#optStats").textContent = `Ziel ${T} Sättigungspunkte · erreicht ${sat} · ${cand.length} Kandidaten · ${ops.toLocaleString("de-CH")} DP-Übergänge · Strategie ${dice ? "gewürfelt" : "kostenminimal"}`;
+  const b = $("#orderOut").getBoundingClientRect(); burst(b.left + b.width / 2, b.top + 30, 50, ["#8c2a2e", "#f3ebdd", "#3f7a3a"]);
+}
+const syncLabels = () => { $("#pv").textContent = $("#people").value; $("#hv").textContent = $("#hunger").value; $("#hdesc").textContent = "(" + HUNGER[$("#hunger").value] + ")"; };
+["people", "hunger"].forEach(id => $("#" + id).oninput = syncLabels); syncLabels();
+$("#run").onclick = optimize;
+
+// ---------- currency ----------
+const RATES = [["Margherita", "Margherita"], ["Tiramisù", "Tiramisù"], ["Bellevue Spritz", "Bellevue Spritz"], ["Filetto di Manzo", "Filetti vom heissen Stein"], ["Crodino", "Crodino"], ["Insalata verde", "grüne Salate"]].map(([n, l]) => ({ l, p: byName(n)?.p })).filter(r => r.p);
+function conv() { const v = Math.max(0, +$("#chf").value || 0); $("#convOut").innerHTML = RATES.map(r => `<div><b>${(v / r.p).toFixed(2)}</b>${r.l}<br><span class="mono">@ ${r.p} CHF</span></div>`).join("") + `<div><b>${(v / (byName("Margherita").p - 3)).toFixed(2)}</b>kleine Margherita<br><span class="mono">@ ${byName("Margherita").p - 3} CHF</span></div>`; }
+$("#chf").oninput = conv; conv();
+
+// ---------- explorer ----------
+const SORTS = { "Karte": (a, b) => 0, "Preis ↑": (a, b) => a.p - b.p, "Preis ↓": (a, b) => b.p - a.p, "A–Z": (a, b) => a.n.localeCompare(b.n), "Länge des Namens": (a, b) => b.n.length - a.n.length, "Zufall": () => Math.random() - .5 };
+let sortKey = "Karte", range = null;
+$("#sorts").innerHTML = Object.keys(SORTS).map(k => `<button class="btn ${k === sortKey ? "" : "alt"}" data-k="${k}">${k}</button>`).join("");
+$("#sorts").onclick = e => { const b = e.target.closest("button"); if (!b) return; sortKey = b.dataset.k; [...$("#sorts").children].forEach(x => x.className = "btn " + (x.dataset.k === sortKey ? "" : "alt")); render(); };
+const pmax = Math.max(...ITEMS.map(i => i.p)), BIN = 5, nb = Math.ceil(pmax / BIN);
+function render() {
+  const q = $("#q").value.toLowerCase();
+  let list = ITEMS.map((it, idx) => ({ ...it, idx })).filter(i => (!q || (i.n + " " + (i.d || "") + " " + i.cat).toLowerCase().includes(q)));
+  const bins = Array(nb).fill(0); list.forEach(i => bins[Math.min(nb - 1, Math.floor(i.p / BIN))]++); const bm = Math.max(1, ...bins);
+  $("#hist").innerHTML = bins.map((c, k) => `<div title="${k * BIN}–${(k + 1) * BIN} CHF: ${c}" data-k="${k}" class="${range === k ? "on" : ""}" style="height:${(c / bm * 100).toFixed(0)}%"></div>`).join("");
+  $("#hmin").textContent = "0 CHF"; $("#hmax").textContent = nb * BIN + " CHF"; $("#hlabel").textContent = range === null ? "kein Preisfilter" : `Filter: ${range * BIN}–${(range + 1) * BIN} CHF (nochmals klicken zum Aufheben)`;
+  if (range !== null) list = list.filter(i => Math.floor(i.p / BIN) === range);
+  list.sort(SORTS[sortKey] === SORTS["Karte"] ? (a, b) => a.idx - b.idx : SORTS[sortKey]);
+  const ps = list.map(i => i.p).sort((a, b) => a - b), med = ps.length ? (ps.length % 2 ? ps[(ps.length - 1) / 2] : (ps[ps.length / 2 - 1] + ps[ps.length / 2]) / 2) : 0, avg = ps.reduce((a, b) => a + b, 0) / (ps.length || 1);
+  const sd = Math.sqrt(ps.reduce((a, b) => a + (b - avg) ** 2, 0) / (ps.length || 1));
+  $("#stats").innerHTML = [["Gerichte", list.length], ["Ø Preis", avg.toFixed(2)], ["Median", med.toFixed(2)], ["Std.-Abw.", sd.toFixed(2)], ["Spanne", ps.length ? `${ps[0]}–${ps[ps.length - 1]}` : "–"]].map(([a, b]) => `<div>${a}<b>${b}</b></div>`).join("");
+  $("#rows").innerHTML = list.map(i => `<div class="row"><span>${i.n} <span class="c">${i.cat}</span></span><span>${i.p}</span>${i.d ? `<small>${i.d}</small>` : ""}<div class="pbar" style="width:${(i.p / pmax * 100).toFixed(1)}%"></div></div>`).join("") || `<p class="hand" style="font-size:20px">Nichts gefunden.</p>`;
+}
+$("#hist").onclick = e => { const d = e.target.closest("div[data-k]"); if (!d) return; const k = +d.dataset.k; range = range === k ? null : k; render(); };
+$("#q").oninput = render; render();
+
+// ---------- Konami ----------
+const KON = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"]; let kpos = 0;
+addEventListener("keydown", e => { kpos = e.key === KON[kpos] ? kpos + 1 : (e.key === KON[0] ? 1 : 0); if (kpos === KON.length) { kpos = 0; pizzaMode = !pizzaMode; toast(pizzaMode ? "Modalità Pizza attivata. Es regnet Pizza." : "Zurück zu Parmesan."); burst(innerWidth / 2, innerHeight / 2, 160, ["#2f8a45", "#ffffff", "#c8312f"]); } });
+
+// ---------- accordion tarantella (Web Audio, original little tune) ----------
+let actx = null, playing = false;
+const N = { A3: 220, C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392, GS4: 415.3, A4: 440, B4: 493.88, C5: 523.25, D5: 587.33, E5: 659.25 };
+const TUNE = ["E5", "C5", "A4", "E5", "C5", "A4", "D5", "B4", "GS4", "D5", "B4", "GS4", "C5", "A4", "E4", "C5", "A4", "E4", "B4", "GS4", "E4", "B4", "D5", "E5", "E5", "C5", "A4", "F4", "A4", "C5", "D5", "B4", "GS4", "E4", "GS4", "B4", "A4", "E4", "C5", "A4", null, null];
+const BASS = ["A3", "E4", "A3", "E4", "A3", "E4", "A3", "E4"];
+function note(f, t, d, vol, type) { const o1 = actx.createOscillator(), o2 = actx.createOscillator(), g = actx.createGain(), lp = actx.createBiquadFilter(); o1.type = o2.type = type; o1.frequency.value = f; o2.frequency.value = f * 1.006; lp.type = "lowpass"; lp.frequency.value = 2200; g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .02); g.gain.setValueAtTime(vol, t + d * .7); g.gain.linearRampToValueAtTime(0, t + d); o1.connect(lp); o2.connect(lp); lp.connect(g); g.connect(actx.destination); o1.start(t); o2.start(t); o1.stop(t + d + .05); o2.stop(t + d + .05); }
+$("#music").onclick = () => {
+  if (playing) return; actx = actx || new (window.AudioContext || window.webkitAudioContext)(); playing = true; const t0 = actx.currentTime + .05, step = .16;
+  TUNE.forEach((n, i) => n && note(N[n], t0 + i * step, step * .95, .08, "sawtooth"));
+  for (let i = 0; i < TUNE.length; i += 3) { note(N[BASS[(i / 3) % BASS.length]] / 2, t0 + i * step, step * 1.2, .06, "triangle"); }
+  toast("♪ Tarantella für Akkordeon und Browser"); setTimeout(() => playing = false, TUNE.length * step * 1000 + 200);
+};
+</script>
+</body>
+</html>
