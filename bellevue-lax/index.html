@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bellevue · Pizzeria Bistro · Lax</title>
 <meta name="description" content="Pizzeria Bistro Bellevue, Furkastrasse 100, Lax. Neapolitanische Pizza, Pasta fresca, Risotti, Fleisch vom heissen Stein, Dolci. Tel. 027 971 30 30.">
+<link rel="icon" type="image/png" href="img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Kaushan+Script&display=swap" rel="stylesheet">
@@ -33,12 +34,14 @@ p{margin:0 0 .8em}
 .mast .top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:15px;border-bottom:1px solid var(--ink);padding-bottom:6px}
 .mast h1{margin:22px 0 0;font-size:clamp(78px,17vw,168px);line-height:.9;transform:rotate(-3deg);transform-origin:left;margin-left:-6px}
 .mast .sub{font-size:clamp(17px,2.6vw,22px);margin:14px 0 0 6px}
-.mast .note{position:absolute;right:44px;top:120px;width:190px;font-size:25px;transform:rotate(5deg);text-align:center}
-.mast .note svg{display:block;margin:4px auto 0}
+.mast .row{display:grid;grid-template-columns:1fr 250px;gap:20px;align-items:start}
+.mast .mark{text-align:center;padding-top:22px}
+.mast .mark img{width:230px;height:auto;mix-blend-mode:multiply;filter:sepia(.15)}
+.mast .note{font-size:25px;transform:rotate(4deg);margin-top:10px;text-align:center}
 nav.idx{margin:30px 40px 0;font-size:17px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:6px 0;display:flex;gap:6px 22px;flex-wrap:wrap}
 nav.idx a{color:var(--ink);text-decoration:none}
 nav.idx a:hover{color:var(--wine);text-decoration:underline}
-@media (max-width:700px){.mast{padding:32px 18px 6px}.mast .note{position:static;transform:rotate(-2deg);width:auto;margin:22px 0 0;text-align:left}.mast .note svg{display:none}nav.idx{margin:22px 18px 0}}
+@media (max-width:700px){.mast{padding:32px 18px 6px}.mast .row{display:flex;flex-direction:column-reverse;gap:0}.mast .mark{padding-top:20px;text-align:left}.mast .mark img{width:170px}.mast .note{display:none}nav.idx{margin:22px 18px 0}}
 
 /* welcome */
 .welcome{display:grid;grid-template-columns:1fr 1fr;gap:0 44px;padding:44px 40px 8px}
@@ -103,10 +106,15 @@ footer{margin:40px 40px 0;padding:14px 0 40px;border-top:1px solid var(--ink);fo
 
 <header class="mast">
   <div class="top sc"><span>Furkastrasse 100 · 3994 Lax</span><span><a href="tel:+41279713030" style="color:inherit">027 971 30 30</a></span></div>
-  <h1 class="script">Bellevue</h1>
-  <p class="sub sc">Pizzeria · Bistro · Ristorante</p>
-  <div class="note hand">Tisch reservieren?<br>Einfach anrufen!
-    <svg width="60" height="34" viewBox="0 0 60 34" aria-hidden="true"><path d="M50 4C44 18 30 26 10 28m0 0l8-7m-8 7l9 4" fill="none" stroke="#7b6f65" stroke-width="2" stroke-linecap="round"/></svg>
+  <div class="row">
+    <div>
+      <h1 class="script">Bellevue</h1>
+      <p class="sub sc">Pizzeria · Bistro · Ristorante</p>
+    </div>
+    <div class="mark">
+      <img src="img/logo.png" alt="Bellevue Logo: drei rote Eisenbahnwagen auf einem Steinviadukt" width="422" height="254">
+      <p class="note hand">Tisch reservieren?<br>Einfach anrufen!</p>
+    </div>
   </div>
 </header>
 
